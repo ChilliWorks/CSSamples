@@ -1,0 +1,63 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf200
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}}
+\paperw11900\paperh16840\margl1440\margr1440\vieww37900\viewh19820\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\f0\b\fs24 \cf0 Overview
+\b0 \
+\
+This Chilli Source sample project showcases a simple 3D pong game on iOS and Android and demonstrates the following features:\
+\
+\pard\tx220\tx720\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\li720\fi-720\pardirnatural
+\ls1\ilvl0\cf0 {\listtext	\'95	}App creation\
+{\listtext	\'95	}States\
+{\listtext	\'95	}Entities\
+{\listtext	\'95	}Components\
+{\listtext	\'95	}Resource loading\
+{\listtext	\'95	}Lighting \
+{\listtext	\'95	}Shadows\
+{\listtext	\'95	}Pointer input\
+{\listtext	\'95	}Accelerometer\
+{\listtext	\'95	}Sprites\
+{\listtext	\'95	}Static meshes\
+{\listtext	\'95	}GUI\
+{\listtext	\'95	}Events\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+\cf0 \
+
+\b Requirements
+\b0 \
+\
+Prior to running the sample the following should be installed:\
+\
+\pard\tx220\tx720\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\li720\fi-720\pardirnatural
+\ls2\ilvl0\cf0 {\listtext	\'95	}Python 2.7.5+\
+{\listtext	\'95	}Xcode 5.1+\
+{\listtext	\'95	}Eclipse\
+{\listtext	\'95	}Android SDK 19 (although min. can be changed to 14 in the manifest)\
+{\listtext	\'95	}Android NDK r8+\
+{\listtext	\'95	}iOS 5.1+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+\cf0 \
+
+\b Projects\
+\
+
+\b0 The Eclipse and Xcode projects are in CSPong/Projects/. The AndroidManifest.xml is auto-generated but its contents can be changed from CSAndroidManifest.xml.\
+\
+
+\b Tour
+\b0 \
+\
+Starting at the top of AppSource/CSPong.cpp there is a commented tour that will lead you through the source code explaining each main feature in more detail. By the end of the tour you should have an understanding of how a standard CS app is structured and how to make use of the most common features.\
+\
+
+\b Content Build Process
+\b0 \
+\
+As well as the application a simple \'93content build process\'94 has been included in the sample. This process takes raw assets such as .png and .dae files and converts them into CS ready resources (i.e. meshes, textures, texture atlases, etc.). Although all conversions use the CS tool suite, there is no standard pipeline for converting assets as this can be tailored to each project\'92s needs. The raw assets are in CSPong/Content/PrebuiltResources/ and the processed assets are in CSPong/Content/AppResources/. The \'93BuildAll.command\'94, in the PrebuiltResources folder, can be executed in order to build all the resource types (NOTE: This will delete and overwrite matching folders from PrebuiltResources inside AppResources). Assets that require no additional processing are placed directly into AppResources (i.e. material and GUI files, fonts, etc.). More information on the build process can be gleaned from reading the source in CSPong/Content/PrebuiltResources/Scripts/\
+}

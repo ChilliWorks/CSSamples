@@ -1,0 +1,20 @@
+<Layout>
+  <RootView Type = "ImageView">
+    Name = MainMenu;
+    UnifiedPosition = 0.5 0.5 0 0;
+    SetFillMaintain = 1.0 1.0 0 0;
+    Texture = Textures/GUI/Backing.csimage;
+
+    <View Type = "HighlightButton">
+      Name = PlayButton;
+      UnifiedPosition = 0.5 0.5 0 0;
+      SetWidthMaintain = 0.25 0;
+      NormalTexture = TextureAtlases/GUI/GUI.csimage;
+      HighlightTexture = TextureAtlases/GUI/GUI.csimage;
+      NormalTextureAtlas = TextureAtlases/GUI/GUI.csatlas;
+      HighlightTextureAtlas = TextureAtlases/GUI/GUI.csatlas;
+      NormalTextureAtlasID = Play;
+      HighlightTextureAtlasID = Play;
+    </View>
+  </RootView>
+</Layout>

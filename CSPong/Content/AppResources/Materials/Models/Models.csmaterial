@@ -1,0 +1,15 @@
+<Material type="StaticBlinnShadowed">
+    <Lighting>
+        <Emissive value="0.0 0.0 0.0 1.0" />
+        <Ambient value="1.0 1.0 1.0 1.0" />
+        <Diffuse value="1.0 1.0 1.0 1.0" />
+        <Specular value="1.0 1.0 1.0 1.0" />
+    </Lighting>
+    <RenderStates>
+        <Transparency enabled="false"/>
+        <Culling enabled="true"/>
+    </RenderStates>
+    <Textures>
+        <Texture location="Package" image-name="Textures/Models/Models.csimage" mipmapped="true" />
+    </Textures>
+</Material>

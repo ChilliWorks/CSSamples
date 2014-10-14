@@ -1,0 +1,8 @@
+<Layout>
+    <RootView Type = "ImageView">
+        Name = Splash;
+        UnifiedPosition = 0.5 0.5 0 0;
+        UnifiedSize = 1.0 1.0 0 0;
+        Texture = Textures/GUI/Splash.csimage;
+    </RootView>
+</Layout>

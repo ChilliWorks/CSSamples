@@ -1,0 +1,13 @@
+<Material type = "Sprite">
+    <RenderStates>
+        <Lighting enabled="false" />
+        <DepthWrite enabled="false" />
+        <DepthTest enabled="true" />
+        <AlphaTest enabled="false" />
+        <Culling enabled="true" />
+        <Transparency enabled="true" />
+    </RenderStates>
+    <Textures>
+        <Texture image-name="TextureAtlases/Digits/Digits.csimage" />
+    </Textures>
+</Material>
