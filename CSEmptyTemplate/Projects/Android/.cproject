@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+	<storageModule moduleId="org.eclipse.cdt.core.settings">
+		<cconfiguration id="com.android.toolchain.gcc.1904248117">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.android.toolchain.gcc.1904248117" moduleId="org.eclipse.cdt.core.settings" name="Default">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.VCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.MakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="MoFlowSkeleton" buildProperties="" description="" id="com.android.toolchain.gcc.1904248117" name="Default" parent="org.eclipse.cdt.build.core.emptycfg">
+					<folderInfo id="com.android.toolchain.gcc.1904248117.1779329046" name="/" resourcePath="">
+						<toolChain id="com.android.toolchain.gcc.1483399865" name="Android GCC" superClass="com.android.toolchain.gcc">
+							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF" id="com.android.targetPlatform.280922603" isAbstract="false" superClass="com.android.targetPlatform"/>
+							<builder buildPath="${build_project}" id="com.android.builder.37688792" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Android Builder" superClass="com.android.builder">
+								<outputEntries>
+									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name=""/>
+								</outputEntries>
+							</builder>
+							<tool id="com.android.gcc.compiler.1962682431" name="Android GCC Compiler" superClass="com.android.gcc.compiler">
+								<option id="com.android.gcc.option.includePath.581635498" superClass="com.android.gcc.option.includePath"/>
+								<inputType id="com.android.gcc.inputType.1051498733" superClass="com.android.gcc.inputType"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+	</storageModule>
+	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+		<project id="MoFlowSkeleton.null.515836161" name="MoFlowSkeleton"/>
+	</storageModule>
+	<storageModule moduleId="refreshScope" versionNumber="1">
+		<resource resourceType="PROJECT" workspacePath="/ChilliSourceSkeleton"/>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.1904248117;com.android.toolchain.gcc.1904248117.1779329046;com.android.tool.compiler.g++.2024292182;com.android.tool.compiler.g++.input.572206839">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.make.core.GCCStandardMakePerFileProfile"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.1904248117;com.android.toolchain.gcc.1904248117.1779329046;cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.base.1667659063;cdt.managedbuild.tool.gnu.cpp.compiler.input.cygwin.305828186">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCWinManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.1904248117;com.android.toolchain.gcc.1904248117.1779329046;cdt.managedbuild.tool.gnu.c.compiler.cygwin.base.1403579385;cdt.managedbuild.tool.gnu.c.compiler.input.cygwin.1018000821">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCWinManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.1904248117;com.android.toolchain.gcc.1904248117.1779329046;com.android.gcc.compiler.1962682431;com.android.gcc.inputType.1051498733">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.android.AndroidPerProjectProfile"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.1904248117;com.android.toolchain.gcc.1904248117.1779329046;com.android.tool.compiler.c.1815600566;com.android.tool.compiler.c.input.1605133644">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.make.core.GCCStandardMakePerFileProfile"/>
+		</scannerConfigBuildInfo>
+	</storageModule>
+</cproject>

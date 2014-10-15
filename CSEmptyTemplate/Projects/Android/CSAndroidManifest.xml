@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cs-manifest xmlns:android="http://schemas.android.com/apk/res/android" package="ext.company.csemptytemplate" versionCode="1" versionName="1.0" minSdkVersion="9" targetSdkVersion="19" screenOrientation="sensorLandscape" debuggable="true">
+
+  <manifest-extra/>
+  <application-extra/>
+
+</cs-manifest>

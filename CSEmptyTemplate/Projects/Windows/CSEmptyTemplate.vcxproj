@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\AppSource\App.cpp" />
+    <ClCompile Include="..\..\AppSource\State.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\AppSource\App.h" />
+    <ClInclude Include="..\..\AppSource\State.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{29AA6F17-26E4-48A0-95B4-8945F33A71A1}</ProjectGuid>
+    <RootNamespace>CSEmptyTemplate</RootNamespace>
+    <ProjectName>CSEmptyTemplate</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(ProjectDir)..\..\AppSource\;$(ProjectDir)..\..\ChilliSource\Source\;$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Headers\;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>$(LibraryPath);$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Libs\;$(ProjectDir)csbin\$(Configuration)\</LibraryPath>
+    <LinkIncremental>false</LinkIncremental>
+    <ReferencePath>
+    </ReferencePath>
+    <OutDir>$(SolutionDir)\bin\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\obj\$(Configuration)\a\b\</IntDir>
+    <PostBuildEventUseInBuild>
+    </PostBuildEventUseInBuild>
+    <CustomBuildBeforeTargets>PostBuildEvent</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(ProjectDir)..\..\AppSource\;$(ProjectDir)..\..\ChilliSource\Source\;$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Headers\;$(IncludePath)</IncludePath>
+    <ReferencePath>
+    </ReferencePath>
+    <LibraryPath>$(LibraryPath);$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Libs\;$(ProjectDir)csbin\$(Configuration)\</LibraryPath>
+    <OutDir>$(SolutionDir)\bin\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\obj\$(Configuration)\a\b\</IntDir>
+    <PostBuildEventUseInBuild />
+    <CustomBuildAfterTargets>
+    </CustomBuildAfterTargets>
+    <CustomBuildBeforeTargets>PostBuildEvent</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <ForcedIncludeFiles>
+      </ForcedIncludeFiles>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;DEBUG;CS_TARGETPLATFORM_WINDOWS;CS_ENABLE_DEBUG;CS_LOGLEVEL_VERBOSE</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies);CSBase32d.lib;zdll.lib;opengl32.lib;sfml-system-d.lib;sfml-window-d.lib;glew32.lib;ChilliSource.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
+    <CustomBuildStep>
+      <Command>python $(ProjectDir)\..\..\ChilliSource\Tools\Scripts\copy_windows_resources.py $(ProjectDir)  $(TargetDir)</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Message>Building resources</Message>
+      <Outputs>CSBuildRes.alwaysrun</Outputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <ForcedIncludeFiles>
+      </ForcedIncludeFiles>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;NDEBUG;CS_TARGETPLATFORM_WINDOWS;CS_LOGLEVEL_WARNING</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>CSBase32.lib;zdll.lib;glew32.lib;glu32.lib;opengl32.lib;sfml-system.lib;sfml-window.lib;ChilliSource.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>python $(ProjectDir)\..\..\ChilliSource\Tools\Scripts\copy_windows_resources.py $(ProjectDir)  $(TargetDir)</Command>
+      <Message>Building resources</Message>
+      <Outputs>CSBuildRes.alwaysrun</Outputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
