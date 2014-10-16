@@ -35,6 +35,7 @@
 #include <ChilliSource/Core/System.h>
 
 #include <array>
+#include <functional>
 #include <vector>
 
 namespace CSPong

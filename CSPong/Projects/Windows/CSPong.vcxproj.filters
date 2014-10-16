@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="AppSource">
+      <UniqueIdentifier>{d220e206-8840-4948-8a1c-066d200f3db3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppSource\Common">
+      <UniqueIdentifier>{9791179c-0ee8-4245-8624-c26c581462c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppSource\MainMenu">
+      <UniqueIdentifier>{b7374537-2251-4eee-bb53-03cf95241e64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppSource\Game">
+      <UniqueIdentifier>{631db3c1-91ef-481f-8f31-ba4f60524f62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppSource\Game\Ball">
+      <UniqueIdentifier>{914efb8f-b1fe-4cef-bde2-26401ba6ca4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppSource\Game\Camera">
+      <UniqueIdentifier>{3fe55b74-e9cb-4e85-b766-b29c5c4d9ce4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppSource\Game\Paddle">
+      <UniqueIdentifier>{71f4a771-7f9a-45c4-b517-6509081d6ce6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppSource\Game\Physics">
+      <UniqueIdentifier>{62840892-b3c1-49cd-b646-57f013182976}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppSource\Splash">
+      <UniqueIdentifier>{995c1c9b-1309-4843-8b72-a2018cb742d6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\AppSource\Common\TransitionSystem.cpp">
+      <Filter>AppSource\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\GameEntityFactory.cpp">
+      <Filter>AppSource\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\GameState.cpp">
+      <Filter>AppSource\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\GoalCeremonySystem.cpp">
+      <Filter>AppSource\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\ScoringSystem.cpp">
+      <Filter>AppSource\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\Ball\BallControllerComponent.cpp">
+      <Filter>AppSource\Game\Ball</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\Camera\CameraTiltComponent.cpp">
+      <Filter>AppSource\Game\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\Physics\DynamicBodyComponent.cpp">
+      <Filter>AppSource\Game\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\Physics\PhysicsSystem.cpp">
+      <Filter>AppSource\Game\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\Physics\StaticBodyComponent.cpp">
+      <Filter>AppSource\Game\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\Physics\TriggerComponent.cpp">
+      <Filter>AppSource\Game\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\Paddle\AIControllerComponent.cpp">
+      <Filter>AppSource\Game\Paddle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\Paddle\TouchControllerComponent.cpp">
+      <Filter>AppSource\Game\Paddle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\MainMenu\MainMenuState.cpp">
+      <Filter>AppSource\MainMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Splash\SplashState.cpp">
+      <Filter>AppSource\Splash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\CSPong.cpp">
+      <Filter>AppSource</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\AppSource\Common\TransitionSystem.h">
+      <Filter>AppSource\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\GameEntityFactory.h">
+      <Filter>AppSource\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\GameState.h">
+      <Filter>AppSource\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\GoalCeremonySystem.h">
+      <Filter>AppSource\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\ScoringSystem.h">
+      <Filter>AppSource\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\Ball\BallControllerComponent.h">
+      <Filter>AppSource\Game\Ball</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\Camera\CameraTiltComponent.h">
+      <Filter>AppSource\Game\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\Physics\DynamicBodyComponent.h">
+      <Filter>AppSource\Game\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\Physics\PhysicsSystem.h">
+      <Filter>AppSource\Game\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\Physics\StaticBodyComponent.h">
+      <Filter>AppSource\Game\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\Physics\TriggerComponent.h">
+      <Filter>AppSource\Game\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\Paddle\AIControllerComponent.h">
+      <Filter>AppSource\Game\Paddle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\Paddle\TouchControllerComponent.h">
+      <Filter>AppSource\Game\Paddle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\MainMenu\MainMenuState.h">
+      <Filter>AppSource\MainMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Splash\SplashState.h">
+      <Filter>AppSource\Splash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\CSPong.h">
+      <Filter>AppSource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\ForwardDeclarations.h">
+      <Filter>AppSource</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

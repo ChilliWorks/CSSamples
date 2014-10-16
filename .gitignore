@@ -21,3 +21,8 @@ CSEmptyTemplate/Projects/Android/obj
 CSEmptyTemplate/Projects/Android/assets
 CSEmptyTemplate/Projects/Android/bin
 CSEmptyTemplate/Projects/Android/gen
+CSPong.vcxproj.user
+CSPong/Projects/Windows/bin
+CSPong/Projects/Windows/csbin
+CSPong/Projects/Windows/csobj
+CSPong/Projects/Windows/obj
