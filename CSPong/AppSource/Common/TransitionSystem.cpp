@@ -33,8 +33,8 @@
 #include <ChilliSource/Core/Resource.h>
 #include <ChilliSource/Core/State.h>
 #include <ChilliSource/Core/Scene.h>
-#include <ChilliSource/GUI/Base.h>
-#include <ChilliSource/GUI/Image.h>
+#include <ChilliSource/UI/Base.h>
+#include <ChilliSource/UI/Drawable.h>
 #include <ChilliSource/Rendering/Texture.h>
 
 namespace CSPong
@@ -101,17 +101,14 @@ namespace CSPong
     //-------------------------------------------------
     void TransitionSystem::OnInit()
     {
-        CSRendering::TextureCSPtr texture = CSCore::Application::Get()->GetResourcePool()->LoadResource<CSRendering::Texture>(CSCore::StorageLocation::k_chilliSource, "Textures/Blank.csimage");
-        m_fadeImageView = std::make_shared<CSGUI::ImageView>();
-        m_fadeImageView->EnableAlignmentToParent(true);
-        m_fadeImageView->SetAlignmentToParent(CSRendering::AlignmentAnchor::k_middleCentre);
-        m_fadeImageView->SetLocalAlignment(CSRendering::AlignmentAnchor::k_middleCentre);
-        m_fadeImageView->SetOffsetFromParentAlignment(0.0f, 0.0f, 0.0f, 0.0f);
-        m_fadeImageView->SetSize(1.0f, 1.0f, 0.0f, 0.0f);
-        m_fadeImageView->SetTexture(texture);
-        m_fadeImageView->EnableUserInteraction(false);
-        m_fadeImageView->EnableTouchConsumption(false);
-        GetState()->GetScene()->GetWindow()->AddSubview(m_fadeImageView);
+        auto resPool = CSCore::Application::Get()->GetResourcePool();
+        auto texture = resPool->LoadResource<CSRendering::Texture>(CSCore::StorageLocation::k_chilliSource, "Textures/Blank.csimage");
+        
+        m_fadeImageView = CSCore::Application::Get()->GetWidgetFactory()->CreateImage();
+        CSUI::DrawableDefCSPtr drawableDef(new CSUI::StandardDrawableDef(texture, CSRendering::UVs(), CSCore::Colour::k_white));
+        m_fadeImageView->GetComponent<CSUI::DrawableComponent>()->ApplyDrawableDef(drawableDef);
+        
+        GetState()->GetUICanvas()->AddWidget(m_fadeImageView);
         
         m_fadeTween = CSCore::MakeSmoothStepTween<f32>(1.0f, 0.0f, m_fadeInTime);
         m_fadeTween.SetOnEndDelegate([=](CSCore::SmoothStepTween<f32>* in_tween)
@@ -127,8 +124,8 @@ namespace CSPong
     {
         if (m_transitionState == TransitionState::k_in || m_transitionState == TransitionState::k_out)
         {
-            m_fadeTween.Update(in_deltaTime);
-            m_fadeImageView->SetColour(CSCore::Colour(0.0f, 0.0f, 0.0f, m_fadeTween.GetValue()));
+            f32 value = m_fadeTween.Update(in_deltaTime);
+            m_fadeImageView->SetColour(CSCore::Colour(0.0f, 0.0f, 0.0f, value));
             m_fadeImageView->BringToFront();
         }
         else
@@ -140,6 +137,6 @@ namespace CSPong
     //-------------------------------------------------
     void TransitionSystem::OnDestroy()
     {
-        m_fadeImageView->RemoveFromParentView();
+        m_fadeImageView->RemoveFromParent();
     }
 }

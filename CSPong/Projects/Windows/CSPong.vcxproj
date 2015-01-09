@@ -77,10 +77,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)..\..\AppSource\;$(ProjectDir)..\..\ChilliSource\Source\;$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Headers\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\..\AppSource\;$(ProjectDir)..\..\ChilliSource\Source\;$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Headers\;$(ProjectDir)..\..\ChilliSource\Libraries\CricketAudio\Windows\Headers\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>$(LibraryPath);$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Libs\;$(ProjectDir)csbin\$(Configuration)\</LibraryPath>
+    <LibraryPath>$(LibraryPath);$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Libs\;$(ProjectDir)..\..\ChilliSource\Libraries\CricketAudio\Windows\Libs\DebugDynamic7\;$(ProjectDir)csbin\$(Configuration)\</LibraryPath>
     <LinkIncremental>false</LinkIncremental>
     <ReferencePath>
     </ReferencePath>
@@ -91,10 +91,10 @@
     <CustomBuildBeforeTargets>PostBuildEvent</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(ProjectDir)..\..\AppSource\;$(ProjectDir)..\..\ChilliSource\Source\;$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Headers\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\..\AppSource\;$(ProjectDir)..\..\ChilliSource\Source\;$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Headers\;$(ProjectDir)..\..\ChilliSource\Libraries\CricketAudio\Windows\Headers\;$(IncludePath)</IncludePath>
     <ReferencePath>
     </ReferencePath>
-    <LibraryPath>$(LibraryPath);$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Libs\;$(ProjectDir)csbin\$(Configuration)\</LibraryPath>
+    <LibraryPath>$(LibraryPath);$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Libs\;$(ProjectDir)..\..\ChilliSource\Libraries\CricketAudio\Windows\Libs\ReleaseDynamic7\;$(ProjectDir)csbin\$(Configuration)\</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\obj\$(Configuration)\a\b\</IntDir>
     <PostBuildEventUseInBuild />
@@ -117,7 +117,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies);CSBase32d.lib;zdll.lib;opengl32.lib;sfml-system-d.lib;sfml-window-d.lib;glew32.lib;ChilliSource.lib</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);CSBase32d.lib;ck.lib;XAudio2.lib;zdll.lib;opengl32.lib;sfml-system-d.lib;sfml-window-d.lib;glew32.lib;ChilliSource.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
@@ -158,7 +158,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
-      <AdditionalDependencies>CSBase32.lib;zdll.lib;glew32.lib;glu32.lib;opengl32.lib;sfml-system.lib;sfml-window.lib;ChilliSource.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CSBase32.lib;ck.lib;XAudio2.lib;zdll.lib;glew32.lib;glu32.lib;opengl32.lib;sfml-system.lib;sfml-window.lib;ChilliSource.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
     <PreLinkEvent>

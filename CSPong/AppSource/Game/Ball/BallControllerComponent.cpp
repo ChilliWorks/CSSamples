@@ -71,15 +71,15 @@ namespace CSPong
             //Pick a random direction to start the ball
             f32 angleLimitMin = (CSCore::MathUtils::k_pi) * 0.25f;
             f32 angleLimitMax = (CSCore::MathUtils::k_pi) * 0.75f;
-            m_currentDirection.x = std::sin(CSCore::MathUtils::RandomInRange(angleLimitMin, angleLimitMax));
-            m_currentDirection.y = std::cos(CSCore::MathUtils::RandomInRange(angleLimitMin, angleLimitMax));
+            m_currentDirection.x = std::sin(CSCore::Random::Generate(angleLimitMin, angleLimitMax));
+            m_currentDirection.y = std::cos(CSCore::Random::Generate(angleLimitMin, angleLimitMax));
             
-            if(CSCore::MathUtils::FRand() > 0.5f)
+            if(CSCore::Random::GenerateNormalised<f32>() > 0.5f)
             {
                 m_currentDirection.x = -m_currentDirection.x;
             }
             
-            if(CSCore::MathUtils::FRand() > 0.5f)
+            if(CSCore::Random::GenerateNormalised<f32>() > 0.5f)
             {
                 m_currentDirection.y = -m_currentDirection.y;
             }

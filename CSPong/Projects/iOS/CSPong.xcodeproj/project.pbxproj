@@ -20,6 +20,8 @@
 		811289D81636EC0B008D781D /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 811289D71636EC0B008D781D /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		811289DA1636F1DC008D781D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 811289D91636F1DB008D781D /* libz.dylib */; };
 		812570EC14D8088E009FA9F3 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 812570EB14D8088D009FA9F3 /* CoreTelephony.framework */; };
+		8132155D1A6050BC000751E5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8132155C1A6050BC000751E5 /* AVFoundation.framework */; };
+		813215601A6050CA000751E5 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8132155F1A6050CA000751E5 /* CoreMedia.framework */; };
 		8151B54519656B9900898D07 /* TriggerComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8151B54319656B9900898D07 /* TriggerComponent.cpp */; };
 		8151B54A196594B900898D07 /* TransitionSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8151B548196594B900898D07 /* TransitionSystem.cpp */; };
 		818387131301466F004B7099 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 818387121301466F004B7099 /* CoreGraphics.framework */; };
@@ -83,6 +85,8 @@
 		811289D71636EC0B008D781D /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		811289D91636F1DB008D781D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		812570EB14D8088D009FA9F3 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		8132155C1A6050BC000751E5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		8132155F1A6050CA000751E5 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		8151B54319656B9900898D07 /* TriggerComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerComponent.cpp; sourceTree = "<group>"; };
 		8151B54419656B9900898D07 /* TriggerComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerComponent.h; sourceTree = "<group>"; };
 		8151B548196594B900898D07 /* TransitionSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransitionSystem.cpp; sourceTree = "<group>"; };
@@ -143,6 +147,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				813215601A6050CA000751E5 /* CoreMedia.framework in Frameworks */,
+				8132155D1A6050BC000751E5 /* AVFoundation.framework in Frameworks */,
 				81D8B6EC1962E30F0010DA84 /* libChilliSource.a in Frameworks */,
 				819A8A3E191CFCB6003E9E9F /* GLKit.framework in Frameworks */,
 				81B9C0D918B27D490029BC9E /* CoreMotion.framework in Frameworks */,
@@ -200,6 +206,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8132155F1A6050CA000751E5 /* CoreMedia.framework */,
+				8132155C1A6050BC000751E5 /* AVFoundation.framework */,
 				81A83F9E1340B88E00FBCC29 /* libsqlite3.0.dylib */,
 				1CBC995A14594FCB006CA964 /* libz.1.2.5.dylib */,
 				811289D91636F1DB008D781D /* libz.dylib */,
@@ -515,10 +523,14 @@
 					"$(SRCROOT)/../../AppSource",
 					"$(SRCROOT)/../../ChilliSource/Source",
 					"$(SRCROOT)/../../ChilliSource/Libraries/Core/iOS/Headers",
+					"$(SRCROOT)/../../ChilliSource/Libraries/CricketAudio/iOS/Headers",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/ProjectResources/CSPong-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../../ChilliSource/Libraries/Core/iOS/Libs";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/../../ChilliSource/Libraries/Core/iOS/Libs",
+					"$(PROJECT_DIR)/../../ChilliSource/Libraries/CricketAudio/iOS/Libs",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = CSPong;
 				PROVISIONING_PROFILE = "";
@@ -554,10 +566,14 @@
 					"$(SRCROOT)/../../AppSource",
 					"$(SRCROOT)/../../ChilliSource/Source",
 					"$(SRCROOT)/../../ChilliSource/Libraries/Core/iOS/Headers",
+					"$(SRCROOT)/../../ChilliSource/Libraries/CricketAudio/iOS/Headers",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/ProjectResources/CSPong-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../../ChilliSource/Libraries/Core/iOS/Libs";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/../../ChilliSource/Libraries/Core/iOS/Libs",
+					"$(PROJECT_DIR)/../../ChilliSource/Libraries/CricketAudio/iOS/Libs",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = CSPong;
 				PROVISIONING_PROFILE = "";
@@ -621,10 +637,14 @@
 					"$(SRCROOT)/../../AppSource",
 					"$(SRCROOT)/../../ChilliSource/Source",
 					"$(SRCROOT)/../../ChilliSource/Libraries/Core/iOS/Headers",
+					"$(SRCROOT)/../../ChilliSource/Libraries/CricketAudio/iOS/Headers",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/ProjectResources/CSPong-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../../ChilliSource/Libraries/Core/iOS/Libs";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/../../ChilliSource/Libraries/Core/iOS/Libs",
+					"$(PROJECT_DIR)/../../ChilliSource/Libraries/CricketAudio/iOS/Libs",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = CSPong;
 				PROVISIONING_PROFILE = "";

@@ -39,8 +39,6 @@
 #include <ChilliSource/Core/Base.h>
 #include <ChilliSource/Core/Delegate.h>
 #include <ChilliSource/Core/Scene.h>
-#include <ChilliSource/GUI/Base.h>
-#include <ChilliSource/GUI/Image.h>
 #include <ChilliSource/Rendering/Camera.h>
 #include <ChilliSource/Rendering/Lighting.h>
 

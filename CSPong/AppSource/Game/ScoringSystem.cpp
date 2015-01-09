@@ -70,9 +70,9 @@ namespace CSPong
         auto entityFactory = GetState()->GetSystem<GameEntityFactory>();
         auto scene = GetState()->GetScene();
         const CSCore::Vector2 k_digitSize(20, 20);
-        const f32 distanceFromGround = 2.0f;
+        const f32 distanceFromGround = 0.1f;
         
-        const f32 k_paddingFromCentre = 10.0f;
+        const f32 k_paddingFromCentre = 25.0f;
         
         CSCore::EntitySPtr player1TensEntity = entityFactory->CreateScoreSprite(k_digitSize, CSRendering::AlignmentAnchor::k_middleRight);
         m_scoreViews[0].first = player1TensEntity->GetComponent<CSRendering::SpriteComponent>();

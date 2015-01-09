@@ -166,7 +166,7 @@ namespace CSPong
         f32 m_fadeOutTime;
         TransitionState m_transitionState;
         CSCore::StateSPtr m_targetState;
-        CSGUI::ImageViewSPtr m_fadeImageView;
+        CSUI::WidgetSPtr m_fadeImageView;
         CSCore::SmoothStepTween<f32> m_fadeTween;
         CSCore::Event<TransitionDelegate> m_transitionInFinishedEvent;
         CSCore::Event<TransitionDelegate> m_transitionOutStartedEvent;

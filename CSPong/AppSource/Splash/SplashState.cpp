@@ -33,8 +33,10 @@
 
 #include <ChilliSource/Core/Base.h>
 #include <ChilliSource/Core/Math.h>
+#include <ChilliSource/Core/Resource.h>
 #include <ChilliSource/Core/State.h>
-#include <ChilliSource/GUI/Base.h>
+#include <ChilliSource/Core/Scene.h>
+#include <ChilliSource/UI/Base.h>
 #include <ChilliSource/Rendering/Camera.h>
 
 /*
@@ -109,15 +111,16 @@ namespace CSPong
     //------------------------------------------------------------
     void SplashState::OnInit()
     {
-        //Load the splash screen UI from a csgui and add it to this states UI window. More info on GUI can be found in MainMenuState.cpp
+        //Load the splash screen UI from a csui and add it to this states UI canvas. More info on GUI can be found in MainMenuState.cpp
         //Chilli source has several "Storage Locations". These correspond to the sandbox locations
         //of most mobile platforms. k_package is the most commonly used and refers to the bundle on iOS and the
         //APK on Android.
-        m_splashView = CSGUI::GUIViewFactory::CreateGUIViewFromScript(CSCore::StorageLocation::k_package, "GUI/Splash.csgui");
+        auto splashViewDef = CSCore::Application::Get()->GetResourcePool()->LoadResource<CSUI::WidgetTemplate>(CSCore::StorageLocation::k_package, "GUI/Splash.csui");
+        m_splashView = CSCore::Application::Get()->GetWidgetFactory()->Create(splashViewDef);
         
-        //Each state has a scene. The scene is rendered after the update loop.
-        //Adding a UI view to the window will cause it to be rendered.
-        GetScene()->GetWindow()->AddSubview(m_splashView);
+        //Each state has a ui canvas. The canvas is rendered after the update loop.
+        //Adding a widget to the canvas will cause it to be rendered.
+        GetUICanvas()->AddWidget(m_splashView);
         
         //Set the clear colour of the screen
         GetScene()->SetClearColour(CSCore::Colour(0.424f, 0.365f, 0.357f, 1.0f));

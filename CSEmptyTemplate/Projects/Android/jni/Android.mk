@@ -47,3 +47,6 @@ LOCAL_LDLIBS := $(CS_LDLIBS)
 LOCAL_C_INCLUDES:= $(CS_C_INCLUDES) ../../AppSource/
 include $(BUILD_SHARED_LIBRARY)
 
+#build CPU features for NEON support
+$(call import-module,android/cpufeatures)
+

@@ -79,7 +79,7 @@ namespace CSPong
         
         TransitionSystem* m_transitionSystem;
         f32 m_timer = 0.0f;
-        CSGUI::GUIViewSPtr m_splashView;
+        CSUI::WidgetSPtr m_splashView;
     };
 }
 

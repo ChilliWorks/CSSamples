@@ -32,8 +32,8 @@
 #include <ChilliSource/Core/Resource.h>
 #include <ChilliSource/Core/Scene.h>
 #include <ChilliSource/Core/State.h>
-#include <ChilliSource/GUI/Base.h>
-#include <ChilliSource/GUI/Image.h>
+#include <ChilliSource/UI/Base.h>
+#include <ChilliSource/UI/Drawable.h>
 #include <ChilliSource/Rendering/Texture.h>
 
 namespace CSPong
@@ -54,16 +54,20 @@ namespace CSPong
         ///
         /// @return View
         //------------------------------------------------------
-        CSGUI::GUIViewUPtr CreateGoalCelebrationView()
+        CSUI::WidgetSPtr CreateGoalCelebrationView()
         {
             auto resPool = CSCore::Application::Get()->GetResourcePool();
-            CSGUI::ImageView* view(new CSGUI::ImageView());
-            view->SetTexture(resPool->LoadResource<CSRendering::Texture>(CSCore::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csimage"));
-            view->SetTextureAtlas(resPool->LoadResource<CSRendering::TextureAtlas>(CSCore::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csatlas"));
-            view->SetTextureAtlasID("Goal");
-            view->ScaleTo(0.0f);
-            view->SetWidthMaintainingAspect(0.5f, 0.0f);
-            return CSGUI::GUIViewUPtr(view);
+            auto texture = resPool->LoadResource<CSRendering::Texture>(CSCore::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csimage");
+            auto atlas = resPool->LoadResource<CSRendering::TextureAtlas>(CSCore::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csatlas");
+            
+            CSUI::WidgetSPtr widget = CSCore::Application::Get()->GetWidgetFactory()->CreateImage();
+            CSUI::DrawableDefCSPtr drawableDef(new CSUI::StandardDrawableDef(texture, atlas, "Goal", CSRendering::UVs(), CSCore::Colour::k_white));
+            widget->GetComponent<CSUI::DrawableComponent>()->ApplyDrawableDef(drawableDef);
+            widget->ScaleTo(CSCore::Vector2(0.0f, 0.0f));
+            widget->SetRelativeSize(CSCore::Vector2(0.5f, 0.0f));
+            widget->SetSizePolicy(CSUI::SizePolicy::k_useWidthMaintainingAspect);
+            
+            return widget;
         }
         //------------------------------------------------------
         /// Creates the image view that is displayed when the
@@ -73,16 +77,20 @@ namespace CSPong
         ///
         /// @return View
         //------------------------------------------------------
-        CSGUI::GUIViewUPtr CreateWinCelebrationView()
+        CSUI::WidgetSPtr CreateWinCelebrationView()
         {
             auto resPool = CSCore::Application::Get()->GetResourcePool();
-            CSGUI::ImageView* view(new CSGUI::ImageView());
-            view->SetTexture(resPool->LoadResource<CSRendering::Texture>(CSCore::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csimage"));
-            view->SetTextureAtlas(resPool->LoadResource<CSRendering::TextureAtlas>(CSCore::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csatlas"));
-            view->SetTextureAtlasID("Win");
-            view->ScaleTo(0.0f);
-            view->SetWidthMaintainingAspect(0.5f, 0.0f);
-            return CSGUI::GUIViewUPtr(view);
+            auto texture = resPool->LoadResource<CSRendering::Texture>(CSCore::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csimage");
+            auto atlas = resPool->LoadResource<CSRendering::TextureAtlas>(CSCore::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csatlas");
+            
+            CSUI::WidgetSPtr widget = CSCore::Application::Get()->GetWidgetFactory()->CreateImage();
+            CSUI::DrawableDefCSPtr drawableDef(new CSUI::StandardDrawableDef(texture, atlas, "Win", CSRendering::UVs(), CSCore::Colour::k_white));
+            widget->GetComponent<CSUI::DrawableComponent>()->ApplyDrawableDef(drawableDef);
+            widget->ScaleTo(CSCore::Vector2(0.0f, 0.0f));
+            widget->SetRelativeSize(CSCore::Vector2(0.5f, 0.0f));
+            widget->SetSizePolicy(CSUI::SizePolicy::k_useWidthMaintainingAspect);
+            
+            return widget;
         }
         //------------------------------------------------------
         /// Creates the image view that is displayed when the
@@ -92,16 +100,20 @@ namespace CSPong
         ///
         /// @return View
         //------------------------------------------------------
-        CSGUI::GUIViewUPtr CreateLoseCelebrationView()
+        CSUI::WidgetSPtr CreateLoseCelebrationView()
         {
             auto resPool = CSCore::Application::Get()->GetResourcePool();
-            CSGUI::ImageView* view(new CSGUI::ImageView());
-            view->SetTexture(resPool->LoadResource<CSRendering::Texture>(CSCore::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csimage"));
-            view->SetTextureAtlas(resPool->LoadResource<CSRendering::TextureAtlas>(CSCore::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csatlas"));
-            view->SetTextureAtlasID("Lose");
-            view->ScaleTo(0.0f);
-            view->SetWidthMaintainingAspect(0.5f, 0.0f);
-            return CSGUI::GUIViewUPtr(view);
+            auto texture = resPool->LoadResource<CSRendering::Texture>(CSCore::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csimage");
+            auto atlas = resPool->LoadResource<CSRendering::TextureAtlas>(CSCore::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csatlas");
+            
+            CSUI::WidgetSPtr widget = CSCore::Application::Get()->GetWidgetFactory()->CreateImage();
+            CSUI::DrawableDefCSPtr drawableDef(new CSUI::StandardDrawableDef(texture, atlas, "Lose", CSRendering::UVs(), CSCore::Colour::k_white));
+            widget->GetComponent<CSUI::DrawableComponent>()->ApplyDrawableDef(drawableDef);
+            widget->ScaleTo(CSCore::Vector2(0.0f, 0.0f));
+            widget->SetRelativeSize(CSCore::Vector2(0.5f, 0.0f));
+            widget->SetSizePolicy(CSUI::SizePolicy::k_useWidthMaintainingAspect);
+            
+            return widget;
         }
     }
     //---------------------------------------------------
@@ -149,14 +161,14 @@ namespace CSPong
     //------------------------------------------------------------
     void GoalCeremonySystem::Play(const EndDelegate& in_endDelegate)
     {
-        GetState()->GetScene()->GetWindow()->AddSubview(m_currentView);
+        GetState()->GetUICanvas()->AddWidget(m_currentView);
         
         m_rotationTween = CSCore::MakeEaseOutBackTween(0.0f, CSCore::MathUtils::k_pi * 2.0f, k_ceremonyDuration, k_ceremonyStartDelay, k_ceremonyEndDelay);
         m_scaleTween = CSCore::MakeEaseOutBackTween(CSCore::Vector2::k_zero, CSCore::Vector2::k_one, k_ceremonyDuration, k_ceremonyStartDelay, k_ceremonyEndDelay);
         m_scaleTween.SetOnEndDelegate([this, in_endDelegate](CSCore::EaseOutBackTween<CSCore::Vector2>*)
         {
-            m_currentView->RemoveFromParentView();
-            m_currentView->ScaleTo(0.0f);
+            m_currentView->RemoveFromParent();
+            m_currentView->ScaleTo(CSCore::Vector2(0.0f, 0.0f));
             m_currentView.reset();
             in_endDelegate();
         });

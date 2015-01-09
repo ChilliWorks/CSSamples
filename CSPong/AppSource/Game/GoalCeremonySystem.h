@@ -134,10 +134,10 @@ namespace CSPong
         
         CSCore::EaseOutBackTween<CSCore::Vector2> m_scaleTween;
         CSCore::EaseOutBackTween<f32> m_rotationTween;
-        CSGUI::GUIViewSPtr m_goalView;
-        CSGUI::GUIViewSPtr m_winView;
-        CSGUI::GUIViewSPtr m_loseView;
-        CSGUI::GUIViewSPtr m_currentView;
+        CSUI::WidgetSPtr m_goalView;
+        CSUI::WidgetSPtr m_winView;
+        CSUI::WidgetSPtr m_loseView;
+        CSUI::WidgetSPtr m_currentView;
     };
 }
 

@@ -32,9 +32,10 @@
 #include <Game/GameState.h>
 
 #include <ChilliSource/Core/Base.h>
+#include <ChilliSource/Core/Resource.h>
 #include <ChilliSource/Core/State.h>
-#include <ChilliSource/GUI/Base.h>
-#include <ChilliSource/GUI/Button.h>
+#include <ChilliSource/UI/Base.h>
+#include <ChilliSource/UI/Button.h>
 
 namespace CSPong
 {
@@ -50,26 +51,24 @@ namespace CSPong
     {
         /*
          ==============================
-         Chilli Source Tour: GUI
+         Chilli Source Tour: UI
          ==============================
          
-         GUI in Chilli Source can be created in code or from .csgui files. We are currently working on a new UI system which is simpler, more extensible and has
-         a dedicated WYSIWYG editor, however the underlying principles remain the same.
+         UI in Chilli Source can be created in code or from .csui files.
          
-         GUI is described hierarchically with the window at the root. Changing properties on the parent will usually effect the children i.e. disabling user interaction on the root
+         UI is described hierarchically with the canvas at the root. Changing properties on the parent will usually effect the children i.e. disabling user interaction on the root
          will make all children non-interactable. This is a good way of creating encapsulated widgets i.e. dialogue boxes, etc.
          
-         GUI uses a mixture of absolute and relative co-ordinates which is why UnifiedPosition and UnifiedSize in MainMenu.csgui take 4 floats (Rx, Ry, Ax, Ay).
-         Absolute co-ords are always in screen-space (i.e. pixels) with (0, 0) at the bottom left. Setting UnifiedSize = 0 0 100 200 will always give an view at
+         UI uses a mixture of absolute and relative co-ordinates.
+         Absolute co-ords are always in screen-space (i.e. pixels) with (0, 0) at the bottom left. Setting Absolute Size to 100x200 will always give an view at
          100x200 regardless of screen resolution or orientation. This is useful for views such as virtual thumbsticks which will have been tailored to the avergae size of a human thumb.
-         Relative co-ords are specified as a percentage relative to the parent view size (again from the bottom left). Setting UnifiedPosition = 0.5 0.5 0 0 will place the view at
-         the centre of its parent. Setting the UnifiedSize = 1 1 0 0 will make the view the same size as its parent. Relative co-ords are useful for UI that needs to adapt based on 
+         Relative co-ords are specified as a percentage relative to the parent view size (again from the bottom left). Setting Relative Position to 0.5x0.5 will place the view at
+         the centre of its parent. Setting the Relative Size = 1.0x1.0 will make the view the same size as its parent. Relative co-ords are useful for UI that needs to adapt based on
          the screen resolution.
          
-         Relative size and positioning on its own is not enough to build scaleable UI you need to use anchors and consider the aspect ratio of any images. CS GUI has 2 anchor properties
+         Relative size and positioning on its own is not enough to build scaleable UI you need to use anchors and consider the aspect ratio of any images. CS UI has 2 anchor properties
          
-         The local anchor "LocalAlignment" which controls where the origin of the view is i.e. where it is rendered from and the "ParentalAlignment" which controls how it anchors to its parent (in the current UI system
-         parental anchoring must be enabled and this overrides the position. "UnifiedParentalOffset" can be used to offset the view from the anchor).
+         The local anchor "OriginAnchor" which controls where the origin of the view is i.e. where it is rendered from and the "ParentalAnchor" which controls how it anchors to its parent.
          
          LocalAlignment = MiddleCentre
          ParentalAlignment = MiddleCentre
@@ -86,7 +85,9 @@ namespace CSPong
          |           |
          
          
-         Most of the views that are backed by images have the ability to maintain the aspect ratio of the underlying image using various policies (see ImageView constructor for more info).
+         Widgets can also have a size policy. This governs how the widget will respond when the aspect ratio of its prefered size (in most cases the size of its image) is different to its
+         actual size. The most common of these are "UseWidthMaintainingAspect", which will alter the widgets height to maintain aspect ratio with the given width, or "UseHeightMaintainingAspect"
+         which will alter the widgets width to maintain aspect ratio with the given height.
          
          ------------------------------
          
@@ -94,14 +95,16 @@ namespace CSPong
          */
         
         //Load the GUI and add it to the window
-        CSGUI::GUIViewSPtr mainMenuView = CSGUI::GUIViewFactory::CreateGUIViewFromScript(CSCore::StorageLocation::k_package, "GUI/MainMenu.csgui");
-        GetScene()->GetWindow()->AddSubview(mainMenuView);
+        auto mainMenuViewDef = CSCore::Application::Get()->GetResourcePool()->LoadResource<CSUI::WidgetTemplate>(CSCore::StorageLocation::k_package, "GUI/MainMenu.csui");
+        CSUI::WidgetSPtr mainMenuView = CSCore::Application::Get()->GetWidgetFactory()->Create(mainMenuViewDef);
+        GetUICanvas()->AddWidget(mainMenuView);
         
 
         //Grab the button children by name and add this class as a listener for button events
-        m_playButton = std::static_pointer_cast<CSGUI::HighlightButton>(mainMenuView->GetSubviewWithName("PlayButton"));
+        m_playButton = mainMenuView->GetWidget("PlayButton");
+        
         //Disable user interaction until the animation is complete.
-        m_playButton->EnableUserInteraction(false);
+        m_playButton->SetInputEnabled(false);
         
         //Create a tween that will slide the UI onto the screen. This will be used to offset the button from its stated position.
         m_playButtonTween = CSCore::MakeEaseInOutBackTween(-1.0f, 0.0f, 1.0f);
@@ -121,9 +124,9 @@ namespace CSPong
          
          Next: 'Entities' in GameState::OnInit
          */
-        m_playButtonConnection = m_playButton->GetActivatedEvent().OpenConnection([this](CSGUI::Button*)
+        m_playButtonConnection = m_playButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
         {
-            m_playButton->EnableUserInteraction(false);
+            m_playButton->SetInputEnabled(false);
             m_playButtonTween.Play(CSCore::TweenPlayMode::k_onceReverse);
             m_playButtonTween.SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
             {
@@ -138,7 +141,7 @@ namespace CSPong
             //Once the animation is finished allow the user to press the button
             m_playButtonTween.SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
             {
-                m_playButton->EnableUserInteraction(true);
+                m_playButton->SetInputEnabled(true);
             });
         });
     }
@@ -147,7 +150,7 @@ namespace CSPong
     void MainMenuState::OnUpdate(f32 dt)
     {
         m_playButtonTween.Update(dt);
-        m_playButton->SetOffsetFromPosition(m_playButtonTween.GetValue(), 0.0f, 0.0f, 0.0f);
+        m_playButton->SetRelativePosition(CSCore::Vector2(m_playButtonTween.GetValue(), m_playButton->GetLocalRelativePosition().y));
     }
 }
 

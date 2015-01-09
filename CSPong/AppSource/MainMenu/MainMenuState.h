@@ -78,7 +78,7 @@ namespace CSPong
         CSCore::EventConnectionUPtr m_transitionInConnection;
         CSCore::EventConnectionUPtr m_playButtonConnection;
         CSCore::EaseInOutBackTween<f32> m_playButtonTween;
-        CSGUI::HighlightButtonSPtr m_playButton;
+        CSUI::WidgetSPtr m_playButton;
     };
 }
 

@@ -20,6 +20,8 @@
 		811289D81636EC0B008D781D /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 811289D71636EC0B008D781D /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		811289DA1636F1DC008D781D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 811289D91636F1DB008D781D /* libz.dylib */; };
 		812570EC14D8088E009FA9F3 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 812570EB14D8088D009FA9F3 /* CoreTelephony.framework */; };
+		8160C4111A60875D00C1C1FC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8160C4101A60875D00C1C1FC /* AVFoundation.framework */; };
+		8160C4131A60876900C1C1FC /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8160C4121A60876900C1C1FC /* CoreMedia.framework */; };
 		818387131301466F004B7099 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 818387121301466F004B7099 /* CoreGraphics.framework */; };
 		818387381301467E004B7099 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 818387371301467E004B7099 /* AudioToolbox.framework */; };
 		81852A601964003700EC15DE /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81852A5F1964003700EC15DE /* FacebookSDK.framework */; };
@@ -70,6 +72,8 @@
 		811289D71636EC0B008D781D /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		811289D91636F1DB008D781D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		812570EB14D8088D009FA9F3 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		8160C4101A60875D00C1C1FC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		8160C4121A60876900C1C1FC /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		818387121301466F004B7099 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		818387371301467E004B7099 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		81852A5F1964003700EC15DE /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../ChilliSource/Libraries/Core/iOS/Libs/FacebookSDK.framework; sourceTree = "<group>"; };
@@ -102,6 +106,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8160C4131A60876900C1C1FC /* CoreMedia.framework in Frameworks */,
+				8160C4111A60875D00C1C1FC /* AVFoundation.framework in Frameworks */,
 				81D8B6ED1962E3420010DA84 /* libChilliSource.a in Frameworks */,
 				819A8A3E191CFCB6003E9E9F /* GLKit.framework in Frameworks */,
 				81B9C0D918B27D490029BC9E /* CoreMotion.framework in Frameworks */,
@@ -160,23 +166,25 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				81852A5F1964003700EC15DE /* FacebookSDK.framework */,
-				81A83F9E1340B88E00FBCC29 /* libsqlite3.0.dylib */,
-				1CBC995A14594FCB006CA964 /* libz.1.2.5.dylib */,
-				811289D91636F1DB008D781D /* libz.dylib */,
 				811289D51636EACD008D781D /* Accounts.framework */,
 				81A83F991340B86400FBCC29 /* AddressBook.framework */,
 				81A83F9A1340B86600FBCC29 /* AddressBookUI.framework */,
 				819495D516CE45C50063276A /* AdSupport.framework */,
 				818387371301467E004B7099 /* AudioToolbox.framework */,
+				8160C4101A60875D00C1C1FC /* AVFoundation.framework */,
 				81A83F9B1340B86D00FBCC29 /* CFNetwork.framework */,
 				81A83F9C1340B87400FBCC29 /* CoreAudio.framework */,
 				818387121301466F004B7099 /* CoreGraphics.framework */,
 				81A83F9D1340B87F00FBCC29 /* CoreLocation.framework */,
+				8160C4121A60876900C1C1FC /* CoreMedia.framework */,
 				81B9C0D818B27D490029BC9E /* CoreMotion.framework */,
 				812570EB14D8088D009FA9F3 /* CoreTelephony.framework */,
+				81852A5F1964003700EC15DE /* FacebookSDK.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				819A8A3D191CFCB6003E9E9F /* GLKit.framework */,
+				81A83F9E1340B88E00FBCC29 /* libsqlite3.0.dylib */,
+				1CBC995A14594FCB006CA964 /* libz.1.2.5.dylib */,
+				811289D91636F1DB008D781D /* libz.dylib */,
 				81A83FA01340B8B000FBCC29 /* MapKit.framework */,
 				1C9C317C13FBB6D000DCE0E9 /* MediaPlayer.framework */,
 				1C9C31CC13FBB77A00DCE0E9 /* MessageUI.framework */,
@@ -369,10 +377,14 @@
 					"$(SRCROOT)/../../AppSource",
 					"$(SRCROOT)/../../ChilliSource/Source",
 					"$(SRCROOT)/../../ChilliSource/Libraries/Core/iOS/Headers",
+					"$(SRCROOT)/../../ChilliSource/Libraries/CricketAudio/iOS/Headers",
 				);
 				INFOPLIST_FILE = "ProjectResources/CSEmptyTemplate-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../../ChilliSource/Libraries/Core/iOS/Libs";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/../../ChilliSource/Libraries/Core/iOS/Libs",
+					"$(PROJECT_DIR)/../../ChilliSource/Libraries/CricketAudio/iOS/Libs",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = CSEmptyTemplate;
 				PROVISIONING_PROFILE = "";
@@ -408,10 +420,14 @@
 					"$(SRCROOT)/../../AppSource",
 					"$(SRCROOT)/../../ChilliSource/Source",
 					"$(SRCROOT)/../../ChilliSource/Libraries/Core/iOS/Headers",
+					"$(SRCROOT)/../../ChilliSource/Libraries/CricketAudio/iOS/Headers",
 				);
 				INFOPLIST_FILE = "ProjectResources/CSEmptyTemplate-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../../ChilliSource/Libraries/Core/iOS/Libs";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/../../ChilliSource/Libraries/Core/iOS/Libs",
+					"$(PROJECT_DIR)/../../ChilliSource/Libraries/CricketAudio/iOS/Libs",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = CSEmptyTemplate;
 				PROVISIONING_PROFILE = "";
@@ -475,10 +491,14 @@
 					"$(SRCROOT)/../../AppSource",
 					"$(SRCROOT)/../../ChilliSource/Source",
 					"$(SRCROOT)/../../ChilliSource/Libraries/Core/iOS/Headers",
+					"$(SRCROOT)/../../ChilliSource/Libraries/CricketAudio/iOS/Headers",
 				);
 				INFOPLIST_FILE = "ProjectResources/CSEmptyTemplate-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../../ChilliSource/Libraries/Core/iOS/Libs";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/../../ChilliSource/Libraries/Core/iOS/Libs",
+					"$(PROJECT_DIR)/../../ChilliSource/Libraries/CricketAudio/iOS/Libs",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = CSEmptyTemplate;
 				PROVISIONING_PROFILE = "";
