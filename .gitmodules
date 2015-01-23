@@ -1,6 +1,3 @@
 [submodule "CSPong/ChilliSource"]
 	path = CSPong/ChilliSource
 	url = https://github.com/ChilliWorks/ChilliSource.git
-[submodule "CSEmptyTemplate/ChilliSource"]
-	path = CSEmptyTemplate/ChilliSource
-	url = https://Chilli-Ian@github.com/ChilliWorks/ChilliSource.git
