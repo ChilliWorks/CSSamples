@@ -274,7 +274,7 @@ namespace CSPong
          */
         
         auto resourcePool = CSCore::Application::Get()->GetResourcePool();
-        CSRendering::MeshCSPtr mesh = resourcePool->LoadResource<CSRendering::Mesh>(CSCore::StorageLocation::k_package, "Models/Ball/Ball.csmodel");
+        CSRendering::MeshCSPtr mesh = resourcePool->LoadResource<CSRendering::Mesh>(CSCore::StorageLocation::k_package, "Models/Ball.csmodel");
         
         /*
          =============================
@@ -345,7 +345,7 @@ namespace CSPong
         TouchControllerComponentSPtr touchComponent(new TouchControllerComponent(dynamicBody, in_camera->GetComponent<CSRendering::CameraComponent>()));
         paddle->AddComponent(touchComponent);
         
-        CSRendering::MeshCSPtr arenaMesh = resourcePool->LoadResource<CSRendering::Mesh>(CSCore::StorageLocation::k_package, "Models/Arena/Arena.csmodel");
+        CSRendering::MeshCSPtr arenaMesh = resourcePool->LoadResource<CSRendering::Mesh>(CSCore::StorageLocation::k_package, "Models/Arena.csmodel");
         f32 offsetX = arenaMesh->GetAABB().GetSize().x * -k_paddlePercentageOffsetFromCentre;
         paddle->GetTransform().SetPosition(offsetX, 0.0f, 0.0f);
         
@@ -373,7 +373,7 @@ namespace CSPong
         AIControllerComponentSPtr aiComponent(new AIControllerComponent(dynamicBody, in_ball));
         paddle->AddComponent(aiComponent);
         
-        CSRendering::MeshCSPtr arenaMesh = resourcePool->LoadResource<CSRendering::Mesh>(CSCore::StorageLocation::k_package, "Models/Arena/Arena.csmodel");
+        CSRendering::MeshCSPtr arenaMesh = resourcePool->LoadResource<CSRendering::Mesh>(CSCore::StorageLocation::k_package, "Models/Arena.csmodel");
         f32 offsetX = arenaMesh->GetAABB().GetSize().x * k_paddlePercentageOffsetFromCentre;
         paddle->GetTransform().SetPosition(offsetX, 0.0f, 0.0f);
         
@@ -388,7 +388,7 @@ namespace CSPong
         auto renderFactory = CSCore::Application::Get()->GetSystem<CSRendering::RenderComponentFactory>();
         auto resourcePool = CSCore::Application::Get()->GetResourcePool();
         
-        CSRendering::MeshCSPtr mesh = resourcePool->LoadResource<CSRendering::Mesh>(CSCore::StorageLocation::k_package, "Models/Arena/Arena.csmodel");
+        CSRendering::MeshCSPtr mesh = resourcePool->LoadResource<CSRendering::Mesh>(CSCore::StorageLocation::k_package, "Models/Arena.csmodel");
         CSRendering::MaterialCSPtr material = resourcePool->LoadResource<CSRendering::Material>(CSCore::StorageLocation::k_package, "Materials/Models/Models.csmaterial");
         
         const f32 k_border = 1.0f;

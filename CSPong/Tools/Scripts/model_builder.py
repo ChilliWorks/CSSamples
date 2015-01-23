@@ -31,32 +31,22 @@ import sys
 import os
 import subprocess
 import shutil
+import file_system_utils
 
-#----------------------------------------
-# @param the file path.
-# @param the extension.
-#
-# @author Ian Copland
-#
-# @return whether or not the path has
-# the extension.
-#----------------------------------------
-def HasExtension(filepath, extension):
-    lower_filepath = filepath.lower()
-    lower_extension = extension.lower()
-    return lower_filepath.endswith(lower_extension)
-
-#----------------------------------------
-# Walks the input directory and converts
-# all DAEs into csmodels
+relative_tool_path = "../../ChilliSource/Tools/ColladaToCSModel.jar"
+#------------------------------------------------------------------------------
+# Walks the input directory and converts all DAEs into csmodels.
 #
 # @author S Downie
 #
 # @param Input path
 # @param Output path
-#----------------------------------------
-def BuildModels(input_path, output_path):
-	print("Building models...")
+#------------------------------------------------------------------------------
+def build(input_path, output_path):
+	
+	print("-----------------------------------------")
+	print("           Building Models")
+	print("-----------------------------------------")
 
 	if(input_path.endswith("/") == False):
 		input_path = input_path + "/"
@@ -64,57 +54,51 @@ def BuildModels(input_path, output_path):
 	if(output_path.endswith("/") == False):
 		output_path = output_path + "/"
 
+	file_system_utils.delete_directory(output_path)
+
 	for directory, sub_dirs, filenames in os.walk(input_path):
 		input_dir = directory
 		output_dir = os.path.join(output_path, input_dir[len(input_path):len(input_dir)]);
 
-		if len(sub_dirs) == 0:
-			for filename in filenames:
-				if HasExtension(filename, ".dae") == True:
-					if os.path.exists(output_dir) == False:
-						os.makedirs(output_dir);
+		for filename in filenames:
+			if file_system_utils.has_extension(filename, ".dae") == True:
+				if os.path.exists(output_dir) == False:
+					os.makedirs(output_dir);
 
-					BuildModel(os.path.join(directory, filename), os.path.join(output_dir, filename))
+				output_file_path = os.path.splitext(os.path.join(output_dir, filename))[0] + ".csmodel"
+				build_model(os.path.join(directory, filename), output_file_path)
 
-	print ("Model building finished")
-	print("-----------------------------------------")
-	print("-----------------------------------------")
+	print (" ")
 
-#----------------------------------------
+#------------------------------------------------------------------------------
 # Converts a single DAE to a csmodel
 #
 # @author S Downie
 #
 # @param Input path
 # @param Output path
-#----------------------------------------
-def BuildModel(input_filepath, output_filepath):
-	output_filename = os.path.splitext(output_filepath)[0]+".csmodel"
-	print("Building model: " + output_filename)
+#------------------------------------------------------------------------------
+def build_model(input_filepath, output_filepath):
+	print(output_filepath)
 
-	tool_path = os.path.join("..", "..", "ChilliSource", "Tools", "ColladaToCSModel.jar")
+	tool_path = file_system_utils.get_path_from_here(relative_tool_path)
+	subprocess.call(["java", "-Djava.awt.headless=true", "-Xmx512m", "-jar", tool_path, "--input", input_filepath, "--output", output_filepath, "--swapyandz"]);
 
-	subprocess.call(["java", "-Djava.awt.headless=true", "-Xmx512m", "-jar", tool_path, "--input", input_filepath, "--output", output_filename, "--swapyandz"]);
-
-#----------------------------------------------------------------------
+#------------------------------------------------------------------------------
 # The entry point into the script.
 #
 # @author S Downie
 #
 # @param The list of arguments.
-#----------------------------------------------------------------------
+#------------------------------------------------------------------------------
 def main(args):
 	if not len(args) is 3:
-		print("ERROR: Missing input and output paths")
+		print("ERROR: Incorrect parameters supplied.")
 		return
 
 	input_path = args[1]
 	output_path = args[2]
-
-	if os.path.exists(output_path) == True:
-		shutil.rmtree(output_path)
-
-	BuildModels(input_path, output_path)
+	build_models(input_path, output_path)
 
 if __name__ == "__main__":
 	main(sys.argv)

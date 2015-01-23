@@ -1,12 +1,12 @@
 #!/bin/bash
 #
-#  BuildAll.command
+#  BuildAll.sh
 #  CSPong
-#  Created by Scott Downie on 30/06/2014
+#  Created by Ian Copland on 22/01/2015
 #
 #  The MIT License (MIT)
 #
-#  Copyright (c) 2014 Tag Games Limited
+#  Copyright (c) 2015 Tag Games Limited
 #
 #  Permission is hereby granted, free of charge, to any person obtaining a copy
 #  of this software and associated documentation files (the "Software"), to deal
@@ -27,10 +27,4 @@
 #  THE SOFTWARE.
 #
 
-CURRENT_DIR=${0%/*} 
-cd $CURRENT_DIR
-
-python Scripts/texture_atlas_builder.py $CURRENT_DIR/TextureAtlases $CURRENT_DIR/../AppResources/TextureAtlases
-python Scripts/texture_builder.py $CURRENT_DIR/Textures $CURRENT_DIR/../AppResources/Textures
-python Scripts/model_builder.py $CURRENT_DIR/Models $CURRENT_DIR/../AppResources/Models
-python Scripts/text_builder.py $CURRENT_DIR/Text $CURRENT_DIR/../AppResources/Text
+python ../Tools/Scripts/content_builder.py PrebuiltResources/ AppResources/

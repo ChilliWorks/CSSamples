@@ -27,3 +27,4 @@ CSPong/Projects/Windows/csbin
 CSPong/Projects/Windows/csobj
 CSPong/Projects/Windows/obj
 Thumbs.db
+*.pyc
