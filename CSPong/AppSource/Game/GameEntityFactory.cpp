@@ -83,12 +83,12 @@ namespace CSPong
          Chilli Source Tour: Components
          ==============================
          
-         As mentioned adding functionality to an entity in Chilli Source is acheived by attaching components. A component
-         is a module  that can provide any functionality that applies to a single game object, i.e rendering 
+         As mentioned, adding functionality to an entity in Chilli Source is achieved by attaching components. A component
+         is a module that can provide any functionality that applies to a single game object, i.e rendering 
          a model or representing a collision body.
          
          Components are often created through factories like the Render Component Factory. This provides
-         convienence methods for creating all rendering related components such as SpriteComponent
+         convenience methods for creating all rendering related components such as SpriteComponent
          ParticleComponent or AnimatedMeshComponent. The Entity class exposes methods for adding, removing
          and querying for components.
          
@@ -97,7 +97,7 @@ namespace CSPong
             staticMeshComponent = entity->GetComponent<StaticMeshComponent>();
             staticMeshComponent->RemoveFromEntity();
          
-         Much like systems Components receive lifecycle events such as OnUpdate(), OnSuspend() and
+         Much like systems, Components receive lifecycle events such as OnUpdate(), OnSuspend() and
          OnResume(). These are only received while the component is attached to an entity and that
          entity has been added to the scene. In addition to the standard lifecycle events there are
          also Component specific events: OnAddedToEntity(), OnAddedToScene(), OnRemovedFromScene() and
@@ -118,7 +118,7 @@ namespace CSPong
          Chilli Source Tour: Camera
          ==========================
          
-         In Chilli Source a camera is simply any entity with a Camera Component attached to it. There
+         In Chilli Source a camera is simply an entity with a Camera Component attached to it. There
          are two types of Camera Component each providing a different type of projection: Perspective
          or Orthographic. Both of them are created through the Render Component Factory.
          
@@ -171,19 +171,19 @@ namespace CSPong
          
          Ambient lights apply light evenly to all objects in the scene emulating light
          that has reflected multiple times and has no apparent source. Directional lights apply 
-         light in a given direction to the entire scene, represening a far away light source such 
-         as the sun.  Point lights are omni-directional light objects from a point source with attenuation as objects
+         light in a given direction to the entire scene, representing a far away light source such 
+         as the sun. Point lights are omni-directional light objects from a point source with attenuation as objects
          get further away, emulating light from a closer source such as a lamp.
 
          Chilli Source supports many lights in a scene as it uses a multi-pass renderer. It
          is still a forward renderer however and therefore each additional light will
          negatively affect performance.
          
-         Again similar to a Camera Component, the position and (where revelant) the direction
-         of a light come from the light Entities transform. The SetLookAt() method
+         Again similar to a Camera Component, the position and (where relevant) the direction
+         of a light comes from the light Entities transform. The SetLookAt() method
          is also useful for setting the direction of a light.
          
-         Directional lights can cast shadows. To enable shadows on a directional light simply
+         Directional lights can cast shadows. To enable shadows on a directional light, simply
          pass a non-zero shadow map resolution when creating the component. Shadows require a
          small amount of configuration before use. First of all the shadow volume needs to be
          set. This is the area in which objects can cast shadows in front of the light. Secondly
@@ -258,7 +258,7 @@ namespace CSPong
          
          Resources can also be created manually using the CreateResource() method. In this case
          the resource is still pooled but it must be given a unique identifier and a mutable 
-         instances is returned. This can be queried from the pool using GetResource().
+         instance is returned. This can be queried from the pool using GetResource().
          
              CSRendering::TextureSPtr mutableTexture = resourcePool->CreateResource("MyTexture");
              CSRendering::TextureCSPtr texture = resourcePool->GetResource("MyTexture");
@@ -294,7 +294,7 @@ namespace CSPong
          from disk. To help with this a material factory has been provided with convienence
          methods for creating mutable instances of each of the material types.
          
-            CSRendering::MaterialFactory materialFactory = CSCore::Application::Get()->GetSystem<MaterialFactory>();
+            CSRendering::MaterialFactory* materialFactory = CSCore::Application::Get()->GetSystem<MaterialFactory>();
             CSRendering::MaterialSPtr spriteMaterial = materialFactory->CreateSprite("UniqueId", texture);
          
          Objects with the same material can be rendered in the same batch and therefore it is important to reduce the number of materials by batching textures.
@@ -439,13 +439,13 @@ namespace CSPong
          Texture Atlases (also called Spritesheets) provide a 'virtual' texture lookup within an actual texture. This
          allows multiple objects to share the same physical texture but render with different UVs and sizes, ultimately allowing them to share a material.
          
-         Just like other resources a texture altas is loaded from the resource manager. Once loaded the 'virtual' texture (or sprite frame)
+         Just like other resources, a texture altas is loaded from the resource manager. Once loaded the 'virtual' texture (or sprite frame)
          can be accessed by querying the atlas using a 'Texture Id'. For example:
          
             CSRendering::TextureAltasCSPtr atlas = resourcePool->LoadResource<CSRendering::TextureAtlas>(CSCore::StorageLocation::k_package, "Atlas.csatlas");
             CSRendering::UVs virtualTextureUVs = atlas->GetFrameUVs("Frame1");
          
-         Typically when working with an atlas the component using it would deal with the virtual texture. For example
+         Typically when working with an atlas the component using it would deal with the virtual texture.
          When creating a SpriteComponent through the Render Component Factory the atlas and the virtual texture id are
          passed in.
          
