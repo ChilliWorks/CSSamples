@@ -61,7 +61,7 @@ namespace CSPong
             auto atlas = resPool->LoadResource<CSRendering::TextureAtlas>(CSCore::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csatlas");
             
             CSUI::WidgetSPtr widget = CSCore::Application::Get()->GetWidgetFactory()->CreateImage();
-            CSUI::DrawableDefCSPtr drawableDef(new CSUI::StandardDrawableDef(texture, atlas, "Goal", CSRendering::UVs(), CSCore::Colour::k_white));
+            CSUI::DrawableDefCSPtr drawableDef(new CSUI::StandardDrawableDef(texture, atlas, "Goal"));
             widget->GetComponent<CSUI::DrawableComponent>()->ApplyDrawableDef(drawableDef);
             widget->ScaleTo(CSCore::Vector2(0.0f, 0.0f));
             widget->SetRelativeSize(CSCore::Vector2(0.5f, 0.0f));
@@ -84,7 +84,7 @@ namespace CSPong
             auto atlas = resPool->LoadResource<CSRendering::TextureAtlas>(CSCore::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csatlas");
             
             CSUI::WidgetSPtr widget = CSCore::Application::Get()->GetWidgetFactory()->CreateImage();
-            CSUI::DrawableDefCSPtr drawableDef(new CSUI::StandardDrawableDef(texture, atlas, "Win", CSRendering::UVs(), CSCore::Colour::k_white));
+            CSUI::DrawableDefCSPtr drawableDef(new CSUI::StandardDrawableDef(texture, atlas, "Win"));
             widget->GetComponent<CSUI::DrawableComponent>()->ApplyDrawableDef(drawableDef);
             widget->ScaleTo(CSCore::Vector2(0.0f, 0.0f));
             widget->SetRelativeSize(CSCore::Vector2(0.5f, 0.0f));
@@ -107,7 +107,7 @@ namespace CSPong
             auto atlas = resPool->LoadResource<CSRendering::TextureAtlas>(CSCore::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csatlas");
             
             CSUI::WidgetSPtr widget = CSCore::Application::Get()->GetWidgetFactory()->CreateImage();
-            CSUI::DrawableDefCSPtr drawableDef(new CSUI::StandardDrawableDef(texture, atlas, "Lose", CSRendering::UVs(), CSCore::Colour::k_white));
+            CSUI::DrawableDefCSPtr drawableDef(new CSUI::StandardDrawableDef(texture, atlas, "Lose"));
             widget->GetComponent<CSUI::DrawableComponent>()->ApplyDrawableDef(drawableDef);
             widget->ScaleTo(CSCore::Vector2(0.0f, 0.0f));
             widget->SetRelativeSize(CSCore::Vector2(0.5f, 0.0f));

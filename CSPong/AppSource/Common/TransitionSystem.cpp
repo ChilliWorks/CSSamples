@@ -105,7 +105,7 @@ namespace CSPong
         auto texture = resPool->LoadResource<CSRendering::Texture>(CSCore::StorageLocation::k_chilliSource, "Textures/Blank.csimage");
         
         m_fadeImageView = CSCore::Application::Get()->GetWidgetFactory()->CreateImage();
-        CSUI::DrawableDefCSPtr drawableDef(new CSUI::StandardDrawableDef(texture, CSRendering::UVs(), CSCore::Colour::k_white));
+        CSUI::DrawableDefCSPtr drawableDef(new CSUI::StandardDrawableDef(texture));
         m_fadeImageView->GetComponent<CSUI::DrawableComponent>()->ApplyDrawableDef(drawableDef);
         
         GetState()->GetUICanvas()->AddWidget(m_fadeImageView);

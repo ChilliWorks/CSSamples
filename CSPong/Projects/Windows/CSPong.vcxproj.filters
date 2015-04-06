@@ -2,31 +2,31 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="AppSource">
-      <UniqueIdentifier>{d220e206-8840-4948-8a1c-066d200f3db3}</UniqueIdentifier>
+      <UniqueIdentifier>{07a19b34-87f4-4435-a659-b91ea1653e54}</UniqueIdentifier>
     </Filter>
     <Filter Include="AppSource\Common">
-      <UniqueIdentifier>{9791179c-0ee8-4245-8624-c26c581462c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AppSource\MainMenu">
-      <UniqueIdentifier>{b7374537-2251-4eee-bb53-03cf95241e64}</UniqueIdentifier>
+      <UniqueIdentifier>{e0d1cbb3-b8c0-48e1-b035-d184c394862c}</UniqueIdentifier>
     </Filter>
     <Filter Include="AppSource\Game">
-      <UniqueIdentifier>{631db3c1-91ef-481f-8f31-ba4f60524f62}</UniqueIdentifier>
+      <UniqueIdentifier>{35d8db76-47ab-477c-96ec-08ff276b6bf0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AppSource\Game\Ball">
-      <UniqueIdentifier>{914efb8f-b1fe-4cef-bde2-26401ba6ca4f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AppSource\Game\Camera">
-      <UniqueIdentifier>{3fe55b74-e9cb-4e85-b766-b29c5c4d9ce4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AppSource\Game\Paddle">
-      <UniqueIdentifier>{71f4a771-7f9a-45c4-b517-6509081d6ce6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AppSource\Game\Physics">
-      <UniqueIdentifier>{62840892-b3c1-49cd-b646-57f013182976}</UniqueIdentifier>
+    <Filter Include="AppSource\MainMenu">
+      <UniqueIdentifier>{7fc71957-5890-43fe-b8a0-2da0429af10f}</UniqueIdentifier>
     </Filter>
     <Filter Include="AppSource\Splash">
-      <UniqueIdentifier>{995c1c9b-1309-4843-8b72-a2018cb742d6}</UniqueIdentifier>
+      <UniqueIdentifier>{51742fdf-cfca-4a68-80d0-5f9b33c708e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppSource\Game\Ball">
+      <UniqueIdentifier>{a7139dfb-0625-4823-ad2c-584e5f8a7c6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppSource\Game\Camera">
+      <UniqueIdentifier>{e8fce4c8-26d3-40bb-bb12-1259fdaebb6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppSource\Game\Physics">
+      <UniqueIdentifier>{89976d04-ef1b-49f7-b533-e24c023c3b06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppSource\Game\Paddle">
+      <UniqueIdentifier>{c446f2b6-9f94-4f6e-8414-4982a72859e4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +51,12 @@
     <ClCompile Include="..\..\AppSource\Game\Camera\CameraTiltComponent.cpp">
       <Filter>AppSource\Game\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\Paddle\AIControllerComponent.cpp">
+      <Filter>AppSource\Game\Paddle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Game\Paddle\TouchControllerComponent.cpp">
+      <Filter>AppSource\Game\Paddle</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\AppSource\Game\Physics\DynamicBodyComponent.cpp">
       <Filter>AppSource\Game\Physics</Filter>
     </ClCompile>
@@ -62,12 +68,6 @@
     </ClCompile>
     <ClCompile Include="..\..\AppSource\Game\Physics\TriggerComponent.cpp">
       <Filter>AppSource\Game\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\AppSource\Game\Paddle\AIControllerComponent.cpp">
-      <Filter>AppSource\Game\Paddle</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\AppSource\Game\Paddle\TouchControllerComponent.cpp">
-      <Filter>AppSource\Game\Paddle</Filter>
     </ClCompile>
     <ClCompile Include="..\..\AppSource\MainMenu\MainMenuState.cpp">
       <Filter>AppSource\MainMenu</Filter>
@@ -101,6 +101,12 @@
     <ClInclude Include="..\..\AppSource\Game\Camera\CameraTiltComponent.h">
       <Filter>AppSource\Game\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\Paddle\AIControllerComponent.h">
+      <Filter>AppSource\Game\Paddle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Game\Paddle\TouchControllerComponent.h">
+      <Filter>AppSource\Game\Paddle</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\AppSource\Game\Physics\DynamicBodyComponent.h">
       <Filter>AppSource\Game\Physics</Filter>
     </ClInclude>
@@ -112,12 +118,6 @@
     </ClInclude>
     <ClInclude Include="..\..\AppSource\Game\Physics\TriggerComponent.h">
       <Filter>AppSource\Game\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\AppSource\Game\Paddle\AIControllerComponent.h">
-      <Filter>AppSource\Game\Paddle</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\AppSource\Game\Paddle\TouchControllerComponent.h">
-      <Filter>AppSource\Game\Paddle</Filter>
     </ClInclude>
     <ClInclude Include="..\..\AppSource\MainMenu\MainMenuState.h">
       <Filter>AppSource\MainMenu</Filter>
