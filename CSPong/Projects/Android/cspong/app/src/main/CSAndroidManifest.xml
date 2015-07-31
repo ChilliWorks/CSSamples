@@ -28,7 +28,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -->
 
-<cs-manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.chilliworks.cspong" versionCode="1" versionName="1.0" minSdkVersion="9" targetSdkVersion="21" screenOrientation="sensorLandscape">
+<cs-manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.chilliworks.cspong" screenOrientation="sensorLandscape" facebookAppId="" apkExpansionDownloadView="">
 
 	<manifest-extra/>
 	<application-extra/>

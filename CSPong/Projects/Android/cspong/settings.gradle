@@ -27,6 +27,6 @@
 //
 
 include ':app'
+apply from: '../../../ChilliSource/Tools/Scripts/android-settings.gradle'
 
-include ':chillisource'
-project(':chillisource').projectDir = new File(settingsDir, '../../../ChilliSource/Projects/Android/chillisource')
+csApplyDefaultSettings()

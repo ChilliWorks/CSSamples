@@ -27,16 +27,15 @@
 //
 
 apply plugin: 'com.android.application'
-apply from: '../../../../ChilliSource/Tools/Scripts/androidbuild.gradle'
+apply from: '../../../../ChilliSource/Tools/Scripts/android-build.gradle'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.chilliworks.cspong"
         minSdkVersion 9
-        targetSdkVersion 21
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
@@ -68,6 +67,7 @@ android {
         }
         debug {
             debuggable true
+            applicationIdSuffix ".debug"
         }
     }
 
@@ -77,32 +77,34 @@ android {
     flavorDimensions "sku", "abi"
     productFlavors {
         googlePlay {
-            flavorDimension "sku"
+            dimension "sku"
+            applicationId "com.chilliworks.cspong.googleplay"
         }
         amazon {
-            flavorDimension "sku"
+            dimension "sku"
+            applicationId "com.chilliworks.cspong.amazon"
         }
         arm {
-            flavorDimension "abi"
+            dimension "abi"
             ndk {
                 abiFilter "armeabi"
             }
         }
         armv7 {
-            flavorDimension "abi"
+            dimension "abi"
             ndk {
                 abiFilter "armeabi-v7a"
             }
         }
         x86 {
-            flavorDimension "abi"
+            dimension "abi"
             ndk {
                 abiFilter "x86"
             }
         }
     }
 
-    csInitApplication tasks
+    csInitApplication tasks, defaultConfig, applicationVariants
 }
 
 dependencies {
@@ -112,19 +114,19 @@ dependencies {
     //Gradle doesn't handle dependencies specific to combinations of flavors and build types so
     //ChilliSource provides the following to manage it.
     def csDependencyMap = new HashMap<String, String>()
-    csDependencyMap.put("googlePlayArmDebug", "googlePlayArmDebug");
-    csDependencyMap.put("googlePlayArmRelease", "googlePlayArmRelease");
-    csDependencyMap.put("googlePlayArmv7Debug", "googlePlayArmv7Debug");
-    csDependencyMap.put("googlePlayArmv7Release", "googlePlayArmv7Release")
-    csDependencyMap.put("googlePlayX86Debug", "googlePlayX86Debug");
-    csDependencyMap.put("googlePlayX86Release", "googlePlayX86Release");
-    csDependencyMap.put("amazonArmDebug", "amazonArmDebug");
-    csDependencyMap.put("amazonArmRelease", "amazonArmRelease");
-    csDependencyMap.put("amazonArmv7Debug", "amazonArmv7Debug");
-    csDependencyMap.put("amazonArmv7Release", "amazonArmv7Release");
-    csDependencyMap.put("amazonX86Debug", "amazonX86Debug");
-    csDependencyMap.put("amazonX86Release", "amazonX86Release");
-    csAddCSDependencies(dependencies, configurations, csDependencyMap)
+    csDependencyMap.put "googlePlayArmDebug", "googlePlayArmDebug"
+    csDependencyMap.put "googlePlayArmRelease", "googlePlayArmRelease"
+    csDependencyMap.put "googlePlayArmv7Debug", "googlePlayArmv7Debug"
+    csDependencyMap.put "googlePlayArmv7Release", "googlePlayArmv7Release"
+    csDependencyMap.put "googlePlayX86Debug", "googlePlayX86Debug"
+    csDependencyMap.put "googlePlayX86Release", "googlePlayX86Release"
+    csDependencyMap.put "amazonArmDebug", "amazonArmDebug"
+    csDependencyMap.put "amazonArmRelease", "amazonArmRelease"
+    csDependencyMap.put "amazonArmv7Debug", "amazonArmv7Debug"
+    csDependencyMap.put "amazonArmv7Release", "amazonArmv7Release"
+    csDependencyMap.put "amazonX86Debug", "amazonX86Debug"
+    csDependencyMap.put "amazonX86Release", "amazonX86Release"
+    csAddCSDependencies dependencies, configurations, csDependencyMap
 }
 
 afterEvaluate {

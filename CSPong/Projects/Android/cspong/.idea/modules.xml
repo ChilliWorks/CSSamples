@@ -5,7 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../../ChilliSource/Projects/Android/chillisource/chillisource.iml" filepath="$PROJECT_DIR$/../../../ChilliSource/Projects/Android/chillisource/chillisource.iml" />
       <module fileurl="file://$PROJECT_DIR$/cspong.iml" filepath="$PROJECT_DIR$/cspong.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../ChilliSource/Projects/Android/playapkexpansion/playapkexpansion.iml" filepath="$PROJECT_DIR$/../../../ChilliSource/Projects/Android/playapkexpansion/playapkexpansion.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../ChilliSource/Projects/Android/playlicensing/playlicensing.iml" filepath="$PROJECT_DIR$/../../../ChilliSource/Projects/Android/playlicensing/playlicensing.iml" />
     </modules>
   </component>
 </project>
-

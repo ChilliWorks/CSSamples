@@ -65,6 +65,17 @@ CSCore::Application* CreateApplication()
 {
     return new CSPong::App();
 }
+
+#if defined(CS_TARGETPLATFORM_ANDROID) && defined(CS_ANDROIDFLAVOUR_GOOGLEPLAY)
+
+std::string GetGooglePlayLvlPublicKey()
+{
+    //Enter your Google Play LVL public key here if you are building for Google Play on Android
+    return "";
+}
+
+#endif
+
 namespace CSPong
 {
     //---------------------------------------------------------
