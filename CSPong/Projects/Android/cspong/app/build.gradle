@@ -28,6 +28,7 @@
 
 apply plugin: 'com.android.application'
 apply from: '../../../../ChilliSource/Tools/Scripts/android-build.gradle'
+apply from: '../../../../Tools/Scripts/signing-config.gradle'
 
 android {
     compileSdkVersion 22
@@ -49,12 +50,17 @@ android {
 
     signingConfigs {
         release {
-            keyAlias 'Alias'
-            keyPassword '********'
-            storeFile file('keystore.keystore')
-            storePassword '********'
+            storeFile file('file.ext')
+            storePassword ''
+            keyAlias ''
+            keyPassword ''
         }
     }
+
+    //Applies the release config from a configuration file described in gradle.properties. This
+    //avoids needing to enter the store details here, which could lead to the password being
+    //accidentally committed.
+    cstApplyReleaseSigningConfig project, signingConfigs
 
     //ChilliSource relies on the names of these to set up task dependencies. Additional types can
     //be added and existing types removed, but the resulting build variants must contain 'release'
@@ -78,11 +84,11 @@ android {
     productFlavors {
         googlePlay {
             dimension "sku"
-            applicationId "com.chilliworks.cspong.googleplay"
+            applicationId "com.taggames.cspong.googleplay"
         }
         amazon {
             dimension "sku"
-            applicationId "com.chilliworks.cspong.amazon"
+            applicationId "com.taggames.cspong.amazon"
         }
         arm {
             dimension "abi"
