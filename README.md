@@ -1,10 +1,10 @@
 CSSamples
 =========
 
-A collection of sample projects demoing the Chilli Source game engine.
+A collection of sample projects demoing the ChilliSource game engine.
 
 Links
 -----
-* Chilli Works [Website](http://chilli-works.com/)
-* Chilli Source [Documentation](http://chilli-source.chilli-works.com/docs/)
-* Chilli Source [Repository](https://github.com/ChilliWorks/ChilliSource)
+* ChilliWorks [Website](http://chilli-works.com/)
+* ChilliSource [Documentation](http://chilli-source.chilli-works.com/docs/)
+* ChilliSource [Repository](https://github.com/ChilliWorks/ChilliSource)
