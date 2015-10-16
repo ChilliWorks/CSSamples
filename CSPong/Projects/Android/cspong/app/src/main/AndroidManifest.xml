@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 <!-- NOTE: This is auto generated, do not change! -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.chilliworks.cspong" android:installLocation="preferExternal" >
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.taggames.cspong" android:installLocation="preferExternal" >
 
     <uses-feature android:glEsVersion="0x00020000" android:required="true" />
     <uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="true" />
@@ -58,7 +58,7 @@ THE SOFTWARE.
     <application android:icon="@drawable/ic_launcher" android:label="@string/app_name"  android:allowBackup="false" >
         
         <!-- provide access to the package name, prior to it being replaced by the applicationId -->
-        <meta-data android:name="packageName" android:value="com.chilliworks.cspong" />
+        <meta-data android:name="packageName" android:value="com.taggames.cspong" />
 
         <!-- Chilli Source main -->
         <activity android:name="com.chilliworks.chillisource.core.CSActivity"
