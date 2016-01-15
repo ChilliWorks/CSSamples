@@ -66,7 +66,7 @@ namespace CSPong
 	//----------------------------------------------------------
 	void ParticleEffectComponentFactory::ReleaseCollisionConnections()
 	{
-		for (std::vector<int>::size_type i = 0; i != m_collisionConnections.size(); i++)
+		for (std::vector<CSCore::EventConnectionSPtr>::size_type i = 0; i != m_collisionConnections.size(); i++)
 		{
 			m_collisionConnections[i].reset();
 		}
