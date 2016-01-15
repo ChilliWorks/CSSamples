@@ -29,6 +29,7 @@
 #include <CSPong.h>
 
 #include <Splash/SplashState.h>
+#include <Game/Particles/ParticleEffectComponentFactory.h>
 
 #include <ChilliSource/Input/Accelerometer.h>
 #include <ChilliSource/Rendering/Model.h>
@@ -130,6 +131,7 @@ namespace CSPong
         CreateSystem<CSRendering::CSModelProvider>();
         CreateSystem<CSRendering::CSAnimProvider>();
         CreateSystem<CSInput::Accelerometer>();
+		CreateSystem<ParticleEffectComponentFactory>();
     }
     //---------------------------------------------------------
     //---------------------------------------------------------

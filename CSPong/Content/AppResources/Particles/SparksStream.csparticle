@@ -1,0 +1,44 @@
+ {
+	"Duration": "1.0",
+	"MaxParticles": "10",
+	"SimulationSpace": "World",
+	"LifetimeProperty": 
+	{
+        "Type": "RandomConstant",
+        "LowerValue": "1.0",
+        "UpperValue": "1.5"
+    },
+	"ColourProperty": 
+	{
+        "Type": "Constant",
+        "Value": "0.0 0.0 0.0 1.0"
+    },
+    "InitialSpeedProperty": "1.0",
+	"Drawable": 
+	{
+		"Type": "StaticBillboard",
+		"MaterialPath": "Materials/Particles/Particles.csmaterial",
+        "AtlasPath": "TextureAtlases/Particles/Particles.csatlas",
+		"ImageIds": "Spark",
+		"ParticleSize": "5.0 5.0",
+		"SizePolicy": "FitMaintainingAspect"
+	},
+	"Emitter": 
+		{
+			"Type": "Point",
+			"EmissionMode": "Stream",
+			"EmissionRateProperty": "20000.0f",
+			"ParticlesPerEmissionProperty": "5"
+		},
+	"Affectors": 
+		[
+			{
+				"Type": "ColourOverLifetime",
+				"TargetColourProperty": "0.59 0.89 1.0 0.1"
+			},
+			{
+				"Type": "ScaleOverLifetime",
+				"ScaleProperty": "0.2 0.2"
+			}
+		]
+}

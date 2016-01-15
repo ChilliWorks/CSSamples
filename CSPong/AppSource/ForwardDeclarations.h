@@ -45,6 +45,7 @@ namespace CSPong
     CS_FORWARDDECLARE_CLASS(TouchControllerComponent);
     CS_FORWARDDECLARE_CLASS(TransitionSystem);
     CS_FORWARDDECLARE_CLASS(TriggerComponent);
+	CS_FORWARDDECLARE_CLASS(ParticleEffectComponentFactory);
 }
 
 #endif

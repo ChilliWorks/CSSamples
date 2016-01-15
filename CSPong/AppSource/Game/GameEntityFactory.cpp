@@ -36,6 +36,7 @@
 #include <Game/Physics/DynamicBodyComponent.h>
 #include <Game/Physics/StaticBodyComponent.h>
 #include <Game/Physics/TriggerComponent.h>
+#include <Game/Particles/ParticleEffectComponentFactory.h>
 
 #include <ChilliSource/Core/Base.h>
 #include <ChilliSource/Core/Entity.h>
@@ -45,6 +46,7 @@
 #include <ChilliSource/Rendering/Lighting.h>
 #include <ChilliSource/Rendering/Model.h>
 #include <ChilliSource/Rendering/Texture.h>
+#include <ChilliSource/Rendering/Particle.h>
 
 namespace CSPong
 {
@@ -320,6 +322,10 @@ namespace CSPong
         ball->AddComponent(ballControllerComponent);
         
         m_scoringSystem->AddBallBody(dynamicBody);
+
+		auto particleEffectComponentFactory = CSCore::Application::Get()->GetSystem<ParticleEffectComponentFactory>();
+		CSRendering::ParticleEffectComponentSPtr particleComponent = particleEffectComponentFactory->CreateParticleEffectComponent(ParticleEffectComponentFactory::ParticleType::k_smokeStream, true);
+		ball->AddComponent(particleComponent);
         
         return ball;
     }
@@ -348,7 +354,12 @@ namespace CSPong
         CSRendering::MeshCSPtr arenaMesh = resourcePool->LoadResource<CSRendering::Mesh>(CSCore::StorageLocation::k_package, "Models/Arena.csmodel");
         f32 offsetX = arenaMesh->GetAABB().GetSize().x * -k_paddlePercentageOffsetFromCentre;
         paddle->GetTransform().SetPosition(offsetX, 0.0f, 0.0f);
+
+		auto particleEffectComponentFactory = CSCore::Application::Get()->GetSystem<ParticleEffectComponentFactory>();
+		CSRendering::ParticleEffectComponentSPtr particleComponent = particleEffectComponentFactory->CreateOnCollisionParticleEffectComponent(ParticleEffectComponentFactory::ParticleType::k_magmaBurst, dynamicBody->GetCollisionEvent());
+		paddle->AddComponent(particleComponent);
         
+
         return paddle;
     }
     //------------------------------------------------------------
