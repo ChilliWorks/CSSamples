@@ -32,7 +32,7 @@
 #include <ForwardDeclarations.h>
 
 #include <ChilliSource/Core/System.h>
-#include <ChilliSource/Rendering/Base.h>
+#include <ChilliSource/Rendering/Base.h> 
 
 namespace CSPong
 {

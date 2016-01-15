@@ -35,6 +35,8 @@
 		81A83FAB1340B90900FBCC29 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81A83FA11340B8C900FBCC29 /* Security.framework */; };
 		81A83FAC1340B90900FBCC29 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81A83FA21340B8E900FBCC29 /* SystemConfiguration.framework */; };
 		81B9C0D918B27D490029BC9E /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81B9C0D818B27D490029BC9E /* CoreMotion.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		81CFA14719EE9177003C8436 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81CFA14319EE9177003C8436 /* App.cpp */; };
+		81CFA14819EE9177003C8436 /* State.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81CFA14519EE9177003C8436 /* State.cpp */; };
 		81D8923F196160E70010DA84 /* AppResources in Resources */ = {isa = PBXBuildFile; fileRef = 81D8923D196160E70010DA84 /* AppResources */; };
 		81D89240196160E70010DA84 /* CSResources in Resources */ = {isa = PBXBuildFile; fileRef = 81D8923E196160E70010DA84 /* CSResources */; };
 		81D89B751962BD400010DA84 /* com_taggames_close_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 81D89B721962BD400010DA84 /* com_taggames_close_button.png */; };
@@ -42,22 +44,6 @@
 		81D8B6ED1962E3420010DA84 /* libChilliSource.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81D8B2261962DC120010DA84 /* libChilliSource.a */; };
 		81DB6CAD1A5C8A8A00ED47CE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81DB6CAC1A5C8A8A00ED47CE /* AVFoundation.framework */; };
 		81DB6CAF1A5C8AAD00ED47CE /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81DB6CAE1A5C8AAC00ED47CE /* CoreMedia.framework */; };
-		81ECB4D01AD2B8E70062B24E /* TransitionSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81ECB4A81AD2B8E70062B24E /* TransitionSystem.cpp */; };
-		81ECB4D11AD2B8E70062B24E /* CSPong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81ECB4AA1AD2B8E70062B24E /* CSPong.cpp */; };
-		81ECB4D21AD2B8E70062B24E /* BallControllerComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81ECB4AF1AD2B8E70062B24E /* BallControllerComponent.cpp */; };
-		81ECB4D31AD2B8E70062B24E /* CameraTiltComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81ECB4B21AD2B8E70062B24E /* CameraTiltComponent.cpp */; };
-		81ECB4D41AD2B8E70062B24E /* GameEntityFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81ECB4B41AD2B8E70062B24E /* GameEntityFactory.cpp */; };
-		81ECB4D51AD2B8E70062B24E /* GameState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81ECB4B61AD2B8E70062B24E /* GameState.cpp */; };
-		81ECB4D61AD2B8E70062B24E /* GoalCeremonySystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81ECB4B81AD2B8E70062B24E /* GoalCeremonySystem.cpp */; };
-		81ECB4D71AD2B8E70062B24E /* AIControllerComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81ECB4BB1AD2B8E70062B24E /* AIControllerComponent.cpp */; };
-		81ECB4D81AD2B8E70062B24E /* TouchControllerComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81ECB4BD1AD2B8E70062B24E /* TouchControllerComponent.cpp */; };
-		81ECB4D91AD2B8E70062B24E /* DynamicBodyComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81ECB4C01AD2B8E70062B24E /* DynamicBodyComponent.cpp */; };
-		81ECB4DA1AD2B8E70062B24E /* PhysicsSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81ECB4C21AD2B8E70062B24E /* PhysicsSystem.cpp */; };
-		81ECB4DB1AD2B8E70062B24E /* StaticBodyComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81ECB4C41AD2B8E70062B24E /* StaticBodyComponent.cpp */; };
-		81ECB4DC1AD2B8E70062B24E /* TriggerComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81ECB4C61AD2B8E70062B24E /* TriggerComponent.cpp */; };
-		81ECB4DD1AD2B8E70062B24E /* ScoringSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81ECB4C81AD2B8E70062B24E /* ScoringSystem.cpp */; };
-		81ECB4DE1AD2B8E70062B24E /* MainMenuState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81ECB4CB1AD2B8E70062B24E /* MainMenuState.cpp */; };
-		81ECB4DF1AD2B8E70062B24E /* SplashState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81ECB4CE1AD2B8E70062B24E /* SplashState.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +87,10 @@
 		81A83FA11340B8C900FBCC29 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		81A83FA21340B8E900FBCC29 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		81B9C0D818B27D490029BC9E /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		81CFA14319EE9177003C8436 /* App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = App.cpp; sourceTree = "<group>"; };
+		81CFA14419EE9177003C8436 /* App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App.h; sourceTree = "<group>"; };
+		81CFA14519EE9177003C8436 /* State.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = State.cpp; sourceTree = "<group>"; };
+		81CFA14619EE9177003C8436 /* State.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = State.h; sourceTree = "<group>"; };
 		81D8923D196160E70010DA84 /* AppResources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AppResources; path = XcodeBuiltAssets/AppResources; sourceTree = "<group>"; };
 		81D8923E196160E70010DA84 /* CSResources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = CSResources; path = XcodeBuiltAssets/CSResources; sourceTree = "<group>"; };
 		81D89B721962BD400010DA84 /* com_taggames_close_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = com_taggames_close_button.png; sourceTree = "<group>"; };
@@ -109,39 +99,6 @@
 		81D8B2211962DC120010DA84 /* ChilliSource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ChilliSource.xcodeproj; path = ../../ChilliSource/Projects/iOS/ChilliSource.xcodeproj; sourceTree = "<group>"; };
 		81DB6CAC1A5C8A8A00ED47CE /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		81DB6CAE1A5C8AAC00ED47CE /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		81ECB4A81AD2B8E70062B24E /* TransitionSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransitionSystem.cpp; sourceTree = "<group>"; };
-		81ECB4A91AD2B8E70062B24E /* TransitionSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitionSystem.h; sourceTree = "<group>"; };
-		81ECB4AA1AD2B8E70062B24E /* CSPong.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSPong.cpp; sourceTree = "<group>"; };
-		81ECB4AB1AD2B8E70062B24E /* CSPong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSPong.h; sourceTree = "<group>"; };
-		81ECB4AC1AD2B8E70062B24E /* ForwardDeclarations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForwardDeclarations.h; sourceTree = "<group>"; };
-		81ECB4AF1AD2B8E70062B24E /* BallControllerComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BallControllerComponent.cpp; sourceTree = "<group>"; };
-		81ECB4B01AD2B8E70062B24E /* BallControllerComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallControllerComponent.h; sourceTree = "<group>"; };
-		81ECB4B21AD2B8E70062B24E /* CameraTiltComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraTiltComponent.cpp; sourceTree = "<group>"; };
-		81ECB4B31AD2B8E70062B24E /* CameraTiltComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraTiltComponent.h; sourceTree = "<group>"; };
-		81ECB4B41AD2B8E70062B24E /* GameEntityFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameEntityFactory.cpp; sourceTree = "<group>"; };
-		81ECB4B51AD2B8E70062B24E /* GameEntityFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameEntityFactory.h; sourceTree = "<group>"; };
-		81ECB4B61AD2B8E70062B24E /* GameState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameState.cpp; sourceTree = "<group>"; };
-		81ECB4B71AD2B8E70062B24E /* GameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameState.h; sourceTree = "<group>"; };
-		81ECB4B81AD2B8E70062B24E /* GoalCeremonySystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GoalCeremonySystem.cpp; sourceTree = "<group>"; };
-		81ECB4B91AD2B8E70062B24E /* GoalCeremonySystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalCeremonySystem.h; sourceTree = "<group>"; };
-		81ECB4BB1AD2B8E70062B24E /* AIControllerComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AIControllerComponent.cpp; sourceTree = "<group>"; };
-		81ECB4BC1AD2B8E70062B24E /* AIControllerComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIControllerComponent.h; sourceTree = "<group>"; };
-		81ECB4BD1AD2B8E70062B24E /* TouchControllerComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TouchControllerComponent.cpp; sourceTree = "<group>"; };
-		81ECB4BE1AD2B8E70062B24E /* TouchControllerComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchControllerComponent.h; sourceTree = "<group>"; };
-		81ECB4C01AD2B8E70062B24E /* DynamicBodyComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DynamicBodyComponent.cpp; sourceTree = "<group>"; };
-		81ECB4C11AD2B8E70062B24E /* DynamicBodyComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicBodyComponent.h; sourceTree = "<group>"; };
-		81ECB4C21AD2B8E70062B24E /* PhysicsSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PhysicsSystem.cpp; sourceTree = "<group>"; };
-		81ECB4C31AD2B8E70062B24E /* PhysicsSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsSystem.h; sourceTree = "<group>"; };
-		81ECB4C41AD2B8E70062B24E /* StaticBodyComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StaticBodyComponent.cpp; sourceTree = "<group>"; };
-		81ECB4C51AD2B8E70062B24E /* StaticBodyComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticBodyComponent.h; sourceTree = "<group>"; };
-		81ECB4C61AD2B8E70062B24E /* TriggerComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerComponent.cpp; sourceTree = "<group>"; };
-		81ECB4C71AD2B8E70062B24E /* TriggerComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerComponent.h; sourceTree = "<group>"; };
-		81ECB4C81AD2B8E70062B24E /* ScoringSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScoringSystem.cpp; sourceTree = "<group>"; };
-		81ECB4C91AD2B8E70062B24E /* ScoringSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoringSystem.h; sourceTree = "<group>"; };
-		81ECB4CB1AD2B8E70062B24E /* MainMenuState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainMenuState.cpp; sourceTree = "<group>"; };
-		81ECB4CC1AD2B8E70062B24E /* MainMenuState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuState.h; sourceTree = "<group>"; };
-		81ECB4CE1AD2B8E70062B24E /* SplashState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SplashState.cpp; sourceTree = "<group>"; };
-		81ECB4CF1AD2B8E70062B24E /* SplashState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplashState.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,7 +154,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				81ECB4A61AD2B8E70062B24E /* AppSource */,
+				81CFA14219EE9177003C8436 /* AppSource */,
 				81D8B2211962DC120010DA84 /* ChilliSource.xcodeproj */,
 				81455FE81961B47C00471F69 /* Built */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -254,6 +211,18 @@
 			name = Built;
 			sourceTree = "<group>";
 		};
+		81CFA14219EE9177003C8436 /* AppSource */ = {
+			isa = PBXGroup;
+			children = (
+				81CFA14319EE9177003C8436 /* App.cpp */,
+				81CFA14419EE9177003C8436 /* App.h */,
+				81CFA14519EE9177003C8436 /* State.cpp */,
+				81CFA14619EE9177003C8436 /* State.h */,
+			);
+			name = AppSource;
+			path = ../../AppSource;
+			sourceTree = "<group>";
+		};
 		81D89B711962BD400010DA84 /* ProjectResources */ = {
 			isa = PBXGroup;
 			children = (
@@ -270,111 +239,6 @@
 				81D8B2261962DC120010DA84 /* libChilliSource.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		81ECB4A61AD2B8E70062B24E /* AppSource */ = {
-			isa = PBXGroup;
-			children = (
-				81ECB4A71AD2B8E70062B24E /* Common */,
-				81ECB4AA1AD2B8E70062B24E /* CSPong.cpp */,
-				81ECB4AB1AD2B8E70062B24E /* CSPong.h */,
-				81ECB4AC1AD2B8E70062B24E /* ForwardDeclarations.h */,
-				81ECB4AD1AD2B8E70062B24E /* Game */,
-				81ECB4CA1AD2B8E70062B24E /* MainMenu */,
-				81ECB4CD1AD2B8E70062B24E /* Splash */,
-			);
-			name = AppSource;
-			path = ../../AppSource;
-			sourceTree = "<group>";
-		};
-		81ECB4A71AD2B8E70062B24E /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				81ECB4A81AD2B8E70062B24E /* TransitionSystem.cpp */,
-				81ECB4A91AD2B8E70062B24E /* TransitionSystem.h */,
-			);
-			path = Common;
-			sourceTree = "<group>";
-		};
-		81ECB4AD1AD2B8E70062B24E /* Game */ = {
-			isa = PBXGroup;
-			children = (
-				81ECB4AE1AD2B8E70062B24E /* Ball */,
-				81ECB4B11AD2B8E70062B24E /* Camera */,
-				81ECB4B41AD2B8E70062B24E /* GameEntityFactory.cpp */,
-				81ECB4B51AD2B8E70062B24E /* GameEntityFactory.h */,
-				81ECB4B61AD2B8E70062B24E /* GameState.cpp */,
-				81ECB4B71AD2B8E70062B24E /* GameState.h */,
-				81ECB4B81AD2B8E70062B24E /* GoalCeremonySystem.cpp */,
-				81ECB4B91AD2B8E70062B24E /* GoalCeremonySystem.h */,
-				81ECB4BA1AD2B8E70062B24E /* Paddle */,
-				81ECB4BF1AD2B8E70062B24E /* Physics */,
-				81ECB4C81AD2B8E70062B24E /* ScoringSystem.cpp */,
-				81ECB4C91AD2B8E70062B24E /* ScoringSystem.h */,
-			);
-			path = Game;
-			sourceTree = "<group>";
-		};
-		81ECB4AE1AD2B8E70062B24E /* Ball */ = {
-			isa = PBXGroup;
-			children = (
-				81ECB4AF1AD2B8E70062B24E /* BallControllerComponent.cpp */,
-				81ECB4B01AD2B8E70062B24E /* BallControllerComponent.h */,
-			);
-			path = Ball;
-			sourceTree = "<group>";
-		};
-		81ECB4B11AD2B8E70062B24E /* Camera */ = {
-			isa = PBXGroup;
-			children = (
-				81ECB4B21AD2B8E70062B24E /* CameraTiltComponent.cpp */,
-				81ECB4B31AD2B8E70062B24E /* CameraTiltComponent.h */,
-			);
-			path = Camera;
-			sourceTree = "<group>";
-		};
-		81ECB4BA1AD2B8E70062B24E /* Paddle */ = {
-			isa = PBXGroup;
-			children = (
-				81ECB4BB1AD2B8E70062B24E /* AIControllerComponent.cpp */,
-				81ECB4BC1AD2B8E70062B24E /* AIControllerComponent.h */,
-				81ECB4BD1AD2B8E70062B24E /* TouchControllerComponent.cpp */,
-				81ECB4BE1AD2B8E70062B24E /* TouchControllerComponent.h */,
-			);
-			path = Paddle;
-			sourceTree = "<group>";
-		};
-		81ECB4BF1AD2B8E70062B24E /* Physics */ = {
-			isa = PBXGroup;
-			children = (
-				81ECB4C01AD2B8E70062B24E /* DynamicBodyComponent.cpp */,
-				81ECB4C11AD2B8E70062B24E /* DynamicBodyComponent.h */,
-				81ECB4C21AD2B8E70062B24E /* PhysicsSystem.cpp */,
-				81ECB4C31AD2B8E70062B24E /* PhysicsSystem.h */,
-				81ECB4C41AD2B8E70062B24E /* StaticBodyComponent.cpp */,
-				81ECB4C51AD2B8E70062B24E /* StaticBodyComponent.h */,
-				81ECB4C61AD2B8E70062B24E /* TriggerComponent.cpp */,
-				81ECB4C71AD2B8E70062B24E /* TriggerComponent.h */,
-			);
-			path = Physics;
-			sourceTree = "<group>";
-		};
-		81ECB4CA1AD2B8E70062B24E /* MainMenu */ = {
-			isa = PBXGroup;
-			children = (
-				81ECB4CB1AD2B8E70062B24E /* MainMenuState.cpp */,
-				81ECB4CC1AD2B8E70062B24E /* MainMenuState.h */,
-			);
-			path = MainMenu;
-			sourceTree = "<group>";
-		};
-		81ECB4CD1AD2B8E70062B24E /* Splash */ = {
-			isa = PBXGroup;
-			children = (
-				81ECB4CE1AD2B8E70062B24E /* SplashState.cpp */,
-				81ECB4CF1AD2B8E70062B24E /* SplashState.h */,
-			);
-			path = Splash;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -478,22 +342,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81ECB4DD1AD2B8E70062B24E /* ScoringSystem.cpp in Sources */,
-				81ECB4D01AD2B8E70062B24E /* TransitionSystem.cpp in Sources */,
-				81ECB4DB1AD2B8E70062B24E /* StaticBodyComponent.cpp in Sources */,
-				81ECB4D81AD2B8E70062B24E /* TouchControllerComponent.cpp in Sources */,
-				81ECB4D51AD2B8E70062B24E /* GameState.cpp in Sources */,
-				81ECB4DA1AD2B8E70062B24E /* PhysicsSystem.cpp in Sources */,
-				81ECB4D91AD2B8E70062B24E /* DynamicBodyComponent.cpp in Sources */,
-				81ECB4D31AD2B8E70062B24E /* CameraTiltComponent.cpp in Sources */,
-				81ECB4D71AD2B8E70062B24E /* AIControllerComponent.cpp in Sources */,
-				81ECB4D21AD2B8E70062B24E /* BallControllerComponent.cpp in Sources */,
-				81ECB4DE1AD2B8E70062B24E /* MainMenuState.cpp in Sources */,
-				81ECB4D11AD2B8E70062B24E /* CSPong.cpp in Sources */,
-				81ECB4DF1AD2B8E70062B24E /* SplashState.cpp in Sources */,
-				81ECB4D61AD2B8E70062B24E /* GoalCeremonySystem.cpp in Sources */,
-				81ECB4DC1AD2B8E70062B24E /* TriggerComponent.cpp in Sources */,
-				81ECB4D41AD2B8E70062B24E /* GameEntityFactory.cpp in Sources */,
+				81CFA14719EE9177003C8436 /* App.cpp in Sources */,
+				81CFA14819EE9177003C8436 /* State.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,6 +1,6 @@
 ::
-::  BuildAll.sh
-:: CSPong
+::  BuildAll.bat
+::  CSPong
 ::  Created by Ian Copland on 22/01/2015
 ::
 ::  The MIT License (MIT)

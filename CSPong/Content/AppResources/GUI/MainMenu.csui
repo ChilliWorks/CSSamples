@@ -1,17 +1,20 @@
 {
   "Type": "Image",
-  "Drawable": {
+  "Drawable": 
+  {
     "Type": "Standard",
     "TextureLocation": "Package",
     "TexturePath": "Textures/GUI/Backing.csimage"
   },
-  "Children": [
+  "Children": 
+  [
     {
       "Type": "HighlightButton",
       "Name": "PlayButton",
       "RelSize": "0.3 0.0",
       "SizePolicy": "UseWidthMaintainingAspect",
-      "NormalDrawable": {
+      "NormalDrawable": 
+	  {
         "Type": "Standard",
         "TextureLocation": "Package",
         "TexturePath": "TextureAtlases/GUI/GUI.csimage",

@@ -106,7 +106,7 @@ namespace CSPong
         CSCore::EntitySPtr playerPaddle = m_gameEntityFactory->CreatePlayerPaddle(camera);
         GetScene()->Add(playerPaddle);
         
-        m_oppositionPaddle = m_gameEntityFactory->CreateOppositionPaddle(m_ball);
+        m_oppositionPaddle = m_gameEntityFactory->CreateOppositionPaddle(m_ball);  
         GetScene()->Add(m_oppositionPaddle);
         
         m_scoreChangedConnection = m_scoringSystem->GetScoreChangedEvent().OpenConnection(CSCore::MakeDelegate(this, &GameState::OnGoalScored));

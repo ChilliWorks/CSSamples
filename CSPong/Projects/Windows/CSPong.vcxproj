@@ -28,6 +28,7 @@
     <ClCompile Include="..\..\AppSource\Game\GoalCeremonySystem.cpp" />
     <ClCompile Include="..\..\AppSource\Game\Paddle\AIControllerComponent.cpp" />
     <ClCompile Include="..\..\AppSource\Game\Paddle\TouchControllerComponent.cpp" />
+    <ClCompile Include="..\..\AppSource\Game\Particles\ParticleEffectComponentFactory.cpp" />
     <ClCompile Include="..\..\AppSource\Game\Physics\DynamicBodyComponent.cpp" />
     <ClCompile Include="..\..\AppSource\Game\Physics\PhysicsSystem.cpp" />
     <ClCompile Include="..\..\AppSource\Game\Physics\StaticBodyComponent.cpp" />
@@ -47,6 +48,7 @@
     <ClInclude Include="..\..\AppSource\Game\GoalCeremonySystem.h" />
     <ClInclude Include="..\..\AppSource\Game\Paddle\AIControllerComponent.h" />
     <ClInclude Include="..\..\AppSource\Game\Paddle\TouchControllerComponent.h" />
+    <ClInclude Include="..\..\AppSource\Game\Particles\ParticleEffectComponentFactory.h" />
     <ClInclude Include="..\..\AppSource\Game\Physics\DynamicBodyComponent.h" />
     <ClInclude Include="..\..\AppSource\Game\Physics\PhysicsSystem.h" />
     <ClInclude Include="..\..\AppSource\Game\Physics\StaticBodyComponent.h" />
@@ -180,7 +182,7 @@
       </Command>
     </PreLinkEvent>
     <CustomBuildStep>
-      <Command>python $(ProjectDir)\..\..\ChilliSource\Tools\Scripts\copy_windows_resources.py $(ProjectDir)  $(TargetDir)</Command>
+      <Command>python "$(ProjectDir)\..\..\ChilliSource\Tools\Scripts\copy_windows_resources.py" "$(ProjectDir)\" "$(TargetDir)\"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Message>Building resources</Message>
@@ -216,7 +218,7 @@
       </Command>
     </PreLinkEvent>
     <CustomBuildStep>
-      <Command>python $(ProjectDir)\..\..\ChilliSource\Tools\Scripts\copy_windows_resources.py $(ProjectDir)  $(TargetDir)</Command>
+      <Command>python "$(ProjectDir)\..\..\ChilliSource\Tools\Scripts\copy_windows_resources.py" "$(ProjectDir)\" "$(TargetDir)\"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Message>Building resources</Message>
@@ -255,7 +257,7 @@
       </Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python $(ProjectDir)\..\..\ChilliSource\Tools\Scripts\copy_windows_resources.py $(ProjectDir)  $(TargetDir)</Command>
+      <Command>python "$(ProjectDir)\..\..\ChilliSource\Tools\Scripts\copy_windows_resources.py" "$(ProjectDir)\" "$(TargetDir)\"</Command>
       <Message>Building resources</Message>
       <Outputs>CSBuildRes.alwaysrun</Outputs>
     </CustomBuildStep>
@@ -292,7 +294,7 @@
       </Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python $(ProjectDir)\..\..\ChilliSource\Tools\Scripts\copy_windows_resources.py $(ProjectDir)  $(TargetDir)</Command>
+      <Command>python "$(ProjectDir)\..\..\ChilliSource\Tools\Scripts\copy_windows_resources.py" "$(ProjectDir)\" "$(TargetDir)\"</Command>
       <Message>Building resources</Message>
       <Outputs>CSBuildRes.alwaysrun</Outputs>
     </CustomBuildStep>
