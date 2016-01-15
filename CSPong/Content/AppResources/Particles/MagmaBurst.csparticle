@@ -22,10 +22,8 @@
 	},
 	"Emitter": 
 	{
-		"Type": "Cone2D",
+		"Type": "Sphere",
 		"EmissionMode": "Burst",
-		"EmitDirectionType": "Random",
-		"EmitFromType": "Edge",
 		"ParticlesPerEmissionProperty": "100",
 		"RadiusProperty": 
 		{
