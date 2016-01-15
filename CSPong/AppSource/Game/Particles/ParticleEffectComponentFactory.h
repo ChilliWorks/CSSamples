@@ -52,17 +52,6 @@ namespace CSPong
 		CS_DECLARE_NAMEDTYPE(ParticleEffectComponentFactory);
 
 		//------------------------------------------------------------
-		/// A delegate that will be called whenever the dynamic body 
-		/// collides with another dynamic body or a static body.
-		///
-		/// @author Ian Copland
-		///
-		/// @param The direction of the collision.
-		/// @param The entity collided with.
-		//------------------------------------------------------------
-		using CollisionDelegate = std::function<void(const CSCore::Vector2&, CSCore::Entity*)>;
-
-		//------------------------------------------------------------
 		/// An enum that describes the different types of particle 
 		/// effects that have been created for the game.
 		///
