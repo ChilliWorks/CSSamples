@@ -387,6 +387,10 @@ namespace CSPong
         CSRendering::MeshCSPtr arenaMesh = resourcePool->LoadResource<CSRendering::Mesh>(CSCore::StorageLocation::k_package, "Models/Arena.csmodel");
         f32 offsetX = arenaMesh->GetAABB().GetSize().x * k_paddlePercentageOffsetFromCentre;
         paddle->GetTransform().SetPosition(offsetX, 0.0f, 0.0f);
+
+		auto particleEffectComponentFactory = CSCore::Application::Get()->GetSystem<ParticleEffectComponentFactory>();
+		CSRendering::ParticleEffectComponentSPtr particleComponent = particleEffectComponentFactory->CreateOnCollisionParticleEffectComponent(ParticleEffectComponentFactory::ParticleType::k_magmaBurst, dynamicBody->GetCollisionEvent());
+		paddle->AddComponent(particleComponent);
         
         return paddle;
     }
