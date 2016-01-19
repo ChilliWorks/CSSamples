@@ -104,8 +104,17 @@ namespace CSPong
 		CSRendering::ParticleEffectCSPtr particleEffect = nullptr;
 		switch (in_particleType)
 		{
-			case ParticleType::k_magmaBurst:
-				particleEffect = resourcePool->LoadResource<CSRendering::ParticleEffect>(CSCore::StorageLocation::k_package, "Particles/MagmaBurst.csparticle");
+			case ParticleType::k_blueMagmaBurst:
+				particleEffect = resourcePool->LoadResource<CSRendering::ParticleEffect>(CSCore::StorageLocation::k_package, "Particles/BlueMagmaBurst.csparticle");
+				break;
+			case ParticleType::k_yellowMagmaBurst:
+				particleEffect = resourcePool->LoadResource<CSRendering::ParticleEffect>(CSCore::StorageLocation::k_package, "Particles/YellowMagmaBurst.csparticle");
+				break;
+			case ParticleType::k_blueIceCreamBurst:
+				particleEffect = resourcePool->LoadResource<CSRendering::ParticleEffect>(CSCore::StorageLocation::k_package, "Particles/BlueIceCreamBurst.csparticle");
+				break;
+			case ParticleType::k_pinkIceCreamBurst:
+				particleEffect = resourcePool->LoadResource<CSRendering::ParticleEffect>(CSCore::StorageLocation::k_package, "Particles/PinkIceCreamBurst.csparticle");
 				break;
 			case ParticleType::k_beamStream:
 				particleEffect = resourcePool->LoadResource<CSRendering::ParticleEffect>(CSCore::StorageLocation::k_package, "Particles/BeamStream.csparticle");

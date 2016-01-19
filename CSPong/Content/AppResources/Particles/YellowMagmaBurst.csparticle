@@ -1,0 +1,48 @@
+ {
+	"Duration": "0.4",
+	"MaxParticles": "1000",
+	"SimulationSpace": "World",
+	"LifetimeProperty": 
+	{
+        "Type": "RandomConstant",
+        "LowerValue": "0.5",
+        "UpperValue": "0.6"
+    },
+	"ColourProperty": "0.0 0.0 0.0 1.0",
+    "InitialSpeedProperty": "25.0",	
+	"InitialRotationProperty": "-1.5708",
+	"Drawable": 
+	{
+		"Type": "StaticBillboard",
+		"MaterialPath": "Materials/Particles/Particles.csmaterial",
+        "AtlasPath": "TextureAtlases/Particles/Particles.csatlas",
+		"ImageIds": "YellowMagma",
+		"ParticleSize": "6.0 6.0",
+		"SizePolicy": "FitMaintainingAspect"
+	},
+	"Emitter": 
+	{
+		"Type": "Sphere",
+		"EmissionMode": "Burst",
+		"ParticlesPerEmissionProperty": "100",
+		"RadiusProperty": 
+		{
+			"Type": "Curve",
+			"Curve": "SmoothStepPingPong",
+			"StartValue": "0.5",
+			"EndValue": "2.5"
+		},
+		"AngleProperty": "0.5"
+	},
+	"Affectors": 
+	[
+		{
+			"Type": "ColourOverLifetime",
+			"TargetColourProperty": "0.0 0.0 0.0 0.0"
+		},
+		{
+			"Type": "ScaleOverLifetime",
+			"ScaleProperty": "0.2 0.2"
+		}
+	]
+}

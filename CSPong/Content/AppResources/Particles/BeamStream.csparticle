@@ -14,7 +14,7 @@
 		"Type": "StaticBillboard",
 		"MaterialPath": "Materials/Particles/Particles.csmaterial",
         "AtlasPath": "TextureAtlases/Particles/Particles.csatlas",
-		"ImageIds": "BBeam",
+		"ImageIds": "Beam",
 		"ParticleSize": "2.0 2.0",
 		"SizePolicy": "FitMaintainingAspect"
 	},

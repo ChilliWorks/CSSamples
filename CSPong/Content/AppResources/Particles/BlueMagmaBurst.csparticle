@@ -16,7 +16,7 @@
 		"Type": "StaticBillboard",
 		"MaterialPath": "Materials/Particles/Particles.csmaterial",
         "AtlasPath": "TextureAtlases/Particles/Particles.csatlas",
-		"ImageIds": "Magma",
+		"ImageIds": "BlueMagma",
 		"ParticleSize": "6.0 6.0",
 		"SizePolicy": "FitMaintainingAspect"
 	},

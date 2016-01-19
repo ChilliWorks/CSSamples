@@ -356,7 +356,7 @@ namespace CSPong
         paddle->GetTransform().SetPosition(offsetX, 0.0f, 0.0f);
 
 		auto particleEffectComponentFactory = CSCore::Application::Get()->GetSystem<ParticleEffectComponentFactory>();
-		CSRendering::ParticleEffectComponentSPtr particleComponent = particleEffectComponentFactory->CreateOnCollisionParticleEffectComponent(ParticleEffectComponentFactory::ParticleType::k_magmaBurst, dynamicBody->GetCollisionEvent());
+		CSRendering::ParticleEffectComponentSPtr particleComponent = particleEffectComponentFactory->CreateOnCollisionParticleEffectComponent(ParticleEffectComponentFactory::ParticleType::k_blueMagmaBurst, dynamicBody->GetCollisionEvent());
 		paddle->AddComponent(particleComponent);
         
 
@@ -389,7 +389,7 @@ namespace CSPong
         paddle->GetTransform().SetPosition(offsetX, 0.0f, 0.0f);
 
 		auto particleEffectComponentFactory = CSCore::Application::Get()->GetSystem<ParticleEffectComponentFactory>();
-		CSRendering::ParticleEffectComponentSPtr particleComponent = particleEffectComponentFactory->CreateOnCollisionParticleEffectComponent(ParticleEffectComponentFactory::ParticleType::k_magmaBurst, dynamicBody->GetCollisionEvent());
+		CSRendering::ParticleEffectComponentSPtr particleComponent = particleEffectComponentFactory->CreateOnCollisionParticleEffectComponent(ParticleEffectComponentFactory::ParticleType::k_yellowMagmaBurst, dynamicBody->GetCollisionEvent());
 		paddle->AddComponent(particleComponent);
         
         return paddle;
