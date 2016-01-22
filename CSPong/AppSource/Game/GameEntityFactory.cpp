@@ -79,64 +79,11 @@ namespace CSPong
     //------------------------------------------------------------
     //------------------------------------------------------------
     CSCore::EntityUPtr GameEntityFactory::CreateCamera() const
-    {
-        /*
-         ==============================
-         Chilli Source Tour: Components
-         ==============================
-         
-         As mentioned, adding functionality to an entity in Chilli Source is achieved by attaching components. A component
-         is a module that can provide any functionality that applies to a single game object, i.e rendering 
-         a model or representing a collision body.
-         
-         Components are often created through factories like the Render Component Factory. This provides
-         convenience methods for creating all rendering related components such as SpriteComponent
-         ParticleComponent or AnimatedMeshComponent. The Entity class exposes methods for adding, removing
-         and querying for components.
-         
-            CSRendering::StaticMeshComponentSPtr staticMeshComponent = renderComponentFactory->CreateAnimatedMeshComponent(mesh, material);
-            entity->AddComponent(staticMeshComponent);
-            staticMeshComponent = entity->GetComponent<StaticMeshComponent>();
-            staticMeshComponent->RemoveFromEntity();
-         
-         Much like systems, Components receive lifecycle events such as OnUpdate(), OnSuspend() and
-         OnResume(). These are only received while the component is attached to an entity and that
-         entity has been added to the scene. In addition to the standard lifecycle events there are
-         also Component specific events: OnAddedToEntity(), OnAddedToScene(), OnRemovedFromScene() and
-         OnRemovedFromEntity(). These lifecycle events are all governed by the owning entity.
-         
-         ------------------------------
-         
-         Next: 'Camera' in GameEntityFactory::CreateCamera()
-         */
-        
+    {   
         CSCore::EntityUPtr camera(CSCore::Entity::Create());
         
         CameraTiltComponentSPtr cameraTiltComponent(new CameraTiltComponent(CSCore::Vector3::k_unitPositiveZ));
         camera->AddComponent(cameraTiltComponent);
-        
-        /*
-         ==========================
-         Chilli Source Tour: Camera
-         ==========================
-         
-         In Chilli Source a camera is simply an entity with a Camera Component attached to it. There
-         are two types of Camera Component each providing a different type of projection: Perspective
-         or Orthographic. Both of them are created through the Render Component Factory.
-         
-            PerspectiveCameraComponentUPtr perspectiveCameraComponent = renderComponentFactory->CreatePerspectiveCameraComponent(fov, nearPlane, farPlane);
-            OrthographicCameraComponentUPtr orthographicCameraComponent = renderComponentFactory->CreateOrthographicCameraComponent(viewportSize, nearPlane, farPlane);
-         
-         The position and direction of the camera are based on the position and orientation of the
-         camera entity. Methods such as SetLookAt() on an Entities Transform provide a convenient
-         way of positioning a camera.
-         
-         If a scene has no camera in it, nothing will be rendered other than GUI.
-         
-         --------------------------
-         
-         Next: 'Lighting' in GameEntityFactory::CreateDiffuseLight()
-         */
         
         const f32 k_fov = 3.14f / 3.0f;
         const f32 k_viewportHeight = 100.0f;
@@ -152,52 +99,7 @@ namespace CSPong
     //------------------------------------------------------------
     //------------------------------------------------------------
     CSCore::EntityUPtr GameEntityFactory::CreateDiffuseLight() const
-    {
-        /*
-         ============================
-         Chilli Source Tour: Lighting
-         ============================
-         
-         Like Cameras, Lights are entities with a Light Component attached to it. These can also be 
-         created through the Render Component Factory. The engine provides 3 different types of 
-         light: Ambient, Directional and Point.
-         
-             CSRendering::AmbientLightComponentSPtr ambientLightComponent = renderFactory->CreateAmbientLightComponent();
-             ambientLightComponent->SetColour(CSCore::Colour(0.4f, 0.4f, 0.4f, 1.0f));
-             
-             CSRendering::DirectionalLightComponentSPtr directionalLightComponent = renderFactory->CreateDirectionalLightComponent();
-             directionalLightComponent->SetColour(CSCore::Colour(0.6f, 0.6f, 0.6f, 1.0f));
-             
-             CSRendering::PointLightComponentSPtr pointLightComponent = renderFactory->CreateDirectionalLightComponent();
-             pointLightComponent->SetColour(CSCore::Colour(0.6f, 0.6f, 0.6f, 1.0f));
-         
-         Ambient lights apply light evenly to all objects in the scene emulating light
-         that has reflected multiple times and has no apparent source. Directional lights apply 
-         light in a given direction to the entire scene, representing a far away light source such 
-         as the sun. Point lights are omni-directional light objects from a point source with attenuation as objects
-         get further away, emulating light from a closer source such as a lamp.
-
-         Chilli Source supports many lights in a scene as it uses a multi-pass renderer. It
-         is still a forward renderer however and therefore each additional light will
-         negatively affect performance.
-         
-         Again similar to a Camera Component, the position and (where relevant) the direction
-         of a light comes from the light Entities transform. The SetLookAt() method
-         is also useful for setting the direction of a light.
-         
-         Directional lights can cast shadows. To enable shadows on a directional light, simply
-         pass a non-zero shadow map resolution when creating the component. Shadows require a
-         small amount of configuration before use. First of all the shadow volume needs to be
-         set. This is the area in which objects can cast shadows in front of the light. Secondly
-         the shadow tolerence typically needs to be set. This is a small offset used in the shadow
-         calculations to avoid shadow artifacts. By default all opaque objects will cast shadows.
-         This can be disabled using SetShadowCastingEnabled() in Static and Animated Mesh Component.
-         
-         ----------------------------
-         
-         Next: 'Resources' in GameEntityFactory::CreateBall()
-         */
-        
+    { 
         CSCore::EntityUPtr light(CSCore::Entity::Create());
         
         auto renderFactory = CSCore::Application::Get()->GetSystem<CSRendering::RenderComponentFactory>();
@@ -234,81 +136,13 @@ namespace CSPong
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    CSCore::EntityUPtr GameEntityFactory::CreateBall() const
-    {
-        /*
-         =============================
-         Chilli Source Tour: Resources
-         =============================
-         
-         In Chilli Source all resources are contained in the Resource Pool and loaded using a consistent API. When trying to load a
-         resource the pool is queried instead of loading directly from disk. If the pool already
-         contains a loaded version of the resource this will be returned. If not, the Resource Pool
-         will load it from disk. All loaded resources are immutable and are therefore returned
-         as const shared pointers.
-         
-            CSRendering::TextureCSPtr texture = resourcePool->LoadResource<CSRendering::Texture>(CSCore::StorageLocation::k_package, "Texture.png");
-         
-         The resource pool provides methods for asynchonous loading. In this case the resource is
-         not returned immediately instead being returned through a callback provided when calling
-         load.
-         
-             resourcePool->LoadResourceAsync<CSRendering::Texture>(CSCore::StorageLocation::k_package, "Texture.png", [](const CSRendering::TextureCSPtr& in_texture)
-             {
-                //Do something.
-             });
-         
-         Resources can also be created manually using the CreateResource() method. In this case
-         the resource is still pooled but it must be given a unique identifier and a mutable 
-         instance is returned. This can be queried from the pool using GetResource().
-         
-             CSRendering::TextureSPtr mutableTexture = resourcePool->CreateResource("MyTexture");
-             CSRendering::TextureCSPtr texture = resourcePool->GetResource("MyTexture");
-         
-         Resources that are created manually must also be built manually (for instance texture has a build method that takes in image data, format, etc).
-         
-         If the application receives a memory warning the Resource Pool will release any resources
-         that are no-longer in use. This can also be performed manually by calling ReleaseAllUnused().
-         
-         -----------------------------
-         
-         Next: 'Materials' in GameEntityFactory::CreateBall()
-         */
-        
+    CSCore::EntitySPtr GameEntityFactory::CreateBall() const
+    {   
         auto resourcePool = CSCore::Application::Get()->GetResourcePool();
         CSRendering::MeshCSPtr mesh = resourcePool->LoadResource<CSRendering::Mesh>(CSCore::StorageLocation::k_package, "Models/Ball.csmodel");
-        
-        /*
-         =============================
-         Chilli Source Tour: Materials
-         =============================
-         
-         In Chilli Source a material is a resource that contains a collection of rendering settings.
-         This includes the textures that should be used, the lighting surface values and render options
-         like the cull mode.
-         
-         Materials also have a type. This type determines which shaders should be used to render it.
-         For example an AnimatedBlinn material will use the shaders required for applying blinn-phong 
-         shading to an animated model or Sprite material is used to render standard 2D sprites. 
-         The custom type can also be used to specify custom shaders.
-         
-         Unlike most resources it is often convenient to create materials in code instead of loading 
-         from disk. To help with this a material factory has been provided with convienence
-         methods for creating mutable instances of each of the material types.
-         
-            CSRendering::MaterialFactory* materialFactory = CSCore::Application::Get()->GetSystem<MaterialFactory>();
-            CSRendering::MaterialSPtr spriteMaterial = materialFactory->CreateSprite("UniqueId", texture);
-         
-         Objects with the same material can be rendered in the same batch and therefore it is important to reduce the number of materials by batching textures.
-         
-         -----------------------------
-         
-         Next: 'Texture Atlases' in GameEntityFactory::CreateScoreSprite()
-         */
-        
         CSRendering::MaterialCSPtr material = resourcePool->LoadResource<CSRendering::Material>(CSCore::StorageLocation::k_package, "Materials/Models/Models.csmaterial");
         
-        CSCore::EntityUPtr ball(CSCore::Entity::Create());
+        CSCore::EntitySPtr ball(CSCore::Entity::Create());
         
         auto renderFactory = CSCore::Application::Get()->GetSystem<CSRendering::RenderComponentFactory>();
         CSRendering::StaticMeshComponentSPtr meshComponent = renderFactory->CreateStaticMeshComponent(mesh, material);
@@ -323,17 +157,16 @@ namespace CSPong
         
         m_scoringSystem->AddBallBody(dynamicBody);
 
-		auto particleEffectComponentFactory = CSCore::Application::Get()->GetSystem<ParticleEffectComponentFactory>();
-		CSRendering::ParticleEffectComponentSPtr particleComponent = particleEffectComponentFactory->CreateParticleEffectComponent(ParticleEffectComponentFactory::ParticleType::k_smokeStream, true);
-		ball->AddComponent(particleComponent);
+		auto particleECFSystem = CSCore::Application::Get()->GetSystem<ParticleEffectComponentFactory>();
+		particleECFSystem->AddBallParticles(ball);
         
         return ball;
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    CSCore::EntityUPtr GameEntityFactory::CreatePlayerPaddle(const CSCore::EntitySPtr& in_camera) const
+    CSCore::EntitySPtr GameEntityFactory::CreatePlayerPaddle(const CSCore::EntitySPtr& in_camera) const
     {
-        CSCore::EntityUPtr paddle(CSCore::Entity::Create());
+        CSCore::EntitySPtr paddle(CSCore::Entity::Create());
         
         auto renderFactory = CSCore::Application::Get()->GetSystem<CSRendering::RenderComponentFactory>();
         auto resourcePool = CSCore::Application::Get()->GetResourcePool();
@@ -355,18 +188,16 @@ namespace CSPong
         f32 offsetX = arenaMesh->GetAABB().GetSize().x * -k_paddlePercentageOffsetFromCentre;
         paddle->GetTransform().SetPosition(offsetX, 0.0f, 0.0f);
 
-		auto particleEffectComponentFactory = CSCore::Application::Get()->GetSystem<ParticleEffectComponentFactory>();
-		CSRendering::ParticleEffectComponentSPtr particleComponent = particleEffectComponentFactory->CreateOnCollisionParticleEffectComponent(ParticleEffectComponentFactory::ParticleType::k_blueMagmaBurst, dynamicBody->GetCollisionEvent());
-		paddle->AddComponent(particleComponent);
+		auto particleECFSystem = CSCore::Application::Get()->GetSystem<ParticleEffectComponentFactory>();
+		particleECFSystem->AddPlayerParticlesOnCollision(paddle, dynamicBody->GetCollisionEvent());
         
-
         return paddle;
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    CSCore::EntityUPtr GameEntityFactory::CreateOppositionPaddle(const CSCore::EntitySPtr& in_ball) const
+    CSCore::EntitySPtr GameEntityFactory::CreateOppositionPaddle(const CSCore::EntitySPtr& in_ball) const
     {
-        CSCore::EntityUPtr paddle(CSCore::Entity::Create());
+        CSCore::EntitySPtr paddle(CSCore::Entity::Create());
         
         auto renderFactory = CSCore::Application::Get()->GetSystem<CSRendering::RenderComponentFactory>();
         auto resourcePool = CSCore::Application::Get()->GetResourcePool();
@@ -388,10 +219,9 @@ namespace CSPong
         f32 offsetX = arenaMesh->GetAABB().GetSize().x * k_paddlePercentageOffsetFromCentre;
         paddle->GetTransform().SetPosition(offsetX, 0.0f, 0.0f);
 
-		auto particleEffectComponentFactory = CSCore::Application::Get()->GetSystem<ParticleEffectComponentFactory>();
-		CSRendering::ParticleEffectComponentSPtr particleComponent = particleEffectComponentFactory->CreateOnCollisionParticleEffectComponent(ParticleEffectComponentFactory::ParticleType::k_yellowMagmaBurst, dynamicBody->GetCollisionEvent());
-		paddle->AddComponent(particleComponent);
-        
+		auto particleECFSystem = CSCore::Application::Get()->GetSystem<ParticleEffectComponentFactory>();
+		particleECFSystem->AddOpponentParticlesOnCollision(paddle, dynamicBody->GetCollisionEvent());
+		
         return paddle;
     }
     //------------------------------------------------------------

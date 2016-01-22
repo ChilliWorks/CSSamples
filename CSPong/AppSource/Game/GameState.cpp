@@ -61,31 +61,7 @@ namespace CSPong
     //------------------------------------------------------------
     //------------------------------------------------------------
     void GameState::OnInit()
-    {
-        /*
-         ==============================
-         Chilli Source Tour: Entities
-         ==============================
-         
-         Entites (also known as game objects) are used to represent all the objects in the world. Entities have no functionality other than a transform which is used
-         to determine their world space position, scale and orientation. 
-         
-         The behaviour of an entity is goverened by the components it has attached to it. An example of this is the opposition paddle
-         entity which has a StaticMeshComponent which describes how it is rendered and an AIControllerComponent which moves the entity towards the ball. This is really powerful as it allows
-         behaviour to be customised from building blocks without having to change exisiting code. For instance the player paddle is controlled by pointer input via the TouchControllerComponent 
-         however this could easily be detached and replaced by an AccelerometerControllerComponent; while the opposition paddle is controlled by an AIComponent but both player and opposition have the same render component.
-         Another example could be a player entity in an RPG game that collects abilities as they progress, each ability's logic could be controlled by a component.
-         
-         Entites can be added to other entites to form transform hierarchies (i.e. moving the parent entity will move its children).
-         
-         Entities that have render components (meshes, cameras, lights, etc) can only have these components rendered by adding them to the scene. Similarly, components on each entity are only updated if the
-         entity is added to the scene.
-         
-         ------------------------------
-         
-         Next: 'Components' in GameEntityFactory::CreateCamera
-         */
-        
+    {   
         GetScene()->SetClearColour(CSCore::Colour::k_black);
         
         CSCore::EntitySPtr camera = m_gameEntityFactory->CreateCamera();
