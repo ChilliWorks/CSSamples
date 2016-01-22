@@ -30,6 +30,7 @@
 
 #include <Common/TransitionSystem.h>
 #include <Game/GameState.h>
+#include <Game/Particles/ParticleEffectComponentFactory.h>
 
 #include <ChilliSource/Core/Base.h>
 #include <ChilliSource/Core/Resource.h>
@@ -145,6 +146,83 @@ namespace CSPong
 		{
 			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
 		});
+
+		SetupParticleMenuGrid();
+	}
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	void MainMenuState::SetupParticleMenuGrid()
+	{
+		auto particleMenuGrid = m_particleMenu->GetWidgetRecursive("ParticleMenuGridTemplate")->GetWidget("ParticleMenuGrid");
+		auto playerParticleEffectDiv = particleMenuGrid->GetWidgetRecursive("PlayerParticleEffectDivTemplate")->GetWidget("PlayerParticleEffectDiv");
+		auto opponentParticleEffectDiv = particleMenuGrid->GetWidgetRecursive("OpponentParticleEffectDivTemplate")->GetWidget("OpponentParticleEffectDiv");
+		auto ballParticleEffectDiv = particleMenuGrid->GetWidgetRecursive("BallParticleEffectDivTemplate")->GetWidget("BallParticleEffectDiv");
+
+		//Player magma toggle button events
+		auto playerMagmaToggleButton = playerParticleEffectDiv->GetWidgetRecursive("PlayerMagmaToggleButton");
+		m_playerMagmaToggleButtonEnteredConnection = playerMagmaToggleButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_playerMagmaToggleButtonExitedConnection = playerMagmaToggleButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
+		
+		//Player ice cream toggle button events
+		auto playerIceCreamToggleButton = playerParticleEffectDiv->GetWidgetRecursive("PlayerIceCreamToggleButton");
+		m_playerIceCreamToggleButtonEnteredConnection = playerIceCreamToggleButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_playerIceCreamToggleButtonExitedConnection = playerIceCreamToggleButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
+
+		//Opponent magma toggle button events
+		auto opponentMagmaToggleButton = opponentParticleEffectDiv->GetWidgetRecursive("OpponentMagmaToggleButton");
+		m_opponentMagmaToggleButtonEnteredConnection = opponentMagmaToggleButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_opponentMagmaToggleButtonExitedConnection = opponentMagmaToggleButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
+
+		//Opponent ice cream toggle button events
+		auto opponentIceCreamToggleButton = opponentParticleEffectDiv->GetWidgetRecursive("OpponentIceCreamToggleButton");
+		m_opponentIceCreamToggleButtonEnteredConnection = opponentIceCreamToggleButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_opponentIceCreamToggleButtonExitedConnection = opponentIceCreamToggleButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
+
+		//Ball smoke toggle button events
+		auto ballSmokeToggleButton = ballParticleEffectDiv->GetWidgetRecursive("BallSmokeToggleButton");
+		m_ballSmokeToggleButtonEnteredConnection = ballSmokeToggleButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_ballSmokeToggleButtonExitedConnection = ballSmokeToggleButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
+		
+		// Ball beam toggle button events
+		auto ballBeamToggleButton = ballParticleEffectDiv->GetWidgetRecursive("BallBeamToggleButton");
+		m_ballBeamToggleButtonEnteredConnection = ballBeamToggleButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_ballBeamToggleButtonExitedConnection = ballBeamToggleButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
 	}
 	//------------------------------------------------------------
 	//------------------------------------------------------------
@@ -174,6 +252,9 @@ namespace CSPong
 		{
 			m_transitionSystem->Transition(CSCore::StateSPtr(new GameState()));
 		});
+
+		//Update the particle effect component factory system to use the chosen particles
+		UpdateParticleOptions();
 	}
 	//------------------------------------------------------------
 	//------------------------------------------------------------
@@ -203,6 +284,32 @@ namespace CSPong
 		{
 			MainMenuState::SetAllInputEnabled(true);
 		});
+	}
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	void MainMenuState::UpdateParticleOptions()
+	{
+		auto particleECFSystem = CSCore::Application::Get()->GetSystem<ParticleEffectComponentFactory>();
+
+		auto particleMenuGrid = m_particleMenu->GetWidgetRecursive("ParticleMenuGridTemplate")->GetWidget("ParticleMenuGrid");
+		auto playerParticleEffectDiv = particleMenuGrid->GetWidgetRecursive("PlayerParticleEffectDivTemplate")->GetWidget("PlayerParticleEffectDiv");
+		auto opponentParticleEffectDiv = particleMenuGrid->GetWidgetRecursive("OpponentParticleEffectDivTemplate")->GetWidget("OpponentParticleEffectDiv");
+		auto ballParticleEffectDiv = particleMenuGrid->GetWidgetRecursive("BallParticleEffectDivTemplate")->GetWidget("BallParticleEffectDiv");
+
+		//Setting user's options for player particles
+		bool playerMagmaToggled = playerParticleEffectDiv->GetWidgetRecursive("PlayerMagmaToggleButton")->GetProperty<bool>("ToggledOn");
+		bool playerIceCreamToggled = playerParticleEffectDiv->GetWidgetRecursive("PlayerIceCreamToggleButton")->GetProperty<bool>("ToggledOn");
+		particleECFSystem->SetPlayerParticles(playerMagmaToggled, playerIceCreamToggled);
+
+		//Setting user's options for opponent particles
+		bool opponentMagmaToggled = opponentParticleEffectDiv->GetWidgetRecursive("OpponentMagmaToggleButton")->GetProperty<bool>("ToggledOn");
+		bool opponentIceCreamToggled = opponentParticleEffectDiv->GetWidgetRecursive("OpponentIceCreamToggleButton")->GetProperty<bool>("ToggledOn");
+		particleECFSystem->SetOpponentParticles(opponentMagmaToggled, opponentIceCreamToggled);
+
+		//Setting user's options for ball particles
+		bool ballSmokeToggled = ballParticleEffectDiv->GetWidgetRecursive("BallSmokeToggleButton")->GetProperty<bool>("ToggledOn");
+		bool ballBeamToggled = ballParticleEffectDiv->GetWidgetRecursive("BallBeamToggleButton")->GetProperty<bool>("ToggledOn");
+		particleECFSystem->SetBallParticles(ballSmokeToggled, ballBeamToggled);
 	}
 	//------------------------------------------------------------
 	//------------------------------------------------------------

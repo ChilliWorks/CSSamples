@@ -40,25 +40,22 @@ namespace CSPong
 {
     //------------------------------------------------------------
     /// The main menu state displays the UI for accessing the game
-    /// and the options menu. The CPP file contains more information
-    /// on how the UI system operates.
+    /// and the options menu.
     ///
     /// @author S Downie
     //------------------------------------------------------------
     class MainMenuState final : public CSCore::State
     {
     public:
-        //------------------------------------------------------
-        /// Called when its time to create our state systems
+		//------------------------------------------------------------
+        /// Called when its time to create our state systems.
         ///
         /// @author Ian Copland
-        //------------------------------------------------------
+		//------------------------------------------------------------
         void CreateSystems();
         //------------------------------------------------------------
         /// Called when the state is first placed onto the state manager
         /// stack. This is only called once and is mirrored by OnDestroy().
-        ///
-        /// Use this for one time initialisation
         ///
         /// @author S Downie
         //------------------------------------------------------------
@@ -74,17 +71,26 @@ namespace CSPong
         //------------------------------------------------------------
         void OnUpdate(f32 in_dt) override;
 		//------------------------------------------------------------
-		/// Adds the events and easing information needed for the main menu's widgets
+		/// Adds the events and easing information needed for the main 
+		/// menu's widgets.
 		///
 		/// @author Angela Gross
 		//------------------------------------------------------------
 		void SetupMainMenu();
 		//------------------------------------------------------------
-		/// Adds the events and easing information needed for the particle menu's widgets
+		/// Adds the events and easing information needed for the 
+		/// particle menu's widgets
 		///
 		/// @author Angela Gross
 		//------------------------------------------------------------
 		void SetupParticleMenu();
+		//------------------------------------------------------------
+		/// Adds the events needed for the particle buttons in the 
+		/// grid.
+		///
+		/// @author Angela Gross
+		//------------------------------------------------------------
+		void SetupParticleMenuGrid();
 		//------------------------------------------------------------
 		/// Handler for when the MainMenuState is transitioned into.
 		///
@@ -111,6 +117,13 @@ namespace CSPong
 		/// @param Pointer type
 		//------------------------------------------------------------
 		void ArrowButtonPointerReleased(CSUI::Widget* in_arrowButton, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType);
+		//------------------------------------------------------------
+		/// Handler to set all of the particle options for the ball,
+		/// player, and opponent paddles.
+		///
+		/// @author Angela Gross
+		//------------------------------------------------------------
+		void UpdateParticleOptions();
 		//------------------------------------------------------------
 		/// Darkens the widget.
 		///
@@ -147,15 +160,33 @@ namespace CSPong
         TransitionSystem* m_transitionSystem;
 
         CSCore::EventConnectionUPtr m_transitionInConnection;
+
         CSCore::EventConnectionUPtr m_playButtonReleasedConnection;
 		CSCore::EventConnectionUPtr m_playButtonEnteredConnection;
 		CSCore::EventConnectionUPtr m_playButtonExitedConnection;
+
 		CSCore::EventConnectionUPtr m_rightArrowReleasedConnection;
 		CSCore::EventConnectionUPtr m_rightArrowEnteredConnection;
 		CSCore::EventConnectionUPtr m_rightArrowExitedConnection;
+
 		CSCore::EventConnectionUPtr m_leftArrowReleasedConnection;
 		CSCore::EventConnectionUPtr m_leftArrowEnteredConnection;
 		CSCore::EventConnectionUPtr m_leftArrowExitedConnection;
+
+		CSCore::EventConnectionUPtr m_playerMagmaToggleButtonEnteredConnection;
+		CSCore::EventConnectionUPtr m_playerMagmaToggleButtonExitedConnection;
+		CSCore::EventConnectionUPtr m_playerIceCreamToggleButtonEnteredConnection;
+		CSCore::EventConnectionUPtr m_playerIceCreamToggleButtonExitedConnection;
+
+		CSCore::EventConnectionUPtr m_opponentMagmaToggleButtonEnteredConnection;
+		CSCore::EventConnectionUPtr m_opponentMagmaToggleButtonExitedConnection;
+		CSCore::EventConnectionUPtr m_opponentIceCreamToggleButtonEnteredConnection;
+		CSCore::EventConnectionUPtr m_opponentIceCreamToggleButtonExitedConnection;
+
+		CSCore::EventConnectionUPtr m_ballSmokeToggleButtonEnteredConnection;
+		CSCore::EventConnectionUPtr m_ballSmokeToggleButtonExitedConnection;
+		CSCore::EventConnectionUPtr m_ballBeamToggleButtonEnteredConnection;
+		CSCore::EventConnectionUPtr m_ballBeamToggleButtonExitedConnection;
 
 		CSCore::EaseInOutBackTween<f32> m_mainMenuTween;
 		CSCore::EaseInOutBackTween<f32> m_particleMenuTween;
