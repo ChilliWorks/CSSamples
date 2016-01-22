@@ -31,8 +31,10 @@
 
 #include <ForwardDeclarations.h>
 
+#include <ChilliSource/Core/Base.h>
 #include <ChilliSource/Core/State.h>
 #include <ChilliSource/Core/Tween.h>
+#include <ChilliSource/UI/Base.h>
 
 namespace CSPong
 {
@@ -70,15 +72,98 @@ namespace CSPong
         ///
         /// @param Time since last update in seconds
         //------------------------------------------------------------
-        void OnUpdate(f32 in_timeSinceLastUpdate) override;
+        void OnUpdate(f32 in_dt) override;
+		//------------------------------------------------------------
+		/// Adds the events and easing information needed for the main menu's widgets
+		///
+		/// @author Angela Gross
+		//------------------------------------------------------------
+		void SetupMainMenu();
+		//------------------------------------------------------------
+		/// Adds the events and easing information needed for the particle menu's widgets
+		///
+		/// @author Angela Gross
+		//------------------------------------------------------------
+		void SetupParticleMenu();
+		//------------------------------------------------------------
+		/// Handler for when the MainMenuState is transitioned into.
+		///
+		/// @author Angela Gross
+		//------------------------------------------------------------
+		void TransitionSystemFinished();
+		//------------------------------------------------------------
+		/// Handler for when the play button is pressed.
+		///
+		/// @author Angela Gross
+		///
+		/// @param Play button widget
+		/// @param Captured pointer
+		/// @param Pointer type
+		//------------------------------------------------------------
+		void PlayButtonPointerReleased(CSUI::Widget* in_playButton, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType);
+		//------------------------------------------------------------
+		/// Handler for when either of the arrows are pressed.
+		///
+		/// @author Angela Gross
+		///
+		/// @param Arrow button widget
+		/// @param Captured pointer
+		/// @param Pointer type
+		//------------------------------------------------------------
+		void ArrowButtonPointerReleased(CSUI::Widget* in_arrowButton, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType);
+		//------------------------------------------------------------
+		/// Darkens the widget.
+		///
+		/// @author Angela Gross
+		///
+		/// @param Desired widget to darken
+		/// @param Pointer type
+		//------------------------------------------------------------
+		void DarkenWidget(CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer);
+		//------------------------------------------------------------
+		/// Resets the widget's color from DarkenWidget().
+		///
+		/// @author Angela Gross
+		///
+		/// @param Desired widget to darken
+		/// @param Pointer type
+		//------------------------------------------------------------
+		void ResetDarkenWidget(CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer);
+		//------------------------------------------------------------
+		/// Sets the input enabled component on all widgets in the 
+		/// menu.
+		///
+		/// @author Angela Gross
+		///
+		/// @param Whether or not the user should accept and respond
+		/// to input.
+		//------------------------------------------------------------
+		void SetAllInputEnabled(const bool in_inputEnabled);
         
     private:
+
+		CSCore::Colour const k_menuFadeColour = (1.0f, 1.0f, 1.0f, 0.75f);
         
         TransitionSystem* m_transitionSystem;
+
         CSCore::EventConnectionUPtr m_transitionInConnection;
-        CSCore::EventConnectionUPtr m_playButtonConnection;
-        CSCore::EaseInOutBackTween<f32> m_playButtonTween;
-        CSUI::WidgetSPtr m_playButton;
+        CSCore::EventConnectionUPtr m_playButtonReleasedConnection;
+		CSCore::EventConnectionUPtr m_playButtonEnteredConnection;
+		CSCore::EventConnectionUPtr m_playButtonExitedConnection;
+		CSCore::EventConnectionUPtr m_rightArrowReleasedConnection;
+		CSCore::EventConnectionUPtr m_rightArrowEnteredConnection;
+		CSCore::EventConnectionUPtr m_rightArrowExitedConnection;
+		CSCore::EventConnectionUPtr m_leftArrowReleasedConnection;
+		CSCore::EventConnectionUPtr m_leftArrowEnteredConnection;
+		CSCore::EventConnectionUPtr m_leftArrowExitedConnection;
+
+		CSCore::EaseInOutBackTween<f32> m_mainMenuTween;
+		CSCore::EaseInOutBackTween<f32> m_particleMenuTween;
+		bool m_goingRight = true;
+
+		CSUI::WidgetSPtr m_menuContainer;
+        CSUI::WidgetSPtr m_mainMenu;
+		CSUI::WidgetSPtr m_particleMenu;
     };
 }
 

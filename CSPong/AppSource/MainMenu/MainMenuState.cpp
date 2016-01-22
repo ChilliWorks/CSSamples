@@ -49,108 +49,180 @@ namespace CSPong
     //------------------------------------------------------------
     void MainMenuState::OnInit()
     {
-        /*
-         ==============================
-         Chilli Source Tour: UI
-         ==============================
-         
-         UI in Chilli Source can be created in code or from .csui files.
-         
-         UI is described hierarchically with the canvas at the root. Changing properties on the parent will usually effect the children i.e. disabling user interaction on the root
-         will make all children non-interactable. This is a good way of creating encapsulated widgets i.e. dialogue boxes, etc.
-         
-         UI uses a mixture of absolute and relative co-ordinates.
-         Absolute co-ords are always in screen-space (i.e. pixels) with (0, 0) at the bottom left. Setting Absolute Size to 100x200 will always give an view at
-         100x200 regardless of screen resolution or orientation. This is useful for views such as virtual thumbsticks which will have been tailored to the avergae size of a human thumb.
-         Relative co-ords are specified as a percentage relative to the parent view size (again from the bottom left). Setting Relative Position to 0.5x0.5 will place the view at
-         the centre of its parent. Setting the Relative Size = 1.0x1.0 will make the view the same size as its parent. Relative co-ords are useful for UI that needs to adapt based on
-         the screen resolution.
-         
-         Relative size and positioning on its own is not enough to build scaleable UI you need to use anchors and consider the aspect ratio of any images. CS UI has 2 anchor properties
-         
-         The local anchor "OriginAnchor" which controls where the origin of the view is i.e. where it is rendered from and the "ParentalAnchor" which controls how it anchors to its parent.
-         
-         LocalAlignment = MiddleCentre
-         ParentalAlignment = MiddleCentre
-         
-         |           |
-         |    | |    |
-         |           |
-         
-         LocalAlignment = TopLeft
-         ParentalAlignment = TopLeft
-         
-         || |        |
-         |           |
-         |           |
-         
-         
-         Widgets can also have a size policy. This governs how the widget will respond when the aspect ratio of its prefered size (in most cases the size of its image) is different to its
-         actual size. The most common of these are "UseWidthMaintainingAspect", which will alter the widgets height to maintain aspect ratio with the given width, or "UseHeightMaintainingAspect"
-         which will alter the widgets width to maintain aspect ratio with the given height.
-         
-         ------------------------------
-         
-         Next: 'Events' in MainMenuState::OnInit
-         */
-        
-        //Load the GUI and add it to the window
-        auto mainMenuViewDef = CSCore::Application::Get()->GetResourcePool()->LoadResource<CSUI::WidgetTemplate>(CSCore::StorageLocation::k_package, "GUI/MainMenu.csui");
-        CSUI::WidgetSPtr mainMenuView = CSCore::Application::Get()->GetWidgetFactory()->Create(mainMenuViewDef);
-        GetUICanvas()->AddWidget(mainMenuView);
-        
+		//Load parent widget container (only contains background image, main menu, and particle menu)
+		auto menuContainerDef = CSCore::Application::Get()->GetResourcePool()->LoadResource<CSUI::WidgetTemplate>(CSCore::StorageLocation::k_package, "GUI/MenuContainer.csui");
+		m_menuContainer = CSCore::Application::Get()->GetWidgetFactory()->Create(menuContainerDef);
+		GetUICanvas()->AddWidget(m_menuContainer);
 
-        //Grab the button children by name and add this class as a listener for button events
-        m_playButton = mainMenuView->GetWidget("PlayButton");
-        
-        //Disable user interaction until the animation is complete.
-        m_playButton->SetInputEnabled(false);
-        
-        //Create a tween that will slide the UI onto the screen. This will be used to offset the button from its stated position.
-        m_playButtonTween = CSCore::MakeEaseInOutBackTween(-1.0f, 0.0f, 1.0f);
-        
-        /*
-         ==============================
-         Chilli Source Tour: Events
-         ==============================
-         
-         Chilli Source has various ways to register as a listener for an action. The simplest is simply setting a callback delegate using std::function which provides a one to one mapping. One of the most common
-         methods is by using "events". Events allow multiple listeners to register against the same action. Listeners open a scoped connection to the event and while the connection renamins open will
-         be notifed when the event occurs. Connections can be closed by either end (usually when they go out of scope).
-         
-         Buttons use events to inform listeners when they have been activated. The delegate that are passed to events can be std::functions or in this case an anonymous lambda function:
-         
-         ------------------------------
-         
-         Next: 'Entities' in GameState::OnInit
-         */
-        m_playButtonConnection = m_playButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
-        {
-            m_playButton->SetInputEnabled(false);
-            m_playButtonTween.Play(CSCore::TweenPlayMode::k_onceReverse);
-            m_playButtonTween.SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
-            {
-                m_transitionSystem->Transition(CSCore::StateSPtr(new GameState()));
-            });
-        });
-        
-        m_transitionInConnection = m_transitionSystem->GetTransitionInFinishedEvent().OpenConnection([this]()
-        {
-            m_playButtonTween.Play(CSCore::TweenPlayMode::k_once);
-            
-            //Once the animation is finished allow the user to press the button
-            m_playButtonTween.SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
-            {
-                m_playButton->SetInputEnabled(true);
-            });
-        });
+		//Get main and particle menus
+		m_mainMenu = m_menuContainer->GetWidget("MainMenuTemplate")->GetWidget("MainMenuContainer");
+		m_particleMenu = m_menuContainer->GetWidget("ParticleMenuTemplate")->GetWidget("ParticleMenuContainer");
+
+		//Disable all user interaction until the animation is complete.
+		SetAllInputEnabled(false);
+
+		SetupMainMenu();
+		SetupParticleMenu();
+
+		//Transition system event
+		m_transitionInConnection = m_transitionSystem->GetTransitionInFinishedEvent().OpenConnection([this]() { MainMenuState::TransitionSystemFinished(); });
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    void MainMenuState::OnUpdate(f32 dt)
+    void MainMenuState::OnUpdate(f32 in_dt)
     {
-        m_playButtonTween.Update(dt);
-        m_playButton->SetRelativePosition(CSCore::Vector2(m_playButtonTween.GetValue(), m_playButton->GetLocalRelativePosition().y));
+		if (m_mainMenuTween.IsPlaying())
+		{
+			m_mainMenuTween.Update(in_dt);
+			m_mainMenu->SetRelativePosition(CSCore::Vector2(m_mainMenuTween.GetValue(), m_mainMenu->GetLocalRelativePosition().y));
+		}
+
+		if (m_particleMenuTween.IsPlaying())
+		{
+			m_particleMenuTween.Update(in_dt);
+			m_particleMenu->SetRelativePosition(CSCore::Vector2(m_particleMenuTween.GetValue(), m_particleMenu->GetLocalRelativePosition().y));
+		}
     }
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	void MainMenuState::SetupMainMenu()
+	{
+		//Get play and right arrow buttons to set their events
+		auto playButton = m_mainMenu->GetWidget("PlayButton");
+		auto rightArrowButton = m_mainMenu->GetWidget("RightArrowButton");
+
+		//Create main menu tween that will move its components from the left (offscreen) to the center
+		m_mainMenuTween = CSCore::MakeEaseInOutBackTween(-1.0f, 0.0f, 1.0f);
+		
+		//Play button events
+		m_playButtonReleasedConnection = playButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType) 
+		{ 
+			MainMenuState::PlayButtonPointerReleased(in_widget, in_pointer, in_inputType);
+		});
+		m_playButtonEnteredConnection = playButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer) 
+		{ 
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_playButtonExitedConnection = playButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
+
+		//Right arrow button events
+		m_rightArrowReleasedConnection = rightArrowButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
+		{
+			MainMenuState::ArrowButtonPointerReleased(in_widget, in_pointer, in_inputType);
+		});
+		m_rightArrowEnteredConnection = rightArrowButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_rightArrowExitedConnection = rightArrowButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
+	}
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	void MainMenuState::SetupParticleMenu()
+	{
+		//Get left arrow button to set its events
+		auto leftArrowButton = m_particleMenu->GetWidget("LeftArrowButton");
+
+		//Create particle menu tween that will move its components from the right (offscreen) to the center
+		m_particleMenuTween = CSCore::MakeEaseInOutBackTween(1.0f, 0.0f, 1.0f);
+
+		//Left arrow button events
+		m_leftArrowReleasedConnection = leftArrowButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
+		{
+			MainMenuState::ArrowButtonPointerReleased(in_widget, in_pointer, in_inputType);
+		});
+		m_leftArrowEnteredConnection = leftArrowButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_leftArrowExitedConnection = leftArrowButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
+	}
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	void MainMenuState::TransitionSystemFinished()
+	{
+		//Set main menu tween to move to the right
+		m_mainMenuTween.Play(CSCore::TweenPlayMode::k_once);
+
+		//Once the animation is finished, allow the user to press the buttons
+		m_mainMenuTween.SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
+		{
+			MainMenuState::SetAllInputEnabled(true);
+		});
+	}
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	void MainMenuState::PlayButtonPointerReleased(CSUI::Widget* in_playButton, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
+	{
+		//Disable all user interaction until the animation is complete.
+		SetAllInputEnabled(false);
+
+		//Set main menu tween to move to the left
+		m_mainMenuTween.Play(CSCore::TweenPlayMode::k_onceReverse);
+
+		//Once the animation is finished, transition to the game
+		m_mainMenuTween.SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
+		{
+			m_transitionSystem->Transition(CSCore::StateSPtr(new GameState()));
+		});
+	}
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	void MainMenuState::ArrowButtonPointerReleased(CSUI::Widget* in_arrowButton, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
+	{
+		//Disable all user interaction until the animation is complete.
+		SetAllInputEnabled(false);
+
+		if (m_goingRight)
+		{
+			//Set main menu and particle tweens to move left and right, respectively
+			m_mainMenuTween.Play(CSCore::TweenPlayMode::k_onceReverse);
+			m_particleMenuTween.Play(CSCore::TweenPlayMode::k_once);
+		}
+		else
+		{
+			//Set main menu and particle tweens to move right and left, respectively
+			m_mainMenuTween.Play(CSCore::TweenPlayMode::k_once);
+			m_particleMenuTween.Play(CSCore::TweenPlayMode::k_onceReverse);
+		}
+
+		//Reset the direction
+		m_goingRight = !m_goingRight;
+
+		//Once the animation is finished, allow the user to press the buttons
+		m_mainMenuTween.SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
+		{
+			MainMenuState::SetAllInputEnabled(true);
+		});
+	}
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	void MainMenuState::DarkenWidget(CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+	{
+		in_widget->SetColour(in_widget->GetFinalColour() * k_menuFadeColour);
+	}
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	void MainMenuState::ResetDarkenWidget(CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+	{
+		in_widget->SetColour(in_widget->GetFinalColour() / k_menuFadeColour);
+	}
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	void MainMenuState::SetAllInputEnabled(const bool in_inputEnabled)
+	{
+		m_mainMenu->GetWidget("PlayButton")->SetInputEnabled(in_inputEnabled);
+		m_mainMenu->GetWidget("RightArrowButton")->SetInputEnabled(in_inputEnabled);
+		m_particleMenu->GetWidget("LeftArrowButton")->SetInputEnabled(in_inputEnabled);
+	}
 }
 
