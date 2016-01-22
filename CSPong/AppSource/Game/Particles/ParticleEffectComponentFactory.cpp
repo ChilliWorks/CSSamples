@@ -38,6 +38,13 @@ namespace CSPong
 {
 	CS_DEFINE_NAMEDTYPE(ParticleEffectComponentFactory);
 
+	const ParticleEffectComponentFactory::ParticleType ParticleEffectComponentFactory::k_gameParticles[] =
+	{
+		ParticleEffectComponentFactory::ParticleType::k_blueMagmaBurst, ParticleEffectComponentFactory::ParticleType::k_blueIceCreamBurst,
+		ParticleEffectComponentFactory::ParticleType::k_yellowMagmaBurst, ParticleEffectComponentFactory::ParticleType::k_pinkIceCreamBurst,
+		ParticleEffectComponentFactory::ParticleType::k_smokeStream, ParticleEffectComponentFactory::ParticleType::k_beamStream
+	};
+
 	//---------------------------------------------------
 	//---------------------------------------------------
 	ParticleEffectComponentFactoryUPtr ParticleEffectComponentFactory::Create()
@@ -145,38 +152,78 @@ namespace CSPong
 	}
 	//------------------------------------------------------------
 	//------------------------------------------------------------
-	ParticleEffectComponentFactory::ParticleType ParticleEffectComponentFactory::GetBallParticleType() const
+	void ParticleEffectComponentFactory::AddPlayerParticlesOnCollision(CSCore::EntitySPtr in_playerEntity, CSCore::IConnectableEvent<DynamicBodyComponent::CollisionDelegate>& in_collisionEvent)
 	{
-		return m_ballParticleType;
+		//Add magma particles if it's chosen
+		if (m_particlesChosen[k_playerParticlesIx])
+		{
+			auto particleComponent = CreateOnCollisionParticleEffectComponent(k_gameParticles[k_playerParticlesIx], in_collisionEvent);
+			in_playerEntity->AddComponent(particleComponent);
+		}
+
+		//Add ice cream particles if it's chosen
+		if (m_particlesChosen[k_playerParticlesIx + 1])
+		{
+			auto particleComponent = CreateOnCollisionParticleEffectComponent(k_gameParticles[k_playerParticlesIx + 1], in_collisionEvent);
+			in_playerEntity->AddComponent(particleComponent);
+		}
 	}
 	//------------------------------------------------------------
 	//------------------------------------------------------------
-	ParticleEffectComponentFactory::ParticleType ParticleEffectComponentFactory::GetOpponentPaddleParticleType() const
+	void ParticleEffectComponentFactory::AddOpponentParticlesOnCollision(CSCore::EntitySPtr in_opponentEntity, CSCore::IConnectableEvent<DynamicBodyComponent::CollisionDelegate>& in_collisionEvent)
 	{
-		return m_opponentPaddleParticleType;
+		//Add magma particles if it's chosen
+		if (m_particlesChosen[k_opponentParticlesIx])
+		{
+			auto particleComponent = CreateOnCollisionParticleEffectComponent(k_gameParticles[k_opponentParticlesIx], in_collisionEvent);
+			in_opponentEntity->AddComponent(particleComponent);
+		}
+
+		//Add ice cream particles if it's chosen
+		if (m_particlesChosen[k_opponentParticlesIx + 1])
+		{
+			auto particleComponent = CreateOnCollisionParticleEffectComponent(k_gameParticles[k_opponentParticlesIx + 1], in_collisionEvent);
+			in_opponentEntity->AddComponent(particleComponent);
+		}
 	}
 	//------------------------------------------------------------
 	//------------------------------------------------------------
-	ParticleEffectComponentFactory::ParticleType ParticleEffectComponentFactory::GetPlayerPaddleParticleType() const
+	void ParticleEffectComponentFactory::AddBallParticles(CSCore::EntitySPtr in_ballEntity)
 	{
-		return m_playerPaddleParticleType;
+		//Add smoke particles if it's chosen
+		if (m_particlesChosen[k_ballParticlesIx])
+		{
+			CSRendering::ParticleEffectComponentSPtr particleComponent = CreateParticleEffectComponent(k_gameParticles[k_ballParticlesIx], true);
+			in_ballEntity->AddComponent(particleComponent);
+		}
+
+		//Add beam particles if it's chosen
+		if (m_particlesChosen[k_ballParticlesIx + 1])
+		{
+			CSRendering::ParticleEffectComponentSPtr particleComponent = CreateParticleEffectComponent(k_gameParticles[k_ballParticlesIx + 1], true);
+			in_ballEntity->AddComponent(particleComponent);
+		}
 	}
 	//------------------------------------------------------------
 	//------------------------------------------------------------
-	void ParticleEffectComponentFactory::SetBallParticleType(const ParticleType in_particleType)
+	void ParticleEffectComponentFactory::SetPlayerParticles(const bool in_magmaUsed, const bool in_iceCreamUsed)
 	{
-		m_ballParticleType = in_particleType;
+		m_particlesChosen[k_playerParticlesIx] = in_magmaUsed;
+		m_particlesChosen[k_playerParticlesIx + 1] = in_iceCreamUsed;
 	}
 	//------------------------------------------------------------
 	//------------------------------------------------------------
-	void ParticleEffectComponentFactory::SetOpponentPaddleParticleType(const ParticleType in_particleType)
+	void ParticleEffectComponentFactory::SetOpponentParticles(const bool in_magmaUsed, const bool in_iceCreamUsed)
 	{
-		m_opponentPaddleParticleType = in_particleType;
+		m_particlesChosen[k_opponentParticlesIx] = in_magmaUsed;
+		m_particlesChosen[k_opponentParticlesIx + 1] = in_iceCreamUsed;
 	}
 	//------------------------------------------------------------
 	//------------------------------------------------------------
-	void ParticleEffectComponentFactory::SetPlayerPaddleParticleType(const ParticleType in_particleType)
+	void ParticleEffectComponentFactory::SetBallParticles(const bool in_smokeUsed, const bool in_beamUsed)
 	{
-		m_playerPaddleParticleType = in_particleType;
+		m_particlesChosen[k_ballParticlesIx] = in_smokeUsed;
+		m_particlesChosen[k_ballParticlesIx + 1] = in_beamUsed;
 	}
+	
 }

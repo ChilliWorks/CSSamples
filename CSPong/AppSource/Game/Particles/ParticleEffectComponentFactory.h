@@ -92,6 +92,13 @@ namespace CSPong
 		//------------------------------------------------------------
 		bool IsA(CSCore::InterfaceIDType in_interfaceId) const override;
 		//------------------------------------------------------------
+		/// Manually resets collision connection pointers and clears
+		/// the collision connection vector.
+		///
+		/// @author Angela Gross
+		//------------------------------------------------------------
+		void ReleaseCollisionConnections();
+		//------------------------------------------------------------
 		/// Creates a particle effect component based on the given
 		/// particle type. If the given particle type is invalid, then 
 		/// it creates a smoke stream.
@@ -123,54 +130,69 @@ namespace CSPong
 		//------------------------------------------------------------
 		CSRendering::ParticleEffectComponentSPtr CreateOnCollisionParticleEffectComponent(const ParticleType in_particleType, CSCore::IConnectableEvent<DynamicBodyComponent::CollisionDelegate>& in_collisionEvent);
 		//------------------------------------------------------------
-		/// Manually resets collision connection pointers and clears
-		/// the collision connection vector.
+		/// Creates and adds particle components to the player entity
+		/// according to the k_gameParticles and m_particlesChosen 
+		/// arrays. It plays these particles on collision.
 		///
 		/// @author Angela Gross
+		///
+		/// @param The entity that represents the player
+		/// @param The collision delegate event used to trigger the
+		/// collision you want to play the particle effect during.
 		//------------------------------------------------------------
-		void ReleaseCollisionConnections();
+		void AddPlayerParticlesOnCollision(CSCore::EntitySPtr in_playerEntity, CSCore::IConnectableEvent<DynamicBodyComponent::CollisionDelegate>& in_collisionEvent);
 		//------------------------------------------------------------
+		/// Creates and adds particle components to the opponent entity
+		/// according to the k_gameParticles and m_particlesChosen 
+		/// arrays. It plays these particles on collision.
+		///
 		/// @author Angela Gross
 		///
-		/// @return The type of particle effect that is associated
-		/// with the ball.
+		/// @param The entity that represents the opponent
 		//------------------------------------------------------------
-		ParticleType GetBallParticleType() const;
+		void AddOpponentParticlesOnCollision(CSCore::EntitySPtr in_opponentEntity, CSCore::IConnectableEvent<DynamicBodyComponent::CollisionDelegate>& in_collisionEvent);
 		//------------------------------------------------------------
+		/// Creates and adds particle components to the ball entity
+		/// according to the k_gameParticles and m_particlesChosen 
+		/// arrays.
+		///
 		/// @author Angela Gross
 		///
-		/// @return The type of particle effect that is associated
-		/// with the opponent's paddle.
+		/// @param The entity that represents the ball
 		//------------------------------------------------------------
-		ParticleType GetOpponentPaddleParticleType() const;
+		void AddBallParticles(CSCore::EntitySPtr in_ballEntity);
 		//------------------------------------------------------------
+		/// Sets the player particles that were chosen by the user
+		/// in m_particlesChosen.
+		///
 		/// @author Angela Gross
 		///
-		/// @return The type of particle effect that is associated
-		/// with the player's paddle.
+		/// @param Whether or not the magma particles will be added
+		/// @param Whether or not the ice cream particles will be 
+		/// added
 		//------------------------------------------------------------
-		ParticleType GetPlayerPaddleParticleType() const;
+		void SetPlayerParticles(const bool in_magmaUsed, const bool in_iceCreamUsed);
 		//------------------------------------------------------------
+		/// Sets the opponent particles that were chosen by the user
+		/// in m_particlesChosen.
+		///
 		/// @author Angela Gross
 		///
-		/// @param The type of particle effect to associate with the 
-		/// ball.
+		/// @param Whether or not the magma particles will be added
+		/// @param Whether or not the ice cream particles will be 
+		/// added
 		//------------------------------------------------------------
-		void SetBallParticleType(const ParticleType in_particleType);
+		void SetOpponentParticles(const bool in_magmaUsed, const bool in_iceCreamUsed);
 		//------------------------------------------------------------
+		/// Sets the ball particles that were chosen by the user
+		/// in m_particlesChosen.
+		///
 		/// @author Angela Gross
 		///
-		/// @param The type of particle effect to associate with the 
-		/// opponent's paddle.
+		/// @param Whether or not the smoke particles will be added
+		/// @param Whether or not the beam particles will be added
 		//------------------------------------------------------------
-		void SetOpponentPaddleParticleType(const ParticleType in_particleType);
-		//------------------------------------------------------------
-		/// @author Angela Gross
-		///
-		/// @param The type of particle effect to associate with the 
-		/// player's paddle.
-		//------------------------------------------------------------
-		void SetPlayerPaddleParticleType(const ParticleType in_particleType);
+		void SetBallParticles(const bool in_smokeUsed, const bool in_beamUsed);
 
 	private:
 		//----------------------------------------------------------
@@ -180,9 +202,11 @@ namespace CSPong
 		//----------------------------------------------------------
 		ParticleEffectComponentFactory();
 
-		ParticleType m_ballParticleType;
-		ParticleType m_opponentPaddleParticleType;
-		ParticleType m_playerPaddleParticleType;
+		const int k_playerParticlesIx = 0;
+		const int k_opponentParticlesIx = 2;
+		const int k_ballParticlesIx = 4;
+		const static ParticleEffectComponentFactory::ParticleType k_gameParticles[];
+		bool m_particlesChosen[6];
 
 		std::vector<CSCore::EventConnectionSPtr> m_collisionConnections;
 	};
