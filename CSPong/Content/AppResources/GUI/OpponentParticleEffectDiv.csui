@@ -27,7 +27,7 @@
 			[
 				{
 					"Type": "ToggleButton",
-					"Name": "ParticleToggleButton",
+					"Name": "OpponentMagmaToggleButton",
 					"RelSize": "0.2 0.2",
 					"RelPosition": "-0.4 0.0",
 					"SizePolicy": "UseWidthMaintainingAspect",
@@ -110,7 +110,7 @@
 			[
 				{
 					"Type": "ToggleButton",
-					"Name": "ParticleToggleButton",
+					"Name": "OpponentIceCreamToggleButton",
 					"RelSize": "0.2 0.2",
 					"RelPosition": "-0.4 0.0",
 					"SizePolicy": "UseWidthMaintainingAspect",
