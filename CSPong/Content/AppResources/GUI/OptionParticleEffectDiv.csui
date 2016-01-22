@@ -1,0 +1,11 @@
+{
+	"Type": "Layout",
+	"Name": "OptionParticleEffectDiv",
+	"Layout":
+	{
+		"Type": "VList",
+		"NumCells": "0",
+		"RelMargins": "1.0 1.0 1.0 1.0",
+		"RelSpacing": "1.0"
+	}
+}
