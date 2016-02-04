@@ -19,6 +19,11 @@
 			"Type": "Template",
 			"Name": "ParticleMenuTemplate",
 			"TemplatePath": "ParticleMenuContainer.csui"
+		},
+		{
+			"Type": "Template",
+			"Name": "BenchmarkingMenuTemplate",
+			"TemplatePath": "BenchmarkingMenuContainer.csui"
 		}
 	]
 }

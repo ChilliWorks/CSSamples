@@ -58,30 +58,128 @@ namespace CSPong
 		//Get main and particle menus
 		m_mainMenu = m_menuContainer->GetWidget("MainMenuTemplate")->GetWidget("MainMenuContainer");
 		m_particleMenu = m_menuContainer->GetWidget("ParticleMenuTemplate")->GetWidget("ParticleMenuContainer");
+		m_benchmarkingMenu = m_menuContainer->GetWidget("BenchmarkingMenuTemplate")->GetWidget("BenchmarkingMenuContainer");
 
 		//Disable all user interaction until the animation is complete.
 		SetAllInputEnabled(false);
 
+		//Create tweens that will move its components from the right and left (offscreen) to the center
+		m_rightToCenterTween = CSCore::MakeEaseInOutBackTween(1.0f, 0.0f, 1.0f);
+		m_leftToCenterTween = CSCore::MakeEaseInOutBackTween(-1.0f, 0.0f, 1.0f);
+
 		SetupMainMenu();
 		SetupParticleMenu();
+		SetupBenchmarkingMenu();
 
 		//Transition system event
-		m_transitionInConnection = m_transitionSystem->GetTransitionInFinishedEvent().OpenConnection([this]() { MainMenuState::TransitionSystemFinished(); });
+		m_transitionInConnection = m_transitionSystem->GetTransitionInFinishedEvent().OpenConnection([this]() 
+		{ 
+			m_mainMenuMovementData.m_leftTween = true;
+			m_mainMenuMovementData.m_movingCenter = true;
+			m_mainMenuMovementData.m_moving = true;
+		});
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
     void MainMenuState::OnUpdate(f32 in_dt)
     {
-		if (m_mainMenuTween.IsPlaying())
+		if (m_mainMenuMovementData.m_moving)
 		{
-			m_mainMenuTween.Update(in_dt);
-			m_mainMenu->SetRelativePosition(CSCore::Vector2(m_mainMenuTween.GetValue(), m_mainMenu->GetLocalRelativePosition().y));
+			//Get correct directional tween based on movement data
+			CSCore::EaseInOutBackTween<f32>* mainMenuTween = m_mainMenuMovementData.m_leftTween ? &m_leftToCenterTween : &m_rightToCenterTween;
+
+			//Play tween based on its center movement data if it's not playing already
+			if (!mainMenuTween->IsPlaying())
+			{
+				if (m_mainMenuMovementData.m_movingCenter)
+				{
+					mainMenuTween->Play(CSCore::TweenPlayMode::k_once);
+				}
+				else
+				{
+					mainMenuTween->Play(CSCore::TweenPlayMode::k_onceReverse);
+				}
+			}
+
+			//If the play button is pressed then make sure we will transition into the next state at the end of the animation
+			if (m_isPlayButtonPressed)
+			{
+				mainMenuTween->SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
+				{
+					m_transitionSystem->Transition(CSCore::StateSPtr(new GameState()));
+					m_mainMenuMovementData.m_moving = false;
+				});
+			}
+			//Make sure that the menu stops moving at the end of the animation
+			else
+			{
+				mainMenuTween->SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
+				{
+					m_mainMenuMovementData.m_moving = false;
+					MainMenuState::SetAllInputEnabled(true);
+				});
+			}
+
+			mainMenuTween->Update(in_dt);
+			m_mainMenu->SetRelativePosition(CSCore::Vector2(mainMenuTween->GetValue(), m_mainMenu->GetLocalRelativePosition().y));
 		}
 
-		if (m_particleMenuTween.IsPlaying())
+		if (m_particleMenuMovementData.m_moving)
 		{
-			m_particleMenuTween.Update(in_dt);
-			m_particleMenu->SetRelativePosition(CSCore::Vector2(m_particleMenuTween.GetValue(), m_particleMenu->GetLocalRelativePosition().y));
+			//Get correct directional tween based on movement data
+			CSCore::EaseInOutBackTween<f32>* particleMenuTween = m_particleMenuMovementData.m_leftTween ? &m_leftToCenterTween : &m_rightToCenterTween;
+
+			//Play tween based on its center movement data if it's not playing already
+			if (!particleMenuTween->IsPlaying())
+			{
+				if (m_particleMenuMovementData.m_movingCenter)
+				{
+					particleMenuTween->Play(CSCore::TweenPlayMode::k_once);
+				}
+				else
+				{
+					particleMenuTween->Play(CSCore::TweenPlayMode::k_onceReverse);
+				}
+			}
+
+			//Make sure that the menu stops moving at the end of the animation
+			particleMenuTween->SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
+			{
+				m_particleMenuMovementData.m_moving = false;
+				MainMenuState::SetAllInputEnabled(true);
+			});
+
+			particleMenuTween->Update(in_dt);
+			m_particleMenu->SetRelativePosition(CSCore::Vector2(particleMenuTween->GetValue(), m_particleMenu->GetLocalRelativePosition().y));
+		}
+
+		if (m_benchmarkingMenuMovementData.m_moving)
+		{
+			//Get correct directional tween based on movement data
+			CSCore::EaseInOutBackTween<f32>* benchmarkingMenuTween = m_benchmarkingMenuMovementData.m_leftTween ? &m_leftToCenterTween : &m_rightToCenterTween;
+
+			//Play tween based on its center movement data if it's not playing already
+			if (!benchmarkingMenuTween->IsPlaying())
+			{
+				if (m_benchmarkingMenuMovementData.m_movingCenter)
+				{
+					benchmarkingMenuTween->Play(CSCore::TweenPlayMode::k_once);
+				}
+				else
+				{
+					benchmarkingMenuTween->Play(CSCore::TweenPlayMode::k_onceReverse);
+				}
+			}
+
+			//Make sure that the menu stops moving at the end of the animation
+			benchmarkingMenuTween->SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
+			{
+				m_benchmarkingMenuMovementData.m_moving = false;
+				MainMenuState::SetAllInputEnabled(true);
+			});
+
+			benchmarkingMenuTween->Update(in_dt);
+			m_benchmarkingMenu->SetRelativePosition(CSCore::Vector2(benchmarkingMenuTween->GetValue(), m_benchmarkingMenu->GetLocalRelativePosition().y));
 		}
     }
 	//------------------------------------------------------------
@@ -91,14 +189,23 @@ namespace CSPong
 		//Get play and right arrow buttons to set their events
 		auto playButton = m_mainMenu->GetWidget("PlayButton");
 		auto rightArrowButton = m_mainMenu->GetWidget("RightArrowButton");
-
-		//Create main menu tween that will move its components from the left (offscreen) to the center
-		m_mainMenuTween = CSCore::MakeEaseInOutBackTween(-1.0f, 0.0f, 1.0f);
 		
 		//Play button events
 		m_playButtonReleasedConnection = playButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType) 
 		{ 
-			MainMenuState::PlayButtonPointerReleased(in_widget, in_pointer, in_inputType);
+			//L <-- C
+			m_mainMenuMovementData.m_leftTween = true;
+			m_mainMenuMovementData.m_movingCenter = false;
+			m_mainMenuMovementData.m_moving = true;
+
+			//Update the particle effect component factory system to use the chosen particles
+			UpdateParticleOptions();
+
+			//Update member variable so we transition into the next state after the animation 
+			m_isPlayButtonPressed = true;
+
+			//Disable input until the end of the animation
+			MainMenuState::SetAllInputEnabled(false);
 		});
 		m_playButtonEnteredConnection = playButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer) 
 		{ 
@@ -110,15 +217,26 @@ namespace CSPong
 		});
 
 		//Right arrow button events
-		m_rightArrowReleasedConnection = rightArrowButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
+		m_mainRArrowReleasedConnection = rightArrowButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
 		{
-			MainMenuState::ArrowButtonPointerReleased(in_widget, in_pointer, in_inputType);
+			//L <-- C
+			m_mainMenuMovementData.m_leftTween = true;
+			m_mainMenuMovementData.m_movingCenter = false;
+			m_mainMenuMovementData.m_moving = true;
+
+			//C <-- R
+			m_particleMenuMovementData.m_leftTween = false;
+			m_particleMenuMovementData.m_movingCenter = true;
+			m_particleMenuMovementData.m_moving = true;
+
+			//Disable input until the end of the animation
+			MainMenuState::SetAllInputEnabled(false);
 		});
-		m_rightArrowEnteredConnection = rightArrowButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		m_mainRArrowEnteredConnection = rightArrowButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
 		{
 			MainMenuState::DarkenWidget(in_widget, in_pointer);
 		});
-		m_rightArrowExitedConnection = rightArrowButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		m_mainRArrowExitedConnection = rightArrowButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
 		{
 			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
 		});
@@ -127,27 +245,108 @@ namespace CSPong
 	//------------------------------------------------------------
 	void MainMenuState::SetupParticleMenu()
 	{
-		//Get left arrow button to set its events
+		//Get arrow buttons to set their events
 		auto leftArrowButton = m_particleMenu->GetWidget("LeftArrowButton");
-
-		//Create particle menu tween that will move its components from the right (offscreen) to the center
-		m_particleMenuTween = CSCore::MakeEaseInOutBackTween(1.0f, 0.0f, 1.0f);
+		auto rightArrowButton = m_particleMenu->GetWidget("RightArrowButton");
 
 		//Left arrow button events
-		m_leftArrowReleasedConnection = leftArrowButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
+		m_particleLArrowReleasedConnection = leftArrowButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
 		{
-			MainMenuState::ArrowButtonPointerReleased(in_widget, in_pointer, in_inputType);
+			//L --> C
+			m_mainMenuMovementData.m_leftTween = true;
+			m_mainMenuMovementData.m_movingCenter = true;
+			m_mainMenuMovementData.m_moving = true;
+
+			//C --> R
+			m_particleMenuMovementData.m_leftTween = false;
+			m_particleMenuMovementData.m_movingCenter = false;
+			m_particleMenuMovementData.m_moving = true;
+
+			//Disable input until the end of the animation
+			MainMenuState::SetAllInputEnabled(false);
 		});
-		m_leftArrowEnteredConnection = leftArrowButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		m_particleLArrowEnteredConnection = leftArrowButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
 		{
 			MainMenuState::DarkenWidget(in_widget, in_pointer);
 		});
-		m_leftArrowExitedConnection = leftArrowButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		m_particleLArrowExitedConnection = leftArrowButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
+
+		//Right arrow button events
+		m_particleRArrowReleasedConnection = rightArrowButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
+		{
+			//C <-- R
+			m_benchmarkingMenuMovementData.m_leftTween = false;
+			m_benchmarkingMenuMovementData.m_movingCenter = true;
+			m_benchmarkingMenuMovementData.m_moving = true;
+
+			//L <-- C
+			m_particleMenuMovementData.m_leftTween = true;
+			m_particleMenuMovementData.m_movingCenter = false;
+			m_particleMenuMovementData.m_moving = true;
+
+			//Disable input until the end of the animation
+			MainMenuState::SetAllInputEnabled(false);
+		});
+		m_particleRArrowEnteredConnection = rightArrowButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_particleRArrowExitedConnection = rightArrowButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
 		{
 			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
 		});
 
 		SetupParticleMenuGrid();
+	}
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	void MainMenuState::SetupBenchmarkingMenu()
+	{
+		//Get arrow buttons to set their events
+		auto leftArrowButton = m_benchmarkingMenu->GetWidget("LeftArrowButton");
+		auto rightArrowButton = m_benchmarkingMenu->GetWidget("RightArrowButton");
+
+		//Left arrow button events
+		m_benchLArrowReleasedConnection = leftArrowButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
+		{
+			//L --> C
+			m_particleMenuMovementData.m_leftTween = true;
+			m_particleMenuMovementData.m_movingCenter = true;
+			m_particleMenuMovementData.m_moving = true;
+
+			//C --> R
+			m_benchmarkingMenuMovementData.m_leftTween = false;
+			m_benchmarkingMenuMovementData.m_movingCenter = false;
+			m_benchmarkingMenuMovementData.m_moving = true;
+
+			//Disable input until the end of the animation
+			MainMenuState::SetAllInputEnabled(false);
+		});
+		m_benchLArrowEnteredConnection = leftArrowButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_benchLArrowExitedConnection = leftArrowButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
+
+		//Right arrow button events
+		m_benchRArrowReleasedConnection = rightArrowButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
+		{
+			//TODO: nothing will happen
+		});
+		m_benchRArrowEnteredConnection = rightArrowButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_benchRArrowExitedConnection = rightArrowButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
 	}
 	//------------------------------------------------------------
 	//------------------------------------------------------------
@@ -222,67 +421,6 @@ namespace CSPong
 		m_ballBeamToggleButtonExitedConnection = ballBeamToggleButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
 		{
 			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
-		});
-	}
-	//------------------------------------------------------------
-	//------------------------------------------------------------
-	void MainMenuState::TransitionSystemFinished()
-	{
-		//Set main menu tween to move to the right
-		m_mainMenuTween.Play(CSCore::TweenPlayMode::k_once);
-
-		//Once the animation is finished, allow the user to press the buttons
-		m_mainMenuTween.SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
-		{
-			MainMenuState::SetAllInputEnabled(true);
-		});
-	}
-	//------------------------------------------------------------
-	//------------------------------------------------------------
-	void MainMenuState::PlayButtonPointerReleased(CSUI::Widget* in_playButton, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
-	{
-		//Disable all user interaction until the animation is complete.
-		SetAllInputEnabled(false);
-
-		//Set main menu tween to move to the left
-		m_mainMenuTween.Play(CSCore::TweenPlayMode::k_onceReverse);
-
-		//Once the animation is finished, transition to the game
-		m_mainMenuTween.SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
-		{
-			m_transitionSystem->Transition(CSCore::StateSPtr(new GameState()));
-		});
-
-		//Update the particle effect component factory system to use the chosen particles
-		UpdateParticleOptions();
-	}
-	//------------------------------------------------------------
-	//------------------------------------------------------------
-	void MainMenuState::ArrowButtonPointerReleased(CSUI::Widget* in_arrowButton, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
-	{
-		//Disable all user interaction until the animation is complete.
-		SetAllInputEnabled(false);
-
-		if (m_goingRight)
-		{
-			//Set main menu and particle tweens to move left and right, respectively
-			m_mainMenuTween.Play(CSCore::TweenPlayMode::k_onceReverse);
-			m_particleMenuTween.Play(CSCore::TweenPlayMode::k_once);
-		}
-		else
-		{
-			//Set main menu and particle tweens to move right and left, respectively
-			m_mainMenuTween.Play(CSCore::TweenPlayMode::k_once);
-			m_particleMenuTween.Play(CSCore::TweenPlayMode::k_onceReverse);
-		}
-
-		//Reset the direction
-		m_goingRight = !m_goingRight;
-
-		//Once the animation is finished, allow the user to press the buttons
-		m_mainMenuTween.SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
-		{
-			MainMenuState::SetAllInputEnabled(true);
 		});
 	}
 	//------------------------------------------------------------

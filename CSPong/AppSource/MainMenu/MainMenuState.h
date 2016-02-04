@@ -46,6 +46,25 @@ namespace CSPong
     //------------------------------------------------------------
     class MainMenuState final : public CSCore::State
     {
+		//------------------------------------------------------------
+		/// This struct is to help describe the movement of each 
+		/// menu when an arrow is clicked.
+		///
+		/// The possible movements include:
+		/// L --> C (movingCenter = true, leftTween = true)
+		/// L <-- C (movingCenter = false, leftWeen = true) 
+		/// C --> R (movingCenter = false, leftTween = false)
+		/// C <-- R (movingCenter = true, leftTween = false)
+		///
+		/// @author Angela Gross
+		//------------------------------------------------------------
+		struct MenuMovementData
+		{
+			bool m_moving = false;
+			bool m_movingCenter = false;
+			bool m_leftTween = false;
+		};
+
     public:
 		//------------------------------------------------------------
         /// Called when its time to create our state systems.
@@ -85,38 +104,19 @@ namespace CSPong
 		//------------------------------------------------------------
 		void SetupParticleMenu();
 		//------------------------------------------------------------
+		/// Adds the events and easing information needed for the 
+		/// benchmarking menu's widgets
+		///
+		/// @author Angela Gross
+		//------------------------------------------------------------
+		void SetupBenchmarkingMenu();
+		//------------------------------------------------------------
 		/// Adds the events needed for the particle buttons in the 
 		/// grid.
 		///
 		/// @author Angela Gross
 		//------------------------------------------------------------
 		void SetupParticleMenuGrid();
-		//------------------------------------------------------------
-		/// Handler for when the MainMenuState is transitioned into.
-		///
-		/// @author Angela Gross
-		//------------------------------------------------------------
-		void TransitionSystemFinished();
-		//------------------------------------------------------------
-		/// Handler for when the play button is pressed.
-		///
-		/// @author Angela Gross
-		///
-		/// @param Play button widget
-		/// @param Captured pointer
-		/// @param Pointer type
-		//------------------------------------------------------------
-		void PlayButtonPointerReleased(CSUI::Widget* in_playButton, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType);
-		//------------------------------------------------------------
-		/// Handler for when either of the arrows are pressed.
-		///
-		/// @author Angela Gross
-		///
-		/// @param Arrow button widget
-		/// @param Captured pointer
-		/// @param Pointer type
-		//------------------------------------------------------------
-		void ArrowButtonPointerReleased(CSUI::Widget* in_arrowButton, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType);
 		//------------------------------------------------------------
 		/// Handler to set all of the particle options for the ball,
 		/// player, and opponent paddles.
@@ -161,40 +161,29 @@ namespace CSPong
 
         CSCore::EventConnectionUPtr m_transitionInConnection;
 
-        CSCore::EventConnectionUPtr m_playButtonReleasedConnection;
-		CSCore::EventConnectionUPtr m_playButtonEnteredConnection;
-		CSCore::EventConnectionUPtr m_playButtonExitedConnection;
+        CSCore::EventConnectionUPtr m_playButtonReleasedConnection, m_playButtonEnteredConnection, m_playButtonExitedConnection;
+		CSCore::EventConnectionUPtr m_mainRArrowReleasedConnection, m_mainRArrowEnteredConnection, m_mainRArrowExitedConnection;
 
-		CSCore::EventConnectionUPtr m_rightArrowReleasedConnection;
-		CSCore::EventConnectionUPtr m_rightArrowEnteredConnection;
-		CSCore::EventConnectionUPtr m_rightArrowExitedConnection;
+		CSCore::EventConnectionUPtr m_particleLArrowReleasedConnection, m_particleLArrowEnteredConnection, m_particleLArrowExitedConnection;
+		CSCore::EventConnectionUPtr m_particleRArrowReleasedConnection, m_particleRArrowEnteredConnection, m_particleRArrowExitedConnection;
 
-		CSCore::EventConnectionUPtr m_leftArrowReleasedConnection;
-		CSCore::EventConnectionUPtr m_leftArrowEnteredConnection;
-		CSCore::EventConnectionUPtr m_leftArrowExitedConnection;
+		CSCore::EventConnectionUPtr m_benchLArrowReleasedConnection, m_benchLArrowEnteredConnection, m_benchLArrowExitedConnection;
+		CSCore::EventConnectionUPtr m_benchRArrowReleasedConnection, m_benchRArrowEnteredConnection, m_benchRArrowExitedConnection;
 
-		CSCore::EventConnectionUPtr m_playerMagmaToggleButtonEnteredConnection;
-		CSCore::EventConnectionUPtr m_playerMagmaToggleButtonExitedConnection;
-		CSCore::EventConnectionUPtr m_playerIceCreamToggleButtonEnteredConnection;
-		CSCore::EventConnectionUPtr m_playerIceCreamToggleButtonExitedConnection;
+		CSCore::EventConnectionUPtr m_playerMagmaToggleButtonEnteredConnection, m_playerMagmaToggleButtonExitedConnection;
+		CSCore::EventConnectionUPtr m_playerIceCreamToggleButtonEnteredConnection, m_playerIceCreamToggleButtonExitedConnection;
 
-		CSCore::EventConnectionUPtr m_opponentMagmaToggleButtonEnteredConnection;
-		CSCore::EventConnectionUPtr m_opponentMagmaToggleButtonExitedConnection;
-		CSCore::EventConnectionUPtr m_opponentIceCreamToggleButtonEnteredConnection;
-		CSCore::EventConnectionUPtr m_opponentIceCreamToggleButtonExitedConnection;
+		CSCore::EventConnectionUPtr m_opponentMagmaToggleButtonEnteredConnection, m_opponentMagmaToggleButtonExitedConnection;
+		CSCore::EventConnectionUPtr m_opponentIceCreamToggleButtonEnteredConnection, m_opponentIceCreamToggleButtonExitedConnection;
 
-		CSCore::EventConnectionUPtr m_ballSmokeToggleButtonEnteredConnection;
-		CSCore::EventConnectionUPtr m_ballSmokeToggleButtonExitedConnection;
-		CSCore::EventConnectionUPtr m_ballBeamToggleButtonEnteredConnection;
-		CSCore::EventConnectionUPtr m_ballBeamToggleButtonExitedConnection;
+		CSCore::EventConnectionUPtr m_ballSmokeToggleButtonEnteredConnection, m_ballSmokeToggleButtonExitedConnection;
+		CSCore::EventConnectionUPtr m_ballBeamToggleButtonEnteredConnection, m_ballBeamToggleButtonExitedConnection;
 
-		CSCore::EaseInOutBackTween<f32> m_mainMenuTween;
-		CSCore::EaseInOutBackTween<f32> m_particleMenuTween;
-		bool m_goingRight = true;
+		CSCore::EaseInOutBackTween<f32> m_rightToCenterTween, m_leftToCenterTween;
+		MenuMovementData m_mainMenuMovementData, m_particleMenuMovementData, m_benchmarkingMenuMovementData;
+		bool m_isPlayButtonPressed = false;
 
-		CSUI::WidgetSPtr m_menuContainer;
-        CSUI::WidgetSPtr m_mainMenu;
-		CSUI::WidgetSPtr m_particleMenu;
+		CSUI::WidgetSPtr m_menuContainer, m_mainMenu, m_particleMenu, m_benchmarkingMenu;
     };
 }
 
