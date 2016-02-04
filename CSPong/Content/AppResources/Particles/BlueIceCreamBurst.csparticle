@@ -1,6 +1,6 @@
  {
-	"Duration": "0.4",
-	"MaxParticles": "1000",
+	"Duration": "2.0",
+	"MaxParticles": "20000",
 	"SimulationSpace": "World",
 	"LifetimeProperty": 
 	{
@@ -24,7 +24,7 @@
 	{
 		"Type": "Sphere",
 		"EmissionMode": "Burst",
-		"ParticlesPerEmissionProperty": "100",
+		"ParticlesPerEmissionProperty": "20000",
 		"RadiusProperty": 
 		{
 			"Type": "Curve",
