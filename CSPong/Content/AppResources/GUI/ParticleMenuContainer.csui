@@ -37,8 +37,8 @@
 		{
 			"Type": "HighlightButton",
 			"Name": "LeftArrowButton",
-			"RelSize": "0.2 0.2",
-			"RelPosition": "0.0 0.3",
+			"RelSize": "0.22 0.22",
+			"RelPosition": "0.0 0.22",
 			"SizePolicy": "UseWidthMaintainingAspect",
 			"OriginAnchor": "TopLeft", 
 			"ParentalAnchor": "TopLeft",
@@ -78,6 +78,23 @@
 			]
 			
 		},
-		{ "Type": "Widget", "Name": "Placeholder"}
+		{
+			"Type": "HighlightButton",
+			"Name": "RightArrowButton",
+			"RelSize": "0.22 0.22",
+			"RelPosition": "0.0 0.22",
+			"SizePolicy": "UseWidthMaintainingAspect",
+			"OriginAnchor": "TopRight", 
+			"ParentalAnchor": "TopRight",
+			"NormalDrawable": 
+			{
+				"Type": "Standard",
+				"TextureLocation": "Package",
+				"TexturePath": "TextureAtlases/GUI/GUI.csimage",
+				"AtlasLocation": "Package",
+				"AtlasPath": "TextureAtlases/GUI/GUI.csatlas",
+				"AtlasId": "Right_Arrow"
+			}
+		}
 	]
 }
