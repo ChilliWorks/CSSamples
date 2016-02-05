@@ -168,7 +168,7 @@ namespace CSPong
 		CSCore::EventConnectionUPtr m_particleRArrowReleasedConnection, m_particleRArrowEnteredConnection, m_particleRArrowExitedConnection;
 
 		CSCore::EventConnectionUPtr m_benchLArrowReleasedConnection, m_benchLArrowEnteredConnection, m_benchLArrowExitedConnection;
-		CSCore::EventConnectionUPtr m_benchRArrowReleasedConnection, m_benchRArrowEnteredConnection, m_benchRArrowExitedConnection;
+		CSCore::EventConnectionUPtr m_benchMoveButtonReleasedConnection, m_benchMoveButtonEnteredConnection, m_benchMoveButtonExitedConnection;
 
 		CSCore::EventConnectionUPtr m_playerMagmaToggleButtonEnteredConnection, m_playerMagmaToggleButtonExitedConnection;
 		CSCore::EventConnectionUPtr m_playerIceCreamToggleButtonEnteredConnection, m_playerIceCreamToggleButtonExitedConnection;

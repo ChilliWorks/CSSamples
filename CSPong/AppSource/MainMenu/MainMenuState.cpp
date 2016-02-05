@@ -306,8 +306,8 @@ namespace CSPong
 	void MainMenuState::SetupBenchmarkingMenu()
 	{
 		//Get arrow buttons to set their events
-		auto leftArrowButton = m_benchmarkingMenu->GetWidget("LeftArrowButton");
-		auto rightArrowButton = m_benchmarkingMenu->GetWidget("RightArrowButton");
+		auto leftArrowButton = m_benchmarkingMenu->GetWidget("BenchmarkingDivsContainer")->GetWidget("LeftArrowButton");
+		auto moveButton = m_benchmarkingMenu->GetWidget("MoveButton");
 
 		//Left arrow button events
 		m_benchLArrowReleasedConnection = leftArrowButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
@@ -334,16 +334,16 @@ namespace CSPong
 			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
 		});
 
-		//Right arrow button events
-		m_benchRArrowReleasedConnection = rightArrowButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
+		//Move button events
+		m_benchMoveButtonReleasedConnection = moveButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
 		{
 			//TODO: nothing will happen
 		});
-		m_benchRArrowEnteredConnection = rightArrowButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		m_benchMoveButtonEnteredConnection = moveButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
 		{
 			MainMenuState::DarkenWidget(in_widget, in_pointer);
 		});
-		m_benchRArrowExitedConnection = rightArrowButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		m_benchMoveButtonExitedConnection = moveButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
 		{
 			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
 		});
