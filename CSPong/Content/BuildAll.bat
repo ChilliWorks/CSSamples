@@ -26,7 +26,7 @@
 ::  THE SOFTWARE.
 ::
 
-python ../Tools/Scripts/particle_randomizer.py BenchmarkingImagePool/ PrebuiltResources/TextureAtlases/Particles
+python ../Tools/Scripts/particle_randomizer.py PrebuiltResources/TextureAtlases/BenchmarkingImagePool/ PrebuiltResources/TextureAtlases/Particles/
 
 python ../Tools/Scripts/content_builder.py PrebuiltResources/ AppResources/
 

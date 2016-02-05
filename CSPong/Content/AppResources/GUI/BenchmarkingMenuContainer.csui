@@ -85,7 +85,7 @@
 						{
 							"Type": "Template",
 							"Name": "ParticleMenuGridTemplate",
-							"TemplatePath": "ParticleMenuGrid.csui"
+							"TemplatePath": "BenchmarkingParticleMenuGrid.csui"
 						}
 					]
 					
