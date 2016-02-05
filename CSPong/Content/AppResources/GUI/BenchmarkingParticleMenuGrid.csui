@@ -1,6 +1,6 @@
 {
 	"Type": "Layout",
-	"Name": "ParticleMenuGrid",
+	"Name": "BenchmarkingParticleMenuGrid",
 	"OriginAnchor": "MiddleCentre", 
 	"ParentalAnchor": "MiddleCentre",
 	"Layout":

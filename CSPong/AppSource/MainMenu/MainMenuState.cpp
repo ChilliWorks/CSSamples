@@ -60,12 +60,23 @@ namespace CSPong
 		m_particleMenu = m_menuContainer->GetWidget("ParticleMenuTemplate")->GetWidget("ParticleMenuContainer");
 		m_benchmarkingMenu = m_menuContainer->GetWidget("BenchmarkingMenuTemplate")->GetWidget("BenchmarkingMenuContainer");
 
+		//Get benchmarking divs
+		auto benchmarkingMenuGrid = m_benchmarkingMenu->GetWidget("BenchmarkingDivsContainer")->GetWidget("ParticleMenuMainDiv")->GetWidget("ParticleMenuGridTemplate")->GetWidget("BenchmarkingParticleMenuGrid");
+		m_benchPlayerParticleDiv = benchmarkingMenuGrid->GetWidget("PlayerPaddleParticleDiv");
+		m_benchOpponentParticleDiv = benchmarkingMenuGrid->GetWidget("OpponentPaddleParticleDiv");
+		m_benchBallParticleDiv = benchmarkingMenuGrid->GetWidget("BallParticleDiv");
+		m_benchOptionParticleDiv = benchmarkingMenuGrid->GetWidget("OptionParticleDiv");
+
 		//Disable all user interaction until the animation is complete.
 		SetAllInputEnabled(false);
 
 		//Create tweens that will move its components from the right and left (offscreen) to the center
 		m_rightToCenterTween = CSCore::MakeEaseInOutBackTween(1.0f, 0.0f, 1.0f);
 		m_leftToCenterTween = CSCore::MakeEaseInOutBackTween(-1.0f, 0.0f, 1.0f);
+
+		//Create tweens that will move its components up and down and right and left within the screen
+		m_upAndDownTween = CSCore::MakeEaseInOutBackTween(0.5f, 0.0f, 1.0f);
+		m_rightAndLeftTween = CSCore::MakeEaseInOutBackTween(0.5f, 0.0f, 1.0f);
 
 		SetupMainMenu();
 		SetupParticleMenu();
@@ -85,103 +96,108 @@ namespace CSPong
     {
 		if (m_mainMenuMovementData.m_moving)
 		{
-			//Get correct directional tween based on movement data
-			CSCore::EaseInOutBackTween<f32>* mainMenuTween = m_mainMenuMovementData.m_leftTween ? &m_leftToCenterTween : &m_rightToCenterTween;
-
-			//Play tween based on its center movement data if it's not playing already
-			if (!mainMenuTween->IsPlaying())
-			{
-				if (m_mainMenuMovementData.m_movingCenter)
-				{
-					mainMenuTween->Play(CSCore::TweenPlayMode::k_once);
-				}
-				else
-				{
-					mainMenuTween->Play(CSCore::TweenPlayMode::k_onceReverse);
-				}
-			}
-
-			//If the play button is pressed then make sure we will transition into the next state at the end of the animation
-			if (m_isPlayButtonPressed)
-			{
-				mainMenuTween->SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
-				{
-					m_transitionSystem->Transition(CSCore::StateSPtr(new GameState()));
-					m_mainMenuMovementData.m_moving = false;
-				});
-			}
-			//Make sure that the menu stops moving at the end of the animation
-			else
-			{
-				mainMenuTween->SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
-				{
-					m_mainMenuMovementData.m_moving = false;
-					MainMenuState::SetAllInputEnabled(true);
-				});
-			}
-
-			mainMenuTween->Update(in_dt);
-			m_mainMenu->SetRelativePosition(CSCore::Vector2(mainMenuTween->GetValue(), m_mainMenu->GetLocalRelativePosition().y));
+			AnimateWidget(in_dt, m_mainMenu, &m_mainMenuMovementData);
 		}
 
 		if (m_particleMenuMovementData.m_moving)
 		{
-			//Get correct directional tween based on movement data
-			CSCore::EaseInOutBackTween<f32>* particleMenuTween = m_particleMenuMovementData.m_leftTween ? &m_leftToCenterTween : &m_rightToCenterTween;
-
-			//Play tween based on its center movement data if it's not playing already
-			if (!particleMenuTween->IsPlaying())
-			{
-				if (m_particleMenuMovementData.m_movingCenter)
-				{
-					particleMenuTween->Play(CSCore::TweenPlayMode::k_once);
-				}
-				else
-				{
-					particleMenuTween->Play(CSCore::TweenPlayMode::k_onceReverse);
-				}
-			}
-
-			//Make sure that the menu stops moving at the end of the animation
-			particleMenuTween->SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
-			{
-				m_particleMenuMovementData.m_moving = false;
-				MainMenuState::SetAllInputEnabled(true);
-			});
-
-			particleMenuTween->Update(in_dt);
-			m_particleMenu->SetRelativePosition(CSCore::Vector2(particleMenuTween->GetValue(), m_particleMenu->GetLocalRelativePosition().y));
+			AnimateWidget(in_dt, m_particleMenu, &m_particleMenuMovementData);
 		}
 
 		if (m_benchmarkingMenuMovementData.m_moving)
 		{
-			//Get correct directional tween based on movement data
-			CSCore::EaseInOutBackTween<f32>* benchmarkingMenuTween = m_benchmarkingMenuMovementData.m_leftTween ? &m_leftToCenterTween : &m_rightToCenterTween;
+			AnimateWidget(in_dt, m_benchmarkingMenu, &m_benchmarkingMenuMovementData);
+		}
 
-			//Play tween based on its center movement data if it's not playing already
-			if (!benchmarkingMenuTween->IsPlaying())
-			{
-				if (m_benchmarkingMenuMovementData.m_movingCenter)
-				{
-					benchmarkingMenuTween->Play(CSCore::TweenPlayMode::k_once);
-				}
-				else
-				{
-					benchmarkingMenuTween->Play(CSCore::TweenPlayMode::k_onceReverse);
-				}
-			}
+		if (m_playerParticleDivMovementData.m_moving)
+		{
+			AnimateWidget(in_dt, m_benchPlayerParticleDiv, &m_playerParticleDivMovementData, true);
+		}
 
-			//Make sure that the menu stops moving at the end of the animation
-			benchmarkingMenuTween->SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
-			{
-				m_benchmarkingMenuMovementData.m_moving = false;
-				MainMenuState::SetAllInputEnabled(true);
-			});
+		if (m_opponentParticleDivMovementData.m_moving)
+		{
+			AnimateWidget(in_dt, m_benchOpponentParticleDiv, &m_opponentParticleDivMovementData, true);
+		}
 
-			benchmarkingMenuTween->Update(in_dt);
-			m_benchmarkingMenu->SetRelativePosition(CSCore::Vector2(benchmarkingMenuTween->GetValue(), m_benchmarkingMenu->GetLocalRelativePosition().y));
+		if (m_ballParticleMovementData.m_moving)
+		{
+			AnimateWidget(in_dt, m_benchBallParticleDiv, &m_ballParticleMovementData, true);
+		}
+
+		if (m_optionParticleMovementData.m_moving)
+		{
+			AnimateWidget(in_dt, m_benchOptionParticleDiv, &m_optionParticleMovementData, true);
 		}
     }
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	void MainMenuState::AnimateWidget(f32 in_dt, CSUI::WidgetSPtr in_widget, MovementData* in_widgetMovementData, bool in_isBenchmarkingWidget)
+	{
+		CSCore::EaseInOutBackTween<f32>* widgetTween;
+		//Get correct directional tween based on movement data
+		if (in_isBenchmarkingWidget)
+		{
+			widgetTween = in_widgetMovementData->m_leftTween ? &m_rightAndLeftTween : &m_upAndDownTween;
+		}
+		else
+		{
+			widgetTween = in_widgetMovementData->m_leftTween ? &m_leftToCenterTween : &m_rightToCenterTween;
+		}
+
+
+		//Play tween based on its center movement data if it's not playing already
+		if (!widgetTween->IsPlaying())
+		{
+			if (in_widgetMovementData->m_movingCenter)
+			{
+				widgetTween->Play(CSCore::TweenPlayMode::k_once);
+			}
+			else
+			{
+				widgetTween->Play(CSCore::TweenPlayMode::k_onceReverse);
+			}
+		}
+
+		if (in_isBenchmarkingWidget && in_widgetMovementData->m_movingCenter == false)
+		{
+			//Make the widget go back to its place
+			widgetTween->SetOnEndDelegate([this, in_widgetMovementData](CSCore::EaseInOutBackTween<f32>* in_tween)
+			{
+				in_widgetMovementData->m_movingCenter = true;
+			});
+		}
+		else
+		{
+			//Make sure that the menu stops moving at the end of the animation
+			widgetTween->SetOnEndDelegate([this, in_widgetMovementData](CSCore::EaseInOutBackTween<f32>* in_tween)
+			{
+				in_widgetMovementData->m_moving = false;
+				MainMenuState::SetAllInputEnabled(true);
+			});
+		}
+
+		//If the play button is pressed then make sure we will transition into the next state at the end of the animation
+		if ((in_widget == m_mainMenu) && m_isPlayButtonPressed)
+		{
+			widgetTween->SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
+			{
+				m_transitionSystem->Transition(CSCore::StateSPtr(new GameState()));
+				m_mainMenuMovementData.m_moving = false;
+			});
+		}
+
+		widgetTween->Update(in_dt);
+
+		//Move the widget either up and down or left and right depending on the type of widget and movement data
+		if (!in_isBenchmarkingWidget || in_widgetMovementData->m_leftTween)
+		{
+			in_widget->SetRelativePosition(CSCore::Vector2(widgetTween->GetValue(), in_widget->GetLocalRelativePosition().y));
+		}
+		else
+		{
+			in_widget->SetRelativePosition(CSCore::Vector2(in_widget->GetLocalRelativePosition().x, widgetTween->GetValue()));
+		}
+	}
 	//------------------------------------------------------------
 	//------------------------------------------------------------
 	void MainMenuState::SetupMainMenu()
@@ -337,7 +353,21 @@ namespace CSPong
 		//Move button events
 		m_benchMoveButtonReleasedConnection = moveButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
 		{
-			//TODO: nothing will happen
+			m_playerParticleDivMovementData.m_leftTween = false;
+			m_playerParticleDivMovementData.m_movingCenter = false;
+			m_playerParticleDivMovementData.m_moving = true;
+				
+			m_opponentParticleDivMovementData.m_leftTween = false;
+			m_opponentParticleDivMovementData.m_movingCenter = false;
+			m_opponentParticleDivMovementData.m_moving = true;
+				
+			m_ballParticleMovementData.m_leftTween = false;
+			m_ballParticleMovementData.m_movingCenter = false;
+			m_ballParticleMovementData.m_moving = true;
+				
+			m_optionParticleMovementData.m_leftTween = false;
+			m_optionParticleMovementData.m_movingCenter = false;
+			m_optionParticleMovementData.m_moving = true;
 		});
 		m_benchMoveButtonEnteredConnection = moveButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
 		{
@@ -468,6 +498,9 @@ namespace CSPong
 		m_mainMenu->GetWidget("PlayButton")->SetInputEnabled(in_inputEnabled);
 		m_mainMenu->GetWidget("RightArrowButton")->SetInputEnabled(in_inputEnabled);
 		m_particleMenu->GetWidget("LeftArrowButton")->SetInputEnabled(in_inputEnabled);
+		m_particleMenu->GetWidget("RightArrowButton")->SetInputEnabled(in_inputEnabled);
+		m_benchmarkingMenu->GetWidget("BenchmarkingDivsContainer")->GetWidget("LeftArrowButton")->SetInputEnabled(in_inputEnabled);
+		m_benchmarkingMenu->GetWidget("MoveButton")->SetInputEnabled(in_inputEnabled);
 	}
 }
 

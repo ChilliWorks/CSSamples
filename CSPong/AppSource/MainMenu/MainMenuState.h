@@ -47,18 +47,17 @@ namespace CSPong
     class MainMenuState final : public CSCore::State
     {
 		//------------------------------------------------------------
-		/// This struct is to help describe the movement of each 
-		/// menu when an arrow is clicked.
+		/// This struct is to help describe the movement of components
 		///
 		/// The possible movements include:
 		/// L --> C (movingCenter = true, leftTween = true)
-		/// L <-- C (movingCenter = false, leftWeen = true) 
+		/// L <-- C (movingCenter = false, leftTween = true) 
 		/// C --> R (movingCenter = false, leftTween = false)
 		/// C <-- R (movingCenter = true, leftTween = false)
 		///
 		/// @author Angela Gross
 		//------------------------------------------------------------
-		struct MenuMovementData
+		struct MovementData
 		{
 			bool m_moving = false;
 			bool m_movingCenter = false;
@@ -76,19 +75,33 @@ namespace CSPong
         /// Called when the state is first placed onto the state manager
         /// stack. This is only called once and is mirrored by OnDestroy().
         ///
-        /// @author S Downie
+        /// @author  Angela Gross
         //------------------------------------------------------------
         void OnInit() override;
         //------------------------------------------------------------
         /// This is called whenever the state is active (i.e. top of the
-        /// state stack). A state is active between OnForeground and OnBackground
-        /// lifecycle events.
+        /// state stack). A state is active between OnForeground and 
+		/// OnBackground lifecycle events.
         ///
-        /// @author S Downie
+        /// @author Angela Gross
         ///
         /// @param Time since last update in seconds
         //------------------------------------------------------------
         void OnUpdate(f32 in_dt) override;
+		//------------------------------------------------------------
+		/// Method that handles the movement of widget components that
+		/// have MovementData associated with them.
+		///
+		/// @author Angela Gross
+		///
+		/// @param Time since last update in seconds
+		/// @param Widget to animate
+		/// @param Widget's movement data that helps determine direction
+		/// and nature of widget's movement
+		/// @param Whether or not it's a benchmarking widget, or a 
+		/// widget that is activated by the "move" button
+		//------------------------------------------------------------
+		void AnimateWidget(f32 in_dt, CSUI::WidgetSPtr in_widget, MovementData* in_widgetMovementData, bool in_isBenchmarkingWidget = false);
 		//------------------------------------------------------------
 		/// Adds the events and easing information needed for the main 
 		/// menu's widgets.
@@ -180,10 +193,13 @@ namespace CSPong
 		CSCore::EventConnectionUPtr m_ballBeamToggleButtonEnteredConnection, m_ballBeamToggleButtonExitedConnection;
 
 		CSCore::EaseInOutBackTween<f32> m_rightToCenterTween, m_leftToCenterTween;
-		MenuMovementData m_mainMenuMovementData, m_particleMenuMovementData, m_benchmarkingMenuMovementData;
+		CSCore::EaseInOutBackTween<f32> m_upAndDownTween, m_rightAndLeftTween;
+		MovementData m_mainMenuMovementData, m_particleMenuMovementData, m_benchmarkingMenuMovementData;
+		MovementData m_playerParticleDivMovementData, m_opponentParticleDivMovementData, m_ballParticleMovementData, m_optionParticleMovementData;
 		bool m_isPlayButtonPressed = false;
 
 		CSUI::WidgetSPtr m_menuContainer, m_mainMenu, m_particleMenu, m_benchmarkingMenu;
+		CSUI::WidgetSPtr m_benchPlayerParticleDiv, m_benchOpponentParticleDiv, m_benchBallParticleDiv, m_benchOptionParticleDiv;
     };
 }
 
