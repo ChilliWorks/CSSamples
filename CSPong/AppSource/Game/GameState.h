@@ -51,7 +51,7 @@ namespace CSPong
         ///
         /// @author S Downie
         //------------------------------------------------------
-        void CreateSystems();
+        void CreateSystems() override;
         
     private:
         //------------------------------------------------------------

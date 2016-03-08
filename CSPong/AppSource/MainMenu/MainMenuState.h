@@ -51,7 +51,7 @@ namespace CSPong
         ///
         /// @author Ian Copland
         //------------------------------------------------------
-        void CreateSystems();
+        void CreateSystems() override;
         //------------------------------------------------------------
         /// Called when the state is first placed onto the state manager
         /// stack. This is only called once and is mirrored by OnDestroy().
