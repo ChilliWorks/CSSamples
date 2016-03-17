@@ -80,6 +80,9 @@
     <Report>
       <Path>CSPong160126(1).vspx</Path>
     </Report>
+    <Report>
+      <Path>CSPong160314.vspx</Path>
+    </Report>
   </Reports>
   <Launches>
     <ProjBinary>

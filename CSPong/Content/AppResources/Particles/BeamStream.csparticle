@@ -5,31 +5,31 @@
 	"LifetimeProperty": "1.5",
 	"ColourProperty": 
 	{
-        "Type": "Constant",
-        "Value": "0.0 0.0 0.0 0.1"
-    },
-    "InitialSpeedProperty": "1.0",
+		"Type": "Constant",
+		"Value": "0.0 0.0 0.0 0.1"
+	},
+	"InitialSpeedProperty": "1.0",
 	"Drawable": 
 	{
 		"Type": "StaticBillboard",
 		"MaterialPath": "Materials/Particles/Particles.csmaterial",
-        "AtlasPath": "TextureAtlases/Particles/Particles.csatlas",
+		"AtlasPath": "TextureAtlases/Particles/Particles.csatlas",
 		"ImageIds": "Beam",
 		"ParticleSize": "2.0 2.0",
 		"SizePolicy": "FitMaintainingAspect"
 	},
 	"Emitter": 
-		{
-			"Type": "Point",
-			"EmissionMode": "Stream",
-			"EmissionRateProperty": "100.0f",
-			"ParticlesPerEmissionProperty": "5"
-		},
+	{
+		"Type": "Point",
+		"EmissionMode": "Stream",
+		"EmissionRateProperty": "100.0f",
+		"ParticlesPerEmissionProperty": "5"
+	},
 	"Affectors": 
-		[
-			{
-				"Type": "ColourOverLifetime",
-				"TargetColourProperty": "0.59 0.89 1.0 0.1"
-			}
-		]
+	[
+		{
+			"Type": "ColourOverLifetime",
+			"TargetColourProperty": "0.59 0.89 1.0 0.1"
+		}
+	]
 }

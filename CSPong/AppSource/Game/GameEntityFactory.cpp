@@ -276,29 +276,6 @@ namespace CSPong
     //------------------------------------------------------------
     CSCore::EntityUPtr GameEntityFactory::CreateScoreSprite(const CSCore::Vector2& in_size, CSRendering::AlignmentAnchor in_alignmentAnchor) const
     {
-        /*
-         ===================================
-         Chilli Source Tour: Texture Atlases
-         ===================================
-         
-         Texture Atlases (also called Spritesheets) provide a 'virtual' texture lookup within an actual texture. This
-         allows multiple objects to share the same physical texture but render with different UVs and sizes, ultimately allowing them to share a material.
-         
-         Just like other resources, a texture altas is loaded from the resource manager. Once loaded the 'virtual' texture (or sprite frame)
-         can be accessed by querying the atlas using a 'Texture Id'. For example:
-         
-            CSRendering::TextureAltasCSPtr atlas = resourcePool->LoadResource<CSRendering::TextureAtlas>(CSCore::StorageLocation::k_package, "Atlas.csatlas");
-            CSRendering::UVs virtualTextureUVs = atlas->GetFrameUVs("Frame1");
-         
-         Typically when working with an atlas the component using it would deal with the virtual texture.
-         When creating a SpriteComponent through the Render Component Factory the atlas and the virtual texture id are
-         passed in.
-         
-         -----------------------------------
-         
-         This concludes the Chilli Source Tour!
-         */
-        
         auto renderFactory = CSCore::Application::Get()->GetSystem<CSRendering::RenderComponentFactory>();
         auto resPool = CSCore::Application::Get()->GetResourcePool();
         auto digitAtlas = resPool->LoadResource<CSRendering::TextureAtlas>(CSCore::StorageLocation::k_package, "TextureAtlases/Digits/Digits.csatlas");

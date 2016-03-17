@@ -34,6 +34,8 @@
 #include <ChilliSource/Core/Resource.h>
 #include <ChilliSource/Rendering/Base.h>
 
+#include <sstream>
+
 namespace CSPong
 {
 	CS_DEFINE_NAMEDTYPE(ParticleEffectComponentFactory);
@@ -61,7 +63,12 @@ namespace CSPong
 	//----------------------------------------------------------
 	ParticleEffectComponentFactory::ParticleEffectComponentFactory()
 	{
+		/*int particleSize = sizeof(CSRendering::Particle);
 
+		std::ostringstream oss;
+		oss << "TESTINGGG: Size of the particle struct is: " << particleSize;
+
+		CS_LOG_VERBOSE(oss.str());*/
 	}
 	//----------------------------------------------------------
 	//----------------------------------------------------------
