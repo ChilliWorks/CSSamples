@@ -10,6 +10,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CSPong", "CSPong.vcxproj", 
 		{A9B516D3-71D5-4661-8EEE-DA55F3EADC9A} = {A9B516D3-71D5-4661-8EEE-DA55F3EADC9A}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shiny", "..\..\Shiny\Shiny.vcxproj", "{5D7DBD52-A339-4867-90BF-BB02D3BB201B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -34,6 +36,14 @@ Global
 		{29AA6F17-26E4-48A0-95B4-8945F33A71A1}.Release|Win32.Build.0 = Release|Win32
 		{29AA6F17-26E4-48A0-95B4-8945F33A71A1}.Release|x64.ActiveCfg = Release|x64
 		{29AA6F17-26E4-48A0-95B4-8945F33A71A1}.Release|x64.Build.0 = Release|x64
+		{5D7DBD52-A339-4867-90BF-BB02D3BB201B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5D7DBD52-A339-4867-90BF-BB02D3BB201B}.Debug|Win32.Build.0 = Debug|Win32
+		{5D7DBD52-A339-4867-90BF-BB02D3BB201B}.Debug|x64.ActiveCfg = Debug|x64
+		{5D7DBD52-A339-4867-90BF-BB02D3BB201B}.Debug|x64.Build.0 = Debug|x64
+		{5D7DBD52-A339-4867-90BF-BB02D3BB201B}.Release|Win32.ActiveCfg = Release|Win32
+		{5D7DBD52-A339-4867-90BF-BB02D3BB201B}.Release|Win32.Build.0 = Release|Win32
+		{5D7DBD52-A339-4867-90BF-BB02D3BB201B}.Release|x64.ActiveCfg = Release|x64
+		{5D7DBD52-A339-4867-90BF-BB02D3BB201B}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

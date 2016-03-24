@@ -7,9 +7,9 @@
         "Type": "RandomConstant",
         "LowerValue": "0.5",
         "UpperValue": "0.6"
-    },
+	},
 	"ColourProperty": "0.0 0.0 0.0 1.0",
-    "InitialSpeedProperty": "25.0",	
+	"InitialSpeedProperty": "25.0",	
 	"InitialRotationProperty": "-1.5708",
 	"Drawable": 
 	{

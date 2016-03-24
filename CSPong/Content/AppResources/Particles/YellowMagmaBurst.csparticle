@@ -4,18 +4,18 @@
 	"SimulationSpace": "World",
 	"LifetimeProperty": 
 	{
-        "Type": "RandomConstant",
-        "LowerValue": "0.5",
-        "UpperValue": "0.6"
-    },
+		"Type": "RandomConstant",
+		"LowerValue": "0.5",
+		"UpperValue": "0.6"
+	},
 	"ColourProperty": "0.0 0.0 0.0 1.0",
-    "InitialSpeedProperty": "25.0",	
+	"InitialSpeedProperty": "25.0",	
 	"InitialRotationProperty": "-1.5708",
 	"Drawable": 
 	{
 		"Type": "StaticBillboard",
 		"MaterialPath": "Materials/Particles/Particles.csmaterial",
-        "AtlasPath": "TextureAtlases/Particles/Particles.csatlas",
+		"AtlasPath": "TextureAtlases/Particles/Particles.csatlas",
 		"ImageIds": "YellowMagma",
 		"ParticleSize": "6.0 6.0",
 		"SizePolicy": "FitMaintainingAspect"
