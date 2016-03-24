@@ -29,3 +29,6 @@ Thumbs.db
 *.opendb
 CSPong/Projects/Windows/Profiling Files/
 CSPong/Projects/Windows/CSPong160314.vspx
+*.psess
+CSPong/Projects/Windows/UpgradeLog.htm
+CSPong/Projects/Windows/profile.txt
