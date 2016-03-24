@@ -1,0 +1,198 @@
+{
+	"Type": "Layout",
+	"Name": "BallParticleEffectDiv",
+	"Layout":
+	{
+		"Type": "VList",
+		"NumCells": "3",
+		"RelMargins": "0.03 0.03 0.03 0.03",
+		"RelSpacing": "0.01"
+	},
+	"Children": 
+	[
+		{
+			"Type": "Layout",
+			"Name": "FirstParticleOptionDiv",
+			"Layout":
+			{
+				"Type": "Grid",
+				"CellOrder": "RowMajor",
+				"NumRows": "1",
+				"NumCols": "3",
+				"RelMargins": "0.03 0.03 0.03 0.03",
+				"RelHSpacing": "0.01",
+				"RelVSpacing": "0.01"
+			},
+			"Children": 
+			[
+				{
+					"Type": "ToggleButton",
+					"Name": "BallSmokeToggleButton",
+					"RelSize": "0.2 0.2",
+					"RelPosition": "-0.4 0.0",
+					"SizePolicy": "UseWidthMaintainingAspect",
+					"OriginAnchor": "MiddleCentre", 
+					"ParentalAnchor": "MiddleCentre",
+					"HighlightOnColour": "1.0 1.0 1.0 0.1",
+					"HighlightOffColour": "1.0 1.0 1.0 0.1",
+					"NormalOffDrawable": 
+					{
+						"Type": "Standard",
+						"TextureLocation": "Package",
+						"TexturePath": "TextureAtlases/GUI/GUI.csimage",
+						"AtlasLocation": "Package",
+						"AtlasPath": "TextureAtlases/GUI/GUI.csatlas",
+						"AtlasId": "Red_X"
+					},
+					"NormalOnDrawable": 
+					{
+						"Type": "Standard",
+						"TextureLocation": "Package",
+						"TexturePath": "TextureAtlases/GUI/GUI.csimage",
+						"AtlasLocation": "Package",
+						"AtlasPath": "TextureAtlases/GUI/GUI.csatlas",
+						"AtlasId": "Green_O"
+					},
+					"ToggledOn": "false"
+				},
+				{
+					"Type": "Image",
+					"Name": "ParticleImage",
+					"RelSize": "0.5 0.5",
+					"RelPosition": "-0.7 0.0",
+					"SizePolicy": "UseWidthMaintainingAspect",
+					"OriginAnchor": "MiddleCentre", 
+					"ParentalAnchor": "MiddleCentre",
+					"Drawable": 
+					{
+						"Type": "Standard",
+						"TextureLocation": "Package",
+						"TexturePath": "TextureAtlases/Particles/Particles.csimage",
+						"AtlasLocation": "Package",
+						"AtlasPath": "TextureAtlases/Particles/Particles.csatlas",
+						"AtlasId": "Smoke"
+					}
+				},
+				{
+					"Type": "Image",
+					"Name": "ParticleHeadingImage",
+					"RelSize": "0.9 0.9",
+					"RelPosition": "-0.7 0.0",
+					"SizePolicy": "UseWidthMaintainingAspect",
+					"OriginAnchor": "MiddleCentre", 
+					"ParentalAnchor": "MiddleCentre",
+					"Drawable": 
+					{
+						"Type": "Standard",
+						"TextureLocation": "Package",
+						"TexturePath": "TextureAtlases/GUI/GUI.csimage",
+						"AtlasLocation": "Package",
+						"AtlasPath": "TextureAtlases/GUI/GUI.csatlas",
+						"AtlasId": "Smoke"
+					}
+				}
+			]
+		},
+		{
+			"Type": "Layout",
+			"Name": "SecondParticleOptionDiv",
+			"Layout":
+			{
+				"Type": "Grid",
+				"CellOrder": "RowMajor",
+				"NumRows": "1",
+				"NumCols": "3",
+				"RelMargins": "0.03 0.03 0.03 0.03",
+				"RelHSpacing": "0.01",
+				"RelVSpacing": "0.01"
+			},
+			"Children": 
+			[
+				{
+					"Type": "ToggleButton",
+					"Name": "BallBeamToggleButton",
+					"RelSize": "0.2 0.2",
+					"RelPosition": "-0.4 0.0",
+					"SizePolicy": "UseWidthMaintainingAspect",
+					"OriginAnchor": "MiddleCentre", 
+					"ParentalAnchor": "MiddleCentre",
+					"HighlightOnColour": "1.0 1.0 1.0 0.1",
+					"HighlightOffColour": "1.0 1.0 1.0 0.1",
+					"NormalOffDrawable": 
+					{
+						"Type": "Standard",
+						"TextureLocation": "Package",
+						"TexturePath": "TextureAtlases/GUI/GUI.csimage",
+						"AtlasLocation": "Package",
+						"AtlasPath": "TextureAtlases/GUI/GUI.csatlas",
+						"AtlasId": "Red_X"
+					},
+					"NormalOnDrawable": 
+					{
+						"Type": "Standard",
+						"TextureLocation": "Package",
+						"TexturePath": "TextureAtlases/GUI/GUI.csimage",
+						"AtlasLocation": "Package",
+						"AtlasPath": "TextureAtlases/GUI/GUI.csatlas",
+						"AtlasId": "Green_O"
+					},
+					"ToggledOn": "false"
+				},
+				{
+					"Type": "Image",
+					"Name": "ParticleImage",
+					"RelSize": "0.5 0.5",
+					"RelPosition": "-0.7 0.0",
+					"SizePolicy": "UseWidthMaintainingAspect",
+					"OriginAnchor": "MiddleCentre", 
+					"ParentalAnchor": "MiddleCentre",
+					"Drawable": 
+					{
+						"Type": "Standard",
+						"TextureLocation": "Package",
+						"TexturePath": "TextureAtlases/Particles/Particles.csimage",
+						"AtlasLocation": "Package",
+						"AtlasPath": "TextureAtlases/Particles/Particles.csatlas",
+						"AtlasId": "Beam"
+					}
+				},
+				{
+					"Type": "Image",
+					"Name": "ParticleHeadingImage",
+					"RelSize": "0.9 0.9",
+					"RelPosition": "-0.7 0.0",
+					"SizePolicy": "UseWidthMaintainingAspect",
+					"OriginAnchor": "MiddleCentre", 
+					"ParentalAnchor": "MiddleCentre",
+					"Drawable": 
+					{
+						"Type": "Standard",
+						"TextureLocation": "Package",
+						"TexturePath": "TextureAtlases/GUI/GUI.csimage",
+						"AtlasLocation": "Package",
+						"AtlasPath": "TextureAtlases/GUI/GUI.csatlas",
+						"AtlasId": "Beam"
+					}
+				}
+			]
+		},
+		{
+			"Type": "Image",
+			"Name": "MainHeadingImage",
+			"RelSize": "0.35 0.35",
+			"RelPosition": "0.0 0.0",
+			"SizePolicy": "UseWidthMaintainingAspect",
+			"OriginAnchor": "MiddleCentre", 
+			"ParentalAnchor": "MiddleCentre",
+			"Drawable": 
+			{
+				"Type": "Standard",
+				"TextureLocation": "Package",
+				"TexturePath": "TextureAtlases/GUI/GUI.csimage",
+				"AtlasLocation": "Package",
+				"AtlasPath": "TextureAtlases/GUI/GUI.csatlas",
+				"AtlasId": "Ball"
+			}
+		}
+	]
+}

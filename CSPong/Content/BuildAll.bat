@@ -1,6 +1,6 @@
 ::
-::  BuildAll.sh
-:: CSPong
+::  BuildAll.bat
+::  CSPong
 ::  Created by Ian Copland on 22/01/2015
 ::
 ::  The MIT License (MIT)
@@ -25,6 +25,8 @@
 ::  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 ::  THE SOFTWARE.
 ::
+
+python ../Tools/Scripts/particle_randomizer.py PrebuiltResources/TextureAtlases/BenchmarkingImagePool/ PrebuiltResources/TextureAtlases/Particles/
 
 python ../Tools/Scripts/content_builder.py PrebuiltResources/ AppResources/
 

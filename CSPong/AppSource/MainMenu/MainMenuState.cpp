@@ -30,6 +30,7 @@
 
 #include <Common/TransitionSystem.h>
 #include <Game/GameState.h>
+#include <Game/Particles/ParticleEffectComponentFactory.h>
 
 #include <ChilliSource/Core/Base.h>
 #include <ChilliSource/Core/Resource.h>
@@ -49,108 +50,457 @@ namespace CSPong
     //------------------------------------------------------------
     void MainMenuState::OnInit()
     {
-        /*
-         ==============================
-         Chilli Source Tour: UI
-         ==============================
-         
-         UI in Chilli Source can be created in code or from .csui files.
-         
-         UI is described hierarchically with the canvas at the root. Changing properties on the parent will usually effect the children i.e. disabling user interaction on the root
-         will make all children non-interactable. This is a good way of creating encapsulated widgets i.e. dialogue boxes, etc.
-         
-         UI uses a mixture of absolute and relative co-ordinates.
-         Absolute co-ords are always in screen-space (i.e. pixels) with (0, 0) at the bottom left. Setting Absolute Size to 100x200 will always give an view at
-         100x200 regardless of screen resolution or orientation. This is useful for views such as virtual thumbsticks which will have been tailored to the avergae size of a human thumb.
-         Relative co-ords are specified as a percentage relative to the parent view size (again from the bottom left). Setting Relative Position to 0.5x0.5 will place the view at
-         the centre of its parent. Setting the Relative Size = 1.0x1.0 will make the view the same size as its parent. Relative co-ords are useful for UI that needs to adapt based on
-         the screen resolution.
-         
-         Relative size and positioning on its own is not enough to build scaleable UI you need to use anchors and consider the aspect ratio of any images. CS UI has 2 anchor properties
-         
-         The local anchor "OriginAnchor" which controls where the origin of the view is i.e. where it is rendered from and the "ParentalAnchor" which controls how it anchors to its parent.
-         
-         LocalAlignment = MiddleCentre
-         ParentalAlignment = MiddleCentre
-         
-         |           |
-         |    | |    |
-         |           |
-         
-         LocalAlignment = TopLeft
-         ParentalAlignment = TopLeft
-         
-         || |        |
-         |           |
-         |           |
-         
-         
-         Widgets can also have a size policy. This governs how the widget will respond when the aspect ratio of its prefered size (in most cases the size of its image) is different to its
-         actual size. The most common of these are "UseWidthMaintainingAspect", which will alter the widgets height to maintain aspect ratio with the given width, or "UseHeightMaintainingAspect"
-         which will alter the widgets width to maintain aspect ratio with the given height.
-         
-         ------------------------------
-         
-         Next: 'Events' in MainMenuState::OnInit
-         */
-        
-        //Load the GUI and add it to the window
-        auto mainMenuViewDef = CSCore::Application::Get()->GetResourcePool()->LoadResource<CSUI::WidgetTemplate>(CSCore::StorageLocation::k_package, "GUI/MainMenu.csui");
-        CSUI::WidgetSPtr mainMenuView = CSCore::Application::Get()->GetWidgetFactory()->Create(mainMenuViewDef);
-        GetUICanvas()->AddWidget(mainMenuView);
-        
+		//Load parent widget container (only contains background image, main menu, and particle menu)
+		auto menuContainerDef = CSCore::Application::Get()->GetResourcePool()->LoadResource<CSUI::WidgetTemplate>(CSCore::StorageLocation::k_package, "GUI/MenuContainer.csui");
+		m_menuContainer = CSCore::Application::Get()->GetWidgetFactory()->Create(menuContainerDef);
+		GetUICanvas()->AddWidget(m_menuContainer);
 
-        //Grab the button children by name and add this class as a listener for button events
-        m_playButton = mainMenuView->GetWidget("PlayButton");
-        
-        //Disable user interaction until the animation is complete.
-        m_playButton->SetInputEnabled(false);
-        
-        //Create a tween that will slide the UI onto the screen. This will be used to offset the button from its stated position.
-        m_playButtonTween = CSCore::MakeEaseInOutBackTween(-1.0f, 0.0f, 1.0f);
-        
-        /*
-         ==============================
-         Chilli Source Tour: Events
-         ==============================
-         
-         Chilli Source has various ways to register as a listener for an action. The simplest is simply setting a callback delegate using std::function which provides a one to one mapping. One of the most common
-         methods is by using "events". Events allow multiple listeners to register against the same action. Listeners open a scoped connection to the event and while the connection renamins open will
-         be notifed when the event occurs. Connections can be closed by either end (usually when they go out of scope).
-         
-         Buttons use events to inform listeners when they have been activated. The delegate that are passed to events can be std::functions or in this case an anonymous lambda function:
-         
-         ------------------------------
-         
-         Next: 'Entities' in GameState::OnInit
-         */
-        m_playButtonConnection = m_playButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
-        {
-            m_playButton->SetInputEnabled(false);
-            m_playButtonTween.Play(CSCore::TweenPlayMode::k_onceReverse);
-            m_playButtonTween.SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
-            {
-                m_transitionSystem->Transition(CSCore::StateSPtr(new GameState()));
-            });
-        });
-        
-        m_transitionInConnection = m_transitionSystem->GetTransitionInFinishedEvent().OpenConnection([this]()
-        {
-            m_playButtonTween.Play(CSCore::TweenPlayMode::k_once);
-            
-            //Once the animation is finished allow the user to press the button
-            m_playButtonTween.SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
-            {
-                m_playButton->SetInputEnabled(true);
-            });
-        });
+		//Get main and particle menus
+		m_mainMenu = m_menuContainer->GetWidget("MainMenuTemplate")->GetWidget("MainMenuContainer");
+		m_particleMenu = m_menuContainer->GetWidget("ParticleMenuTemplate")->GetWidget("ParticleMenuContainer");
+		m_benchmarkingMenu = m_menuContainer->GetWidget("BenchmarkingMenuTemplate")->GetWidget("BenchmarkingMenuContainer");
+
+		//Get benchmarking divs
+		auto benchmarkingMenuGrid = m_benchmarkingMenu->GetWidget("BenchmarkingDivsContainer")->GetWidget("ParticleMenuMainDiv")->GetWidget("ParticleMenuGridTemplate")->GetWidget("BenchmarkingParticleMenuGrid");
+		m_benchPlayerParticleDiv = benchmarkingMenuGrid->GetWidget("PlayerPaddleParticleDiv");
+		m_benchOpponentParticleDiv = benchmarkingMenuGrid->GetWidget("OpponentPaddleParticleDiv");
+		m_benchBallParticleDiv = benchmarkingMenuGrid->GetWidget("BallParticleDiv");
+		m_benchOptionParticleDiv = benchmarkingMenuGrid->GetWidget("OptionParticleDiv");
+
+		//Disable all user interaction until the animation is complete.
+		SetAllInputEnabled(false);
+
+		//Create tweens that will move its components from the right and left (offscreen) to the center
+		m_rightToCenterTween = CSCore::MakeEaseInOutBackTween(1.0f, 0.0f, 1.0f);
+		m_leftToCenterTween = CSCore::MakeEaseInOutBackTween(-1.0f, 0.0f, 1.0f);
+
+		//Create tweens that will move its components up and down and right and left within the screen
+		m_upAndDownTween = CSCore::MakeEaseInOutBackTween(0.5f, 0.0f, 1.0f);
+		m_rightAndLeftTween = CSCore::MakeEaseInOutBackTween(0.5f, 0.0f, 1.0f);
+
+		SetupMainMenu();
+		SetupParticleMenu();
+		SetupBenchmarkingMenu();
+
+		//Transition system event
+		m_transitionInConnection = m_transitionSystem->GetTransitionInFinishedEvent().OpenConnection([this]() 
+		{ 
+			m_mainMenuMovementData.m_leftTween = true;
+			m_mainMenuMovementData.m_movingCenter = true;
+			m_mainMenuMovementData.m_moving = true;
+		});
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    void MainMenuState::OnUpdate(f32 dt)
+    void MainMenuState::OnUpdate(f32 in_dt)
     {
-        m_playButtonTween.Update(dt);
-        m_playButton->SetRelativePosition(CSCore::Vector2(m_playButtonTween.GetValue(), m_playButton->GetLocalRelativePosition().y));
+		if (m_mainMenuMovementData.m_moving)
+		{
+			AnimateWidget(in_dt, m_mainMenu, &m_mainMenuMovementData);
+		}
+
+		if (m_particleMenuMovementData.m_moving)
+		{
+			AnimateWidget(in_dt, m_particleMenu, &m_particleMenuMovementData);
+		}
+
+		if (m_benchmarkingMenuMovementData.m_moving)
+		{
+			AnimateWidget(in_dt, m_benchmarkingMenu, &m_benchmarkingMenuMovementData);
+		}
+
+		if (m_playerParticleDivMovementData.m_moving)
+		{
+			AnimateWidget(in_dt, m_benchPlayerParticleDiv, &m_playerParticleDivMovementData, true);
+		}
+
+		if (m_opponentParticleDivMovementData.m_moving)
+		{
+			AnimateWidget(in_dt, m_benchOpponentParticleDiv, &m_opponentParticleDivMovementData, true);
+		}
+
+		if (m_ballParticleMovementData.m_moving)
+		{
+			AnimateWidget(in_dt, m_benchBallParticleDiv, &m_ballParticleMovementData, true);
+		}
+
+		if (m_optionParticleMovementData.m_moving)
+		{
+			AnimateWidget(in_dt, m_benchOptionParticleDiv, &m_optionParticleMovementData, true);
+		}
     }
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	void MainMenuState::AnimateWidget(f32 in_dt, CSUI::WidgetSPtr in_widget, MovementData* in_widgetMovementData, bool in_isBenchmarkingWidget)
+	{
+		CSCore::EaseInOutBackTween<f32>* widgetTween;
+		//Get correct directional tween based on movement data
+		if (in_isBenchmarkingWidget)
+		{
+			widgetTween = in_widgetMovementData->m_leftTween ? &m_rightAndLeftTween : &m_upAndDownTween;
+		}
+		else
+		{
+			widgetTween = in_widgetMovementData->m_leftTween ? &m_leftToCenterTween : &m_rightToCenterTween;
+		}
+
+
+		//Play tween based on its center movement data if it's not playing already
+		if (!widgetTween->IsPlaying())
+		{
+			if (in_widgetMovementData->m_movingCenter)
+			{
+				widgetTween->Play(CSCore::TweenPlayMode::k_once);
+			}
+			else
+			{
+				widgetTween->Play(CSCore::TweenPlayMode::k_onceReverse);
+			}
+		}
+
+		if (in_isBenchmarkingWidget && in_widgetMovementData->m_movingCenter == false)
+		{
+			//Make the widget go back to its place
+			widgetTween->SetOnEndDelegate([this, in_widgetMovementData](CSCore::EaseInOutBackTween<f32>* in_tween)
+			{
+				in_widgetMovementData->m_movingCenter = true;
+			});
+		}
+		else
+		{
+			//Make sure that the menu stops moving at the end of the animation
+			widgetTween->SetOnEndDelegate([this, in_widgetMovementData](CSCore::EaseInOutBackTween<f32>* in_tween)
+			{
+				in_widgetMovementData->m_moving = false;
+				MainMenuState::SetAllInputEnabled(true);
+			});
+		}
+
+		//If the play button is pressed then make sure we will transition into the next state at the end of the animation
+		if ((in_widget == m_mainMenu) && m_isPlayButtonPressed)
+		{
+			widgetTween->SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
+			{
+				m_transitionSystem->Transition(CSCore::StateSPtr(new GameState()));
+				m_mainMenuMovementData.m_moving = false;
+			});
+		}
+
+		widgetTween->Update(in_dt);
+
+		//Move the widget either up and down or left and right depending on the type of widget and movement data
+		if (!in_isBenchmarkingWidget || in_widgetMovementData->m_leftTween)
+		{
+			in_widget->SetRelativePosition(CSCore::Vector2(widgetTween->GetValue(), in_widget->GetLocalRelativePosition().y));
+		}
+		else
+		{
+			in_widget->SetRelativePosition(CSCore::Vector2(in_widget->GetLocalRelativePosition().x, widgetTween->GetValue()));
+		}
+	}
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	void MainMenuState::SetupMainMenu()
+	{
+		//Get play and right arrow buttons to set their events
+		auto playButton = m_mainMenu->GetWidget("PlayButton");
+		auto rightArrowButton = m_mainMenu->GetWidget("RightArrowButton");
+		
+		//Play button events
+		m_playButtonReleasedConnection = playButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType) 
+		{ 
+			//L <-- C
+			m_mainMenuMovementData.m_leftTween = true;
+			m_mainMenuMovementData.m_movingCenter = false;
+			m_mainMenuMovementData.m_moving = true;
+
+			//Update the particle effect component factory system to use the chosen particles
+			UpdateParticleOptions();
+
+			//Update member variable so we transition into the next state after the animation 
+			m_isPlayButtonPressed = true;
+
+			//Disable input until the end of the animation
+			MainMenuState::SetAllInputEnabled(false);
+		});
+		m_playButtonEnteredConnection = playButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer) 
+		{ 
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_playButtonExitedConnection = playButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
+
+		//Right arrow button events
+		m_mainRArrowReleasedConnection = rightArrowButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
+		{
+			//L <-- C
+			m_mainMenuMovementData.m_leftTween = true;
+			m_mainMenuMovementData.m_movingCenter = false;
+			m_mainMenuMovementData.m_moving = true;
+
+			//C <-- R
+			m_particleMenuMovementData.m_leftTween = false;
+			m_particleMenuMovementData.m_movingCenter = true;
+			m_particleMenuMovementData.m_moving = true;
+
+			//Disable input until the end of the animation
+			MainMenuState::SetAllInputEnabled(false);
+		});
+		m_mainRArrowEnteredConnection = rightArrowButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_mainRArrowExitedConnection = rightArrowButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
+	}
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	void MainMenuState::SetupParticleMenu()
+	{
+		//Get arrow buttons to set their events
+		auto leftArrowButton = m_particleMenu->GetWidget("LeftArrowButton");
+		auto rightArrowButton = m_particleMenu->GetWidget("RightArrowButton");
+
+		//Left arrow button events
+		m_particleLArrowReleasedConnection = leftArrowButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
+		{
+			//L --> C
+			m_mainMenuMovementData.m_leftTween = true;
+			m_mainMenuMovementData.m_movingCenter = true;
+			m_mainMenuMovementData.m_moving = true;
+
+			//C --> R
+			m_particleMenuMovementData.m_leftTween = false;
+			m_particleMenuMovementData.m_movingCenter = false;
+			m_particleMenuMovementData.m_moving = true;
+
+			//Disable input until the end of the animation
+			MainMenuState::SetAllInputEnabled(false);
+		});
+		m_particleLArrowEnteredConnection = leftArrowButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_particleLArrowExitedConnection = leftArrowButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
+
+		//Right arrow button events
+		m_particleRArrowReleasedConnection = rightArrowButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
+		{
+			//C <-- R
+			m_benchmarkingMenuMovementData.m_leftTween = false;
+			m_benchmarkingMenuMovementData.m_movingCenter = true;
+			m_benchmarkingMenuMovementData.m_moving = true;
+
+			//L <-- C
+			m_particleMenuMovementData.m_leftTween = true;
+			m_particleMenuMovementData.m_movingCenter = false;
+			m_particleMenuMovementData.m_moving = true;
+
+			//Disable input until the end of the animation
+			MainMenuState::SetAllInputEnabled(false);
+		});
+		m_particleRArrowEnteredConnection = rightArrowButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_particleRArrowExitedConnection = rightArrowButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
+
+		SetupParticleMenuGrid();
+	}
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	void MainMenuState::SetupBenchmarkingMenu()
+	{
+		//Get arrow buttons to set their events
+		auto leftArrowButton = m_benchmarkingMenu->GetWidget("BenchmarkingDivsContainer")->GetWidget("LeftArrowButton");
+		auto moveButton = m_benchmarkingMenu->GetWidget("MoveButton");
+
+		//Left arrow button events
+		m_benchLArrowReleasedConnection = leftArrowButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
+		{
+			//L --> C
+			m_particleMenuMovementData.m_leftTween = true;
+			m_particleMenuMovementData.m_movingCenter = true;
+			m_particleMenuMovementData.m_moving = true;
+
+			//C --> R
+			m_benchmarkingMenuMovementData.m_leftTween = false;
+			m_benchmarkingMenuMovementData.m_movingCenter = false;
+			m_benchmarkingMenuMovementData.m_moving = true;
+
+			//Disable input until the end of the animation
+			MainMenuState::SetAllInputEnabled(false);
+		});
+		m_benchLArrowEnteredConnection = leftArrowButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_benchLArrowExitedConnection = leftArrowButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
+
+		//Move button events
+		m_benchMoveButtonReleasedConnection = moveButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
+		{
+			m_playerParticleDivMovementData.m_leftTween = false;
+			m_playerParticleDivMovementData.m_movingCenter = false;
+			m_playerParticleDivMovementData.m_moving = true;
+				
+			m_opponentParticleDivMovementData.m_leftTween = false;
+			m_opponentParticleDivMovementData.m_movingCenter = false;
+			m_opponentParticleDivMovementData.m_moving = true;
+				
+			m_ballParticleMovementData.m_leftTween = false;
+			m_ballParticleMovementData.m_movingCenter = false;
+			m_ballParticleMovementData.m_moving = true;
+				
+			m_optionParticleMovementData.m_leftTween = false;
+			m_optionParticleMovementData.m_movingCenter = false;
+			m_optionParticleMovementData.m_moving = true;
+		});
+		m_benchMoveButtonEnteredConnection = moveButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_benchMoveButtonExitedConnection = moveButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
+	}
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	void MainMenuState::SetupParticleMenuGrid()
+	{
+		auto particleMenuGrid = m_particleMenu->GetWidgetRecursive("ParticleMenuGridTemplate")->GetWidget("ParticleMenuGrid");
+		auto playerParticleEffectDiv = particleMenuGrid->GetWidgetRecursive("PlayerParticleEffectDivTemplate")->GetWidget("PlayerParticleEffectDiv");
+		auto opponentParticleEffectDiv = particleMenuGrid->GetWidgetRecursive("OpponentParticleEffectDivTemplate")->GetWidget("OpponentParticleEffectDiv");
+		auto ballParticleEffectDiv = particleMenuGrid->GetWidgetRecursive("BallParticleEffectDivTemplate")->GetWidget("BallParticleEffectDiv");
+
+		//Player magma toggle button events
+		auto playerMagmaToggleButton = playerParticleEffectDiv->GetWidgetRecursive("PlayerMagmaToggleButton");
+		m_playerMagmaToggleButtonEnteredConnection = playerMagmaToggleButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_playerMagmaToggleButtonExitedConnection = playerMagmaToggleButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
+		
+		//Player ice cream toggle button events
+		auto playerIceCreamToggleButton = playerParticleEffectDiv->GetWidgetRecursive("PlayerIceCreamToggleButton");
+		m_playerIceCreamToggleButtonEnteredConnection = playerIceCreamToggleButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_playerIceCreamToggleButtonExitedConnection = playerIceCreamToggleButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
+
+		//Opponent magma toggle button events
+		auto opponentMagmaToggleButton = opponentParticleEffectDiv->GetWidgetRecursive("OpponentMagmaToggleButton");
+		m_opponentMagmaToggleButtonEnteredConnection = opponentMagmaToggleButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_opponentMagmaToggleButtonExitedConnection = opponentMagmaToggleButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
+
+		//Opponent ice cream toggle button events
+		auto opponentIceCreamToggleButton = opponentParticleEffectDiv->GetWidgetRecursive("OpponentIceCreamToggleButton");
+		m_opponentIceCreamToggleButtonEnteredConnection = opponentIceCreamToggleButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_opponentIceCreamToggleButtonExitedConnection = opponentIceCreamToggleButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
+
+		//Ball smoke toggle button events
+		auto ballSmokeToggleButton = ballParticleEffectDiv->GetWidgetRecursive("BallSmokeToggleButton");
+		m_ballSmokeToggleButtonEnteredConnection = ballSmokeToggleButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_ballSmokeToggleButtonExitedConnection = ballSmokeToggleButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
+		
+		// Ball beam toggle button events
+		auto ballBeamToggleButton = ballParticleEffectDiv->GetWidgetRecursive("BallBeamToggleButton");
+		m_ballBeamToggleButtonEnteredConnection = ballBeamToggleButton->GetMoveEnteredEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::DarkenWidget(in_widget, in_pointer);
+		});
+		m_ballBeamToggleButtonExitedConnection = ballBeamToggleButton->GetMoveExitedEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+		{
+			MainMenuState::ResetDarkenWidget(in_widget, in_pointer);
+		});
+	}
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	void MainMenuState::UpdateParticleOptions()
+	{
+		auto particleECFSystem = CSCore::Application::Get()->GetSystem<ParticleEffectComponentFactory>();
+
+		auto particleMenuGrid = m_particleMenu->GetWidgetRecursive("ParticleMenuGridTemplate")->GetWidget("ParticleMenuGrid");
+		auto playerParticleEffectDiv = particleMenuGrid->GetWidgetRecursive("PlayerParticleEffectDivTemplate")->GetWidget("PlayerParticleEffectDiv");
+		auto opponentParticleEffectDiv = particleMenuGrid->GetWidgetRecursive("OpponentParticleEffectDivTemplate")->GetWidget("OpponentParticleEffectDiv");
+		auto ballParticleEffectDiv = particleMenuGrid->GetWidgetRecursive("BallParticleEffectDivTemplate")->GetWidget("BallParticleEffectDiv");
+
+		//Setting user's options for player particles
+		bool playerMagmaToggled = playerParticleEffectDiv->GetWidgetRecursive("PlayerMagmaToggleButton")->GetProperty<bool>("ToggledOn");
+		bool playerIceCreamToggled = playerParticleEffectDiv->GetWidgetRecursive("PlayerIceCreamToggleButton")->GetProperty<bool>("ToggledOn");
+		particleECFSystem->SetPlayerParticles(playerMagmaToggled, playerIceCreamToggled);
+
+		//Setting user's options for opponent particles
+		bool opponentMagmaToggled = opponentParticleEffectDiv->GetWidgetRecursive("OpponentMagmaToggleButton")->GetProperty<bool>("ToggledOn");
+		bool opponentIceCreamToggled = opponentParticleEffectDiv->GetWidgetRecursive("OpponentIceCreamToggleButton")->GetProperty<bool>("ToggledOn");
+		particleECFSystem->SetOpponentParticles(opponentMagmaToggled, opponentIceCreamToggled);
+
+		//Setting user's options for ball particles
+		bool ballSmokeToggled = ballParticleEffectDiv->GetWidgetRecursive("BallSmokeToggleButton")->GetProperty<bool>("ToggledOn");
+		bool ballBeamToggled = ballParticleEffectDiv->GetWidgetRecursive("BallBeamToggleButton")->GetProperty<bool>("ToggledOn");
+		particleECFSystem->SetBallParticles(ballSmokeToggled, ballBeamToggled);
+	}
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	void MainMenuState::DarkenWidget(CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+	{
+		in_widget->SetColour(in_widget->GetFinalColour() * k_menuFadeColour);
+	}
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	void MainMenuState::ResetDarkenWidget(CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer)
+	{
+		in_widget->SetColour(in_widget->GetFinalColour() / k_menuFadeColour);
+	}
+	//------------------------------------------------------------
+	//------------------------------------------------------------
+	void MainMenuState::SetAllInputEnabled(const bool in_inputEnabled)
+	{
+		m_mainMenu->GetWidget("PlayButton")->SetInputEnabled(in_inputEnabled);
+		m_mainMenu->GetWidget("RightArrowButton")->SetInputEnabled(in_inputEnabled);
+		m_particleMenu->GetWidget("LeftArrowButton")->SetInputEnabled(in_inputEnabled);
+		m_particleMenu->GetWidget("RightArrowButton")->SetInputEnabled(in_inputEnabled);
+		m_benchmarkingMenu->GetWidget("BenchmarkingDivsContainer")->GetWidget("LeftArrowButton")->SetInputEnabled(in_inputEnabled);
+		m_benchmarkingMenu->GetWidget("MoveButton")->SetInputEnabled(in_inputEnabled);
+	}
 }
 

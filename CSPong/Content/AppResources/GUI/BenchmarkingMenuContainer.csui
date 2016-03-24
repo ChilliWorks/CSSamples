@@ -1,0 +1,115 @@
+{
+	"Type": "Layout",
+	"Name": "BenchmarkingMenuContainer",
+	"RelPosition": "1.0 0.0",
+	"Layout":
+	{
+		"Type": "VList",
+		"NumCells": "2",
+		"RelMargins": "0.03 0.0 -0.8 0.0",
+		"RelSpacing": "-0.01"
+	},
+	"Children": 
+	[
+		{
+			"Type": "Layout",
+			"Name": "BenchmarkingDivsContainer",
+			"Layout":
+			{
+				"Type": "Grid",
+				"CellOrder": "RowMajor",
+				"NumRows": "2",
+				"NumCols": "3",
+				"RelMargins": "0.03 0.01 0.03 0.01",
+				"RelHSpacing": "0.01",
+				"RelVSpacing": "0.01"
+			},
+			"Children":
+			[
+				{ "Type": "Widget", "Name": "Placeholder"},
+				{
+					"Type": "Image",
+					"Name": "BenchmarkingMenuHeading",
+					"RelSize": "1.5 1.5",
+					"RelPosition": "0.0 -0.1",
+					"OriginAnchor": "MiddleCentre", 
+					"ParentalAnchor": "TopCentre",
+					"SizePolicy": "UseWidthMaintainingAspect",
+					"Drawable": 
+					{
+						"Type": "Standard",
+						"TextureLocation": "Package",
+						"TexturePath": "TextureAtlases/GUI/GUI.csimage",
+						"AtlasLocation": "Package",
+						"AtlasPath": "TextureAtlases/GUI/GUI.csatlas",
+						"AtlasId": "Benchmarking"
+					}
+				},
+				{ "Type": "Widget", "Name": "Placeholder"},
+				{
+					"Type": "HighlightButton",
+					"Name": "LeftArrowButton",
+					"RelSize": "0.22 0.22",
+					"RelPosition": "0.0 0.22",
+					"SizePolicy": "UseWidthMaintainingAspect",
+					"OriginAnchor": "TopLeft", 
+					"ParentalAnchor": "TopLeft",
+					"NormalDrawable": 
+					{
+						"Type": "Standard",
+						"TextureLocation": "Package",
+						"TexturePath": "TextureAtlases/GUI/GUI.csimage",
+						"AtlasLocation": "Package",
+						"AtlasPath": "TextureAtlases/GUI/GUI.csatlas",
+						"AtlasId": "Left_Arrow"
+					}
+				},
+				{
+					"Type": "Image",
+					"Name": "ParticleMenuMainDiv",
+					"RelSize": "2.6 1.8",
+					"RelPosition": "0.0 -0.1",
+					"OriginAnchor": "MiddleCentre", 
+					"ParentalAnchor": "TopCentre",
+					"Drawable": 
+					{
+						"Type": "Standard",
+						"TextureLocation": "Package",
+						"TexturePath": "TextureAtlases/GUI/GUI.csimage",
+						"AtlasLocation": "Package",
+						"AtlasPath": "TextureAtlases/GUI/GUI.csatlas",
+						"AtlasId": "Transparent_Div"
+					},
+					"Children": 
+					[
+						{
+							"Type": "Template",
+							"Name": "ParticleMenuGridTemplate",
+							"TemplatePath": "BenchmarkingParticleMenuGrid.csui"
+						}
+					]
+					
+				},
+				{ "Type": "Widget", "Name": "Placeholder"}
+			]
+		},
+		{
+			"Type": "HighlightButton",
+			"Name": "MoveButton",
+			"RelSize": "0.1 0.1",
+			"RelPosition": "0.0 0.02",
+			"SizePolicy": "UseWidthMaintainingAspect",
+			"OriginAnchor": "TopCentre", 
+			"ParentalAnchor": "TopCentre",
+			"NormalDrawable": 
+			{
+				"Type": "Standard",
+				"TextureLocation": "Package",
+				"TexturePath": "TextureAtlases/GUI/GUI.csimage",
+				"AtlasLocation": "Package",
+				"AtlasPath": "TextureAtlases/GUI/GUI.csatlas",
+				"AtlasId": "Move"
+			}
+		}
+	]
+}

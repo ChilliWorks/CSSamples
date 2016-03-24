@@ -42,9 +42,9 @@ namespace CSPong
     
     namespace
     {
-        const f32 k_ceremonyDuration = 1.0f;
+        const f32 k_ceremonyDuration = 0.5f;
         const f32 k_ceremonyStartDelay = 0.2f;
-        const f32 k_ceremonyEndDelay = 0.7f;
+        const f32 k_ceremonyEndDelay = 0.6f;
         
         //------------------------------------------------------
         /// Creates the image view that is displayed when a

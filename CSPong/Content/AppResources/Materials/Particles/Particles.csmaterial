@@ -1,0 +1,15 @@
+<Material type="StaticAmbient">
+    <Lighting>
+        <Emissive value="0.5 0.5 0.5 1.0" />
+        <Ambient value="1.0 1.0 1.0 1.0" />
+        <Diffuse value="1.0 1.0 1.0 1.0" />
+        <Specular value="1.0 1.0 1.0 1.0" />
+    </Lighting>
+    <RenderStates>
+        <Transparency enabled="true"/>
+        <Culling enabled="true"/>
+    </RenderStates>
+    <Textures>
+        <Texture image-name="TextureAtlases/Particles/Particles.csimage" />
+    </Textures>
+</Material>

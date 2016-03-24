@@ -28,90 +28,85 @@
 
 apply plugin: 'com.android.application'
 apply from: '../../../../ChilliSource/Tools/Scripts/android-build.gradle'
-apply from: '../../../../Tools/Scripts/signing-config.gradle'
 
-android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    android {
+        compileSdkVersion 22
+        buildToolsVersion "22.0.1"
 
-    defaultConfig {
-        minSdkVersion 9
-        targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
-    }
-
-    sourceSets {
-        main {
-            jniLibs.srcDir 'src/main/libs'
-            jni.srcDir '../../../../AppSource'
+        defaultConfig {
+            minSdkVersion 9
+            targetSdkVersion 22
+            versionCode 1
+            versionName "1.0"
         }
-    }
 
-    signingConfigs {
-        release {
-            storeFile file('file.ext')
-            storePassword ''
-            keyAlias ''
-            keyPassword ''
-        }
-    }
-
-    //Applies the release config from a configuration file described in gradle.properties. This
-    //avoids needing to enter the store details here, which could lead to the password being
-    //accidentally committed.
-    cstApplyReleaseSigningConfig project, signingConfigs
-
-    //ChilliSource relies on the names of these to set up task dependencies. Additional types can
-    //be added and existing types removed, but the resulting build variants must contain 'release'
-    //or 'debug' in the name.
-    buildTypes {
-        release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), '../../../../ChilliSource/Tools/Scripts/android-proguard-rules.pro', 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-        }
-        debug {
-            debuggable true
-            applicationIdSuffix ".debug"
-        }
-    }
-
-    //ChilliSource relies on the names of these to set up task dependencies. Additional flavors
-    //can be added and existing flavors removed, but the resulting build variants must contain an
-    //ABI and either 'googlePlay' or 'amazon' in the name.
-    flavorDimensions "sku", "abi"
-    productFlavors {
-        googlePlay {
-            dimension "sku"
-            applicationId "com.taggames.cspong.googleplay"
-        }
-        amazon {
-            dimension "sku"
-            applicationId "com.taggames.cspong.amazon"
-        }
-        arm {
-            dimension "abi"
-            ndk {
-                abiFilter "armeabi"
+        sourceSets {
+            main {
+                jniLibs.srcDir 'src/main/libs'
+                jni.srcDir '../../../../AppSource'
             }
         }
-        armv7 {
-            dimension "abi"
-            ndk {
-                abiFilter "armeabi-v7a"
+
+        signingConfigs {
+            release {
+                keyAlias 'Alias'
+                keyPassword '********'
+                storeFile file('keystore.keystore')
+                storePassword '********'
             }
         }
-        x86 {
-            dimension "abi"
-            ndk {
-                abiFilter "x86"
+
+        //ChilliSource relies on the names of these to set up task dependencies. Additional types can
+        //be added and existing types removed, but the resulting build variants must contain 'release'
+        //or 'debug' in the name.
+        buildTypes {
+            release {
+                minifyEnabled true
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), '../../../../ChilliSource/Tools/Scripts/android-proguard-rules.pro', 'proguard-rules.pro'
+                signingConfig signingConfigs.release
+            }
+            debug {
+                debuggable true
+                applicationIdSuffix ".debug"
             }
         }
+
+        //ChilliSource relies on the names of these to set up task dependencies. Additional flavors
+        //can be added and existing flavors removed, but the resulting build variants must contain an
+        //ABI and either 'googlePlay' or 'amazon' in the name.
+        flavorDimensions "sku", "abi"
+        productFlavors {
+            googlePlay {
+                dimension "sku"
+                applicationId "com.chilliworks.cspong.googleplay"
+            }
+            amazon {
+                dimension "sku"
+                applicationId "com.chilliworks.cspong.amazon"
+            }
+            arm {
+                dimension "abi"
+                ndk {
+                    abiFilter "armeabi"
+                }
+            }
+            armv7 {
+                dimension "abi"
+                ndk {
+                    abiFilter "armeabi-v7a"
+                }
+            }
+            x86 {
+                dimension "abi"
+                ndk {
+                    abiFilter "x86"
+                }
+            }
+        }
+
+        csInitApplication tasks, defaultConfig, applicationVariants
     }
 
-    csInitApplication tasks, defaultConfig, applicationVariants
-}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])

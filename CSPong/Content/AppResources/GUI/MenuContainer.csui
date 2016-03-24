@@ -1,0 +1,29 @@
+{
+	"Type": "Image",
+	"Name": "MenuContainer",
+	"ParentalAnchor": "MiddleCentre",
+	"Drawable": 
+	{
+		"Type": "Standard",
+		"TextureLocation": "Package",
+		"TexturePath": "Textures/GUI/Backing.csimage"
+	},
+	"Children": 
+	[
+		{
+			"Type": "Template",
+			"Name": "MainMenuTemplate",
+			"TemplatePath": "MainMenuContainer.csui"
+		},
+		{
+			"Type": "Template",
+			"Name": "ParticleMenuTemplate",
+			"TemplatePath": "ParticleMenuContainer.csui"
+		},
+		{
+			"Type": "Template",
+			"Name": "BenchmarkingMenuTemplate",
+			"TemplatePath": "BenchmarkingMenuContainer.csui"
+		}
+	]
+}
