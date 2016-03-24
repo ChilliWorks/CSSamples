@@ -112,7 +112,7 @@
     <IncludePath>$(ProjectDir)..\..\AppSource\;$(ProjectDir)..\..\ChilliSource\Source\;$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Headers\;$(ProjectDir)..\..\ChilliSource\Libraries\CricketAudio\Windows\Headers\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>$(LibraryPath);$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Libs\$(Platform)\$(Configuration)\;$(ProjectDir)..\..\ChilliSource\Libraries\CricketAudio\Windows\Libs\$(Platform)\$(Configuration)\;$(ProjectDir)csbin\$(Platform)\$(Configuration)\</LibraryPath>
+    <LibraryPath>$(LibraryPath);$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Libs\$(Platform)\$(Configuration)\;$(ProjectDir)..\..\ChilliSource\Libraries\CricketAudio\Windows\Libs\$(Platform)\$(Configuration)\;$(SolutionDir)csbin\$(Platform)\$(Configuration)\</LibraryPath>
     <LinkIncremental>false</LinkIncremental>
     <ReferencePath>
     </ReferencePath>
@@ -165,13 +165,12 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <ObjectFileName>$(IntDir)/%(RelativeDir)/</ObjectFileName>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Shiny;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>%(AdditionalDependencies);opengl32.lib;winmm.lib;XAudio2.lib;zlibstat.lib;glew32s.lib;sfml-system-s-d.lib;sfml-window-s-d.lib;ck.lib;CSBase.lib;ChilliSource.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
