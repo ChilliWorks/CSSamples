@@ -131,29 +131,36 @@ namespace CSPong
         m_scoreChangedConnection.reset();
 
 		// update all profiles
-		//PROFILE_UPDATE();
+		PROFILE_UPDATE();
 
-		//// create directory for profiling (won't create it if it already exists)
-		//bool isCreated = CSCore::Application::Get()->GetFileSystem()->CreateDirectoryPath(CSCore::StorageLocation::k_saveData, "Profile");
+		// create directory for profiling (won't create it if it already exists)
+		bool isCreated = CSCore::Application::Get()->GetFileSystem()->CreateDirectoryPath(CSCore::StorageLocation::k_saveData, "Profile");
 
-		//if (isCreated)
-		//{
-		//	// get both parts of profile string
-		//	std::string profileStr = PROFILE_GET_FLAT_STRING();
-		//	profileStr.append("\n\n");
-		//	profileStr.append(PROFILE_GET_TREE_STRING());
+		if (isCreated)
+		{
+			// get both parts of profile string
+			std::string profileStr = PROFILE_GET_FLAT_STRING();
+			profileStr.append("\n\n");
+			profileStr.append(PROFILE_GET_TREE_STRING());
 
-		//	// write profile 
-		//	bool isWritten = CSCore::Application::Get()->GetFileSystem()->WriteFile(CSCore::StorageLocation::k_saveData, "Profile/cspong_profile.txt", profileStr);
+			// write profile 
+			bool isWritten = CSCore::Application::Get()->GetFileSystem()->WriteFile(CSCore::StorageLocation::k_saveData, "Profile/cspong_profile.txt", profileStr);
 
-		//	if (!isWritten)
-		//	{
-		//		CS_LOG_ERROR("PROFILING OUTPUT: Failed to write profile file to SaveData/Profile/cspong_profile.txt");
-		//	}
-		//}
-		//else
-		//{
-		//	CS_LOG_ERROR("PROFILING OUTPUT: Failed to create directory path for SaveData/Profile");
-		//}
+			if (!isWritten)
+			{
+				CS_LOG_ERROR("PROFILING OUTPUT: Failed to write profile file to SaveData/Profile/cspong_profile.txt");
+			}
+			else
+			{
+				CS_LOG_VERBOSE("PROFILING OUTPUT: Saved profile file to SaveData/Profile/cspong_profile.txt");
+			}
+
+			
+
+		}
+		else
+		{
+			CS_LOG_ERROR("PROFILING OUTPUT: Failed to create directory path for SaveData/Profile");
+		}
     }
 }
