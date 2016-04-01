@@ -20,9 +20,10 @@ CSPong/Projects/Android/cspong/app/build
 CSPong/Projects/Android/cspong/app/src/main/assets
 CSPong/Projects/Android/cspong/app/src/main/obj
 CSPong/Projects/Android/cspong/app/src/main/libs/armeabi-v7a
+CSPong/Projects/Android/cspong/app/src/main/libs/arm64-v8a
 CSPong/Projects/Android/cspong/app/src/main/libs/armeabi
 CSPong/Projects/Android/cspong/app/src/main/libs/x86
+CSPong/Projects/Android/cspong/app/src/main/libs/x86_64
 CSPong/Projects/Android/cspong/build
 CSPong/Projects/Android/cspong/.idea/workspace.xml
 CSPong/Projects/Android/cspong/.idea/libraries
-

@@ -102,10 +102,22 @@ android {
                 abiFilter "armeabi-v7a"
             }
         }
+        arm64 {
+            dimension "abi"
+            ndk {
+                abiFilter "arm64-v8a"
+            }
+        }
         x86 {
             dimension "abi"
             ndk {
                 abiFilter "x86"
+            }
+        }
+        x64 {
+            dimension "abi"
+            ndk {
+                abiFilter "x86_64"
             }
         }
     }
@@ -124,14 +136,22 @@ dependencies {
     csDependencyMap.put "googlePlayArmRelease", "googlePlayArmRelease"
     csDependencyMap.put "googlePlayArmv7Debug", "googlePlayArmv7Debug"
     csDependencyMap.put "googlePlayArmv7Release", "googlePlayArmv7Release"
+    csDependencyMap.put "googlePlayArm64Debug", "googlePlayArm64Debug"
+    csDependencyMap.put "googlePlayArm64Release", "googlePlayArm64Release"
     csDependencyMap.put "googlePlayX86Debug", "googlePlayX86Debug"
     csDependencyMap.put "googlePlayX86Release", "googlePlayX86Release"
+    csDependencyMap.put "googlePlayX64Debug", "googlePlayX64Debug"
+    csDependencyMap.put "googlePlayX64Release", "googlePlayX64Release"
     csDependencyMap.put "amazonArmDebug", "amazonArmDebug"
     csDependencyMap.put "amazonArmRelease", "amazonArmRelease"
     csDependencyMap.put "amazonArmv7Debug", "amazonArmv7Debug"
     csDependencyMap.put "amazonArmv7Release", "amazonArmv7Release"
+    csDependencyMap.put "amazonArm64Debug", "amazonArm64Debug"
+    csDependencyMap.put "amazonArm64Release", "amazonArm64Release"
     csDependencyMap.put "amazonX86Debug", "amazonX86Debug"
     csDependencyMap.put "amazonX86Release", "amazonX86Release"
+    csDependencyMap.put "amazonX64Debug", "amazonX64Debug"
+    csDependencyMap.put "amazonX64Release", "amazonX64Release"
     csAddCSDependencies dependencies, configurations, csDependencyMap
 }
 
