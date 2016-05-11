@@ -54,18 +54,18 @@ namespace CSPong
         ///
         /// @return View
         //------------------------------------------------------
-        CSUI::WidgetSPtr CreateGoalCelebrationView()
+        CS::WidgetSPtr CreateGoalCelebrationView()
         {
-            auto resPool = CSCore::Application::Get()->GetResourcePool();
-            auto texture = resPool->LoadResource<CSRendering::Texture>(CSCore::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csimage");
-            auto atlas = resPool->LoadResource<CSRendering::TextureAtlas>(CSCore::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csatlas");
+            auto resPool = CS::Application::Get()->GetResourcePool();
+            auto texture = resPool->LoadResource<CS::Texture>(CS::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csimage");
+            auto atlas = resPool->LoadResource<CS::TextureAtlas>(CS::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csatlas");
             
-            CSUI::WidgetSPtr widget = CSCore::Application::Get()->GetWidgetFactory()->CreateImage();
-            CSUI::DrawableDefCSPtr drawableDef(new CSUI::StandardDrawableDef(texture, atlas, "Goal"));
-            widget->GetComponent<CSUI::DrawableComponent>()->ApplyDrawableDef(drawableDef);
-            widget->ScaleTo(CSCore::Vector2(0.0f, 0.0f));
-            widget->SetRelativeSize(CSCore::Vector2(0.5f, 0.0f));
-            widget->SetSizePolicy(CSUI::SizePolicy::k_useWidthMaintainingAspect);
+            CS::WidgetSPtr widget = CS::Application::Get()->GetWidgetFactory()->CreateImage();
+            CS::UIDrawableDefCSPtr drawableDef(new CS::StandardUIDrawableDef(texture, atlas, "Goal"));
+            widget->GetComponent<CS::DrawableUIComponent>()->ApplyDrawableDef(drawableDef);
+            widget->ScaleTo(CS::Vector2(0.0f, 0.0f));
+            widget->SetRelativeSize(CS::Vector2(0.5f, 0.0f));
+            widget->SetSizePolicy(CS::SizePolicy::k_useWidthMaintainingAspect);
             
             return widget;
         }
@@ -77,18 +77,18 @@ namespace CSPong
         ///
         /// @return View
         //------------------------------------------------------
-        CSUI::WidgetSPtr CreateWinCelebrationView()
+        CS::WidgetSPtr CreateWinCelebrationView()
         {
-            auto resPool = CSCore::Application::Get()->GetResourcePool();
-            auto texture = resPool->LoadResource<CSRendering::Texture>(CSCore::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csimage");
-            auto atlas = resPool->LoadResource<CSRendering::TextureAtlas>(CSCore::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csatlas");
+            auto resPool = CS::Application::Get()->GetResourcePool();
+            auto texture = resPool->LoadResource<CS::Texture>(CS::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csimage");
+            auto atlas = resPool->LoadResource<CS::TextureAtlas>(CS::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csatlas");
             
-            CSUI::WidgetSPtr widget = CSCore::Application::Get()->GetWidgetFactory()->CreateImage();
-            CSUI::DrawableDefCSPtr drawableDef(new CSUI::StandardDrawableDef(texture, atlas, "Win"));
-            widget->GetComponent<CSUI::DrawableComponent>()->ApplyDrawableDef(drawableDef);
-            widget->ScaleTo(CSCore::Vector2(0.0f, 0.0f));
-            widget->SetRelativeSize(CSCore::Vector2(0.5f, 0.0f));
-            widget->SetSizePolicy(CSUI::SizePolicy::k_useWidthMaintainingAspect);
+            CS::WidgetSPtr widget = CS::Application::Get()->GetWidgetFactory()->CreateImage();
+            CS::UIDrawableDefCSPtr drawableDef(new CS::StandardUIDrawableDef(texture, atlas, "Win"));
+            widget->GetComponent<CS::DrawableUIComponent>()->ApplyDrawableDef(drawableDef);
+            widget->ScaleTo(CS::Vector2(0.0f, 0.0f));
+            widget->SetRelativeSize(CS::Vector2(0.5f, 0.0f));
+            widget->SetSizePolicy(CS::SizePolicy::k_useWidthMaintainingAspect);
             
             return widget;
         }
@@ -100,18 +100,18 @@ namespace CSPong
         ///
         /// @return View
         //------------------------------------------------------
-        CSUI::WidgetSPtr CreateLoseCelebrationView()
+        CS::WidgetSPtr CreateLoseCelebrationView()
         {
-            auto resPool = CSCore::Application::Get()->GetResourcePool();
-            auto texture = resPool->LoadResource<CSRendering::Texture>(CSCore::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csimage");
-            auto atlas = resPool->LoadResource<CSRendering::TextureAtlas>(CSCore::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csatlas");
+            auto resPool = CS::Application::Get()->GetResourcePool();
+            auto texture = resPool->LoadResource<CS::Texture>(CS::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csimage");
+            auto atlas = resPool->LoadResource<CS::TextureAtlas>(CS::StorageLocation::k_package, "TextureAtlases/GUI/GUI.csatlas");
             
-            CSUI::WidgetSPtr widget = CSCore::Application::Get()->GetWidgetFactory()->CreateImage();
-            CSUI::DrawableDefCSPtr drawableDef(new CSUI::StandardDrawableDef(texture, atlas, "Lose"));
-            widget->GetComponent<CSUI::DrawableComponent>()->ApplyDrawableDef(drawableDef);
-            widget->ScaleTo(CSCore::Vector2(0.0f, 0.0f));
-            widget->SetRelativeSize(CSCore::Vector2(0.5f, 0.0f));
-            widget->SetSizePolicy(CSUI::SizePolicy::k_useWidthMaintainingAspect);
+            CS::WidgetSPtr widget = CS::Application::Get()->GetWidgetFactory()->CreateImage();
+            CS::UIDrawableDefCSPtr drawableDef(new CS::StandardUIDrawableDef(texture, atlas, "Lose"));
+            widget->GetComponent<CS::DrawableUIComponent>()->ApplyDrawableDef(drawableDef);
+            widget->ScaleTo(CS::Vector2(0.0f, 0.0f));
+            widget->SetRelativeSize(CS::Vector2(0.5f, 0.0f));
+            widget->SetSizePolicy(CS::SizePolicy::k_useWidthMaintainingAspect);
             
             return widget;
         }
@@ -124,7 +124,7 @@ namespace CSPong
     }
     //----------------------------------------------------------
     //----------------------------------------------------------
-    bool GoalCeremonySystem::IsA(CSCore::InterfaceIDType in_interfaceId) const
+    bool GoalCeremonySystem::IsA(CS::InterfaceIDType in_interfaceId) const
     {
         return in_interfaceId == GoalCeremonySystem::InterfaceID;
     }
@@ -163,17 +163,17 @@ namespace CSPong
     {
         GetState()->GetUICanvas()->AddWidget(m_currentView);
         
-        m_rotationTween = CSCore::MakeEaseOutBackTween(0.0f, CSCore::MathUtils::k_pi * 2.0f, k_ceremonyDuration, k_ceremonyStartDelay, k_ceremonyEndDelay);
-        m_scaleTween = CSCore::MakeEaseOutBackTween(CSCore::Vector2::k_zero, CSCore::Vector2::k_one, k_ceremonyDuration, k_ceremonyStartDelay, k_ceremonyEndDelay);
-        m_scaleTween.SetOnEndDelegate([this, in_endDelegate](CSCore::EaseOutBackTween<CSCore::Vector2>*)
+        m_rotationTween = CS::MakeEaseOutBackTween(0.0f, CS::MathUtils::k_pi * 2.0f, k_ceremonyDuration, k_ceremonyStartDelay, k_ceremonyEndDelay);
+        m_scaleTween = CS::MakeEaseOutBackTween(CS::Vector2::k_zero, CS::Vector2::k_one, k_ceremonyDuration, k_ceremonyStartDelay, k_ceremonyEndDelay);
+        m_scaleTween.SetOnEndDelegate([this, in_endDelegate](CS::EaseOutBackTween<CS::Vector2>*)
         {
             m_currentView->RemoveFromParent();
-            m_currentView->ScaleTo(CSCore::Vector2(0.0f, 0.0f));
+            m_currentView->ScaleTo(CS::Vector2(0.0f, 0.0f));
             m_currentView.reset();
             in_endDelegate();
         });
-        m_rotationTween.Play(CSCore::TweenPlayMode::k_pingPong);
-        m_scaleTween.Play(CSCore::TweenPlayMode::k_pingPong);
+        m_rotationTween.Play(CS::TweenPlayMode::k_pingPong);
+        m_scaleTween.Play(CS::TweenPlayMode::k_pingPong);
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
@@ -183,7 +183,7 @@ namespace CSPong
         m_scaleTween.Update(in_timeSinceLastUpdate);
         if(m_currentView != nullptr)
         {
-            m_currentView->ScaleTo(CSCore::Vector2::Max(m_scaleTween.GetValue(), CSCore::Vector2::k_zero));
+            m_currentView->ScaleTo(CS::Vector2::Max(m_scaleTween.GetValue(), CS::Vector2::k_zero));
             m_currentView->RotateTo(m_rotationTween.GetValue());
         }
     }

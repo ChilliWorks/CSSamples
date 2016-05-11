@@ -42,7 +42,7 @@ namespace CSPong
     ///
     /// @author S Downie
     //------------------------------------------------------------
-    class GameEntityFactory final : public CSCore::StateSystem
+    class GameEntityFactory final : public CS::StateSystem
     {
     public:
         
@@ -67,7 +67,7 @@ namespace CSPong
         ///
         /// @return Whether the class matches the comparison type
         //----------------------------------------------------------
-        bool IsA(CSCore::InterfaceIDType in_interfaceId) const override;
+        bool IsA(CS::InterfaceIDType in_interfaceId) const override;
         //------------------------------------------------------------
         /// Create the camera entity. The camera is a perspective camera
         ///
@@ -76,7 +76,7 @@ namespace CSPong
         /// @return Camera entity (NOTE: It returns a unique ptr which
         /// tells the caller that they take ownership)
         //------------------------------------------------------------
-        CSCore::EntityUPtr CreateCamera() const;
+        CS::EntityUPtr CreateCamera() const;
         //------------------------------------------------------------
         /// Create the light entity. The light is ambient
         ///
@@ -85,7 +85,7 @@ namespace CSPong
         /// @return Light entity (NOTE: It returns a unique ptr which
         /// tells the caller that they take ownership)
         //------------------------------------------------------------
-        CSCore::EntityUPtr CreateAmbientLight() const;
+        CS::EntityUPtr CreateAmbientLight() const;
         //------------------------------------------------------------
         /// Create the light entity. The light is directional
         ///
@@ -94,7 +94,7 @@ namespace CSPong
         /// @return Light entity (NOTE: It returns a unique ptr which
         /// tells the caller that they take ownership)
         //------------------------------------------------------------
-        CSCore::EntityUPtr CreateDiffuseLight() const;
+        CS::EntityUPtr CreateDiffuseLight() const;
         //------------------------------------------------------------
         /// Create the ball entity. The ball entity consists of
         /// a static model and logic that controls its movement. These
@@ -105,7 +105,7 @@ namespace CSPong
         /// @return Ball entity (NOTE: It returns a unique ptr which
         /// tells the caller that they take ownership)
         //------------------------------------------------------------
-        CSCore::EntityUPtr CreateBall() const;
+        CS::EntityUPtr CreateBall() const;
         //------------------------------------------------------------
         /// Create the player paddle. This has components for displaying
         /// the paddle and allowing the player to move it via the
@@ -118,7 +118,7 @@ namespace CSPong
         /// @return Paddle entity (NOTE: It returns a unique ptr which
         /// tells the caller that they take ownership)
         //------------------------------------------------------------
-        CSCore::EntityUPtr CreatePlayerPaddle(const CSCore::EntitySPtr& in_camera) const;
+        CS::EntityUPtr CreatePlayerPaddle(const CS::EntitySPtr& in_camera) const;
         //------------------------------------------------------------
         /// Create the oppositions paddle. This has components for displaying
         /// the paddle and AI logic that allows the paddle to move
@@ -131,7 +131,7 @@ namespace CSPong
         /// @return Paddle entity (NOTE: It returns a unique ptr which
         /// tells the caller that they take ownership)
         //------------------------------------------------------------
-        CSCore::EntityUPtr CreateOppositionPaddle(const CSCore::EntitySPtr& in_ball) const;
+        CS::EntityUPtr CreateOppositionPaddle(const CS::EntitySPtr& in_ball) const;
         //------------------------------------------------------------
         /// Creates the arean. This contains a component for displaying
         /// the stage and child entities representing the edges of the
@@ -144,7 +144,7 @@ namespace CSPong
         /// @return The arena entity (NOTE: It returns a unique ptr which
         /// tells the caller that they take ownership)
         //------------------------------------------------------------
-        CSCore::EntityUPtr CreateArena() const;
+        CS::EntityUPtr CreateArena() const;
         //------------------------------------------------------------
         /// Creates the score sprite entity. This simply contains
         /// a sprite component.
@@ -157,7 +157,7 @@ namespace CSPong
         /// @return The sprite entity (NOTE: It returns a unique ptr which
         /// tells the caller that they take ownership)
         //------------------------------------------------------------
-        CSCore::EntityUPtr CreateScoreSprite(const CSCore::Vector2& in_size, CSRendering::AlignmentAnchor in_alignmentAnchor) const;
+        CS::EntityUPtr CreateScoreSprite(const CS::Vector2& in_size, CS::AlignmentAnchor in_alignmentAnchor) const;
         
     private:
         //----------------------------------------------------------

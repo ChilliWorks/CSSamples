@@ -35,19 +35,19 @@ namespace CSPong
     CS_DEFINE_NAMEDTYPE(TriggerComponent);
     //-----------------------------------------------------
     //-----------------------------------------------------
-    TriggerComponent::TriggerComponent(PhysicsSystem* in_physicsSystem, const CSCore::Vector2& in_size)
+    TriggerComponent::TriggerComponent(PhysicsSystem* in_physicsSystem, const CS::Vector2& in_size)
     : m_physicsSystem(in_physicsSystem), m_size(in_size)
     {
     }
     //----------------------------------------------------------
     //----------------------------------------------------------
-    bool TriggerComponent::IsA(CSCore::InterfaceIDType in_interfaceId) const
+    bool TriggerComponent::IsA(CS::InterfaceIDType in_interfaceId) const
     {
         return (TriggerComponent::InterfaceID == in_interfaceId);
     }
     //-----------------------------------------------------
     //-----------------------------------------------------
-    const CSCore::Vector2& TriggerComponent::GetSize() const
+    const CS::Vector2& TriggerComponent::GetSize() const
     {
         return m_size;
     }

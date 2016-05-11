@@ -41,7 +41,7 @@ namespace CSPong
     ///
     /// @author S Downie
     //------------------------------------------------------------
-    class AIControllerComponent final : public CSCore::Component
+    class AIControllerComponent final : public CS::Component
     {
     public:
         
@@ -55,7 +55,7 @@ namespace CSPong
         /// @param Physics body used to move the object
         /// @param Entity to chase (ball)
         //----------------------------------------------------------
-        AIControllerComponent(const DynamicBodyComponentSPtr& in_body, const CSCore::EntitySPtr& in_targetEntity);
+        AIControllerComponent(const DynamicBodyComponentSPtr& in_body, const CS::EntitySPtr& in_targetEntity);
         //----------------------------------------------------------
         /// @author S Downie
         ///
@@ -63,7 +63,7 @@ namespace CSPong
         ///
         /// @return Whether the class matches the comparison type
         //----------------------------------------------------------
-        bool IsA(CSCore::InterfaceIDType in_interfaceId) const override;
+        bool IsA(CS::InterfaceIDType in_interfaceId) const override;
         //----------------------------------------------------
         /// Reset the paddle back to the centre of its rail.
         /// Usually after a goal
@@ -81,7 +81,7 @@ namespace CSPong
         ///
         /// @return True if the paddle is moving towards us
         //----------------------------------------------------
-        bool IsTargetMovingTowardsUs(const CSCore::Vector3& in_currentPos) const;
+        bool IsTargetMovingTowardsUs(const CS::Vector3& in_currentPos) const;
         //----------------------------------------------------
         /// @author S Downie
         ///
@@ -91,7 +91,7 @@ namespace CSPong
         
     private:
         
-        CSCore::EntitySPtr m_target;
+        CS::EntitySPtr m_target;
         DynamicBodyComponentSPtr m_targetBody;
         DynamicBodyComponentSPtr m_body;
         f32 m_currentSpeed = 0.0f;

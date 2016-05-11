@@ -46,7 +46,7 @@ namespace CSPong
     ///
     /// @author S Downie
     //------------------------------------------------------------
-    class ScoringSystem final : public CSCore::StateSystem
+    class ScoringSystem final : public CS::StateSystem
     {
     public:
         
@@ -79,13 +79,13 @@ namespace CSPong
         ///
         /// @return Whether the class matches the comparison type
         //----------------------------------------------------------
-        bool IsA(CSCore::InterfaceIDType in_interfaceId) const override;
+        bool IsA(CS::InterfaceIDType in_interfaceId) const override;
         //----------------------------------------------------
         /// @author S Downie
         ///
         /// @return The score changed event.
         //----------------------------------------------------
-        CSCore::IConnectableEvent<ScoreChangedDelegate>& GetScoreChangedEvent();
+        CS::IConnectableEvent<ScoreChangedDelegate>& GetScoreChangedEvent();
         //------------------------------------------------
         /// Add a ball body which will be checked against
         /// the goal triggers to detect if a goal has been
@@ -106,7 +106,7 @@ namespace CSPong
         /// @param Trigger
         /// @param Player index that will benfit if goal hit
         //------------------------------------------------
-        void AddGoalTrigger(const CSCore::EntitySPtr& in_trigger, u32 in_playerIndex);
+        void AddGoalTrigger(const CS::EntitySPtr& in_trigger, u32 in_playerIndex);
 
     private:
         //----------------------------------------------------------
@@ -128,7 +128,7 @@ namespace CSPong
         ///
         /// @author S Downie
         //------------------------------------------------
-        void OnBallHitTrigger(CSCore::Entity* in_trigger);
+        void OnBallHitTrigger(CS::Entity* in_trigger);
         //------------------------------------------------
         /// Increment the score for the player at
         /// the given index by 1.
@@ -141,13 +141,13 @@ namespace CSPong
         
     private:
         
-        CSCore::Event<ScoreChangedDelegate> m_scoreChangedEvent;
+        CS::Event<ScoreChangedDelegate> m_scoreChangedEvent;
         
         Scores m_scores;
         
-        std::array<std::pair<CSRendering::SpriteComponentSPtr, CSRendering::SpriteComponentSPtr>, k_numPlayers> m_scoreViews;
-        std::vector<CSCore::EventConnectionUPtr> m_ballTriggerConnections;
-        std::array<CSCore::Entity*, k_numPlayers> m_goaltriggers;
+        std::array<std::pair<CS::SpriteComponentSPtr, CS::SpriteComponentSPtr>, k_numPlayers> m_scoreViews;
+        std::vector<CS::EventConnectionUPtr> m_ballTriggerConnections;
+        std::array<CS::Entity*, k_numPlayers> m_goaltriggers;
     };
 }
 

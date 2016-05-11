@@ -50,11 +50,11 @@ namespace CSPong
     {
         CS_ASSERT(m_dynamicBodyComponent != nullptr, "Must provide dynamic body for ball controller.");
         
-        m_collisionConnection = m_dynamicBodyComponent->GetCollisionEvent().OpenConnection(CSCore::MakeDelegate(this, &BallControllerComponent::OnCollision));
+        m_collisionConnection = m_dynamicBodyComponent->GetCollisionEvent().OpenConnection(CS::MakeDelegate(this, &BallControllerComponent::OnCollision));
     }
     //----------------------------------------------------------
     //----------------------------------------------------------
-    bool BallControllerComponent::IsA(CSCore::InterfaceIDType in_interfaceId) const
+    bool BallControllerComponent::IsA(CS::InterfaceIDType in_interfaceId) const
     {
         return in_interfaceId == BallControllerComponent::InterfaceID;
     }
@@ -69,17 +69,17 @@ namespace CSPong
             m_active = true;
             
             //Pick a random direction to start the ball
-            f32 angleLimitMin = (CSCore::MathUtils::k_pi) * 0.25f;
-            f32 angleLimitMax = (CSCore::MathUtils::k_pi) * 0.75f;
-            m_currentDirection.x = std::sin(CSCore::Random::Generate(angleLimitMin, angleLimitMax));
-            m_currentDirection.y = std::cos(CSCore::Random::Generate(angleLimitMin, angleLimitMax));
+            f32 angleLimitMin = (CS::MathUtils::k_pi) * 0.25f;
+            f32 angleLimitMax = (CS::MathUtils::k_pi) * 0.75f;
+            m_currentDirection.x = std::sin(CS::Random::Generate(angleLimitMin, angleLimitMax));
+            m_currentDirection.y = std::cos(CS::Random::Generate(angleLimitMin, angleLimitMax));
             
-            if(CSCore::Random::GenerateNormalised<f32>() > 0.5f)
+            if(CS::Random::GenerateNormalised<f32>() > 0.5f)
             {
                 m_currentDirection.x = -m_currentDirection.x;
             }
             
-            if(CSCore::Random::GenerateNormalised<f32>() > 0.5f)
+            if(CS::Random::GenerateNormalised<f32>() > 0.5f)
             {
                 m_currentDirection.y = -m_currentDirection.y;
             }
@@ -97,15 +97,15 @@ namespace CSPong
         {
             m_active = false;
             
-            GetEntity()->GetTransform().SetPosition(CSCore::Vector3::k_zero);
-            m_dynamicBodyComponent->SetVelocity(CSCore::Vector2());
+            GetEntity()->GetTransform().SetPosition(CS::Vector3::k_zero);
+            m_dynamicBodyComponent->SetVelocity(CS::Vector2());
         }
     }
     //----------------------------------------------------
     //----------------------------------------------------
-    void BallControllerComponent::OnCollision(const CSCore::Vector2& in_direction, CSCore::Entity* in_collidedWith)
+    void BallControllerComponent::OnCollision(const CS::Vector2& in_direction, CS::Entity* in_collidedWith)
     {
-        m_currentDirection -= 2.0f * in_direction * CSCore::Vector2::DotProduct(m_currentDirection, in_direction);
+        m_currentDirection -= 2.0f * in_direction * CS::Vector2::DotProduct(m_currentDirection, in_direction);
         m_dynamicBodyComponent->ApplyImpulse(m_currentDirection * k_collisionImpulse);
     }
 }

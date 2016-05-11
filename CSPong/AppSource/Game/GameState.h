@@ -42,7 +42,7 @@ namespace CSPong
     ///
     /// @author S Downie
     //------------------------------------------------------------
-    class GameState final : public CSCore::State
+    class GameState final : public CS::State
     {
     public: 
 
@@ -80,11 +80,11 @@ namespace CSPong
         
     private:
         
-        CSCore::EventConnectionUPtr m_scoreChangedConnection;
-        CSCore::EventConnectionUPtr m_transitionInConnection;
+        CS::EventConnectionUPtr m_scoreChangedConnection;
+        CS::EventConnectionUPtr m_transitionInConnection;
         
-        CSCore::EntitySPtr m_ball;
-        CSCore::EntitySPtr m_oppositionPaddle;
+        CS::EntitySPtr m_ball;
+        CS::EntitySPtr m_oppositionPaddle;
         
         TransitionSystem* m_transitionSystem;
         PhysicsSystem* m_physicsSystem;

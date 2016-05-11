@@ -48,7 +48,7 @@ namespace CSPong
     ///
     /// @author Ian Copland
     //---------------------------------------------------------
-    class TransitionSystem final : public CSCore::StateSystem
+    class TransitionSystem final : public CS::StateSystem
     {
     public:
         CS_DECLARE_NAMEDTYPE(TransitionSystem);
@@ -80,7 +80,7 @@ namespace CSPong
         ///
         /// @return Whether the interface is implemented.
         //-------------------------------------------------
-        bool IsA(CSCore::InterfaceIDType in_interfaceId) const override;
+        bool IsA(CS::InterfaceIDType in_interfaceId) const override;
         //-------------------------------------------------
         /// Starts transitioning into the given state. This
         /// will fade the screen to black before changing
@@ -92,7 +92,7 @@ namespace CSPong
         ///
         /// @return The state to transition to.
         //-------------------------------------------------
-        void Transition(const CSCore::StateSPtr& in_newState);
+        void Transition(const CS::StateSPtr& in_newState);
         //-------------------------------------------------
         /// @author Ian Copland
         ///
@@ -107,7 +107,7 @@ namespace CSPong
         /// order to be notified when a transition in has
         /// completed.
         //-------------------------------------------------
-        CSCore::IConnectableEvent<TransitionDelegate>& GetTransitionInFinishedEvent();
+        CS::IConnectableEvent<TransitionDelegate>& GetTransitionInFinishedEvent();
         //-------------------------------------------------
         /// @author Ian Copland
         ///
@@ -115,7 +115,7 @@ namespace CSPong
         /// order to be notified when a transition out has
         /// started.
         //-------------------------------------------------
-        CSCore::IConnectableEvent<TransitionDelegate>& GetTransitionOutStartedEvent();
+        CS::IConnectableEvent<TransitionDelegate>& GetTransitionOutStartedEvent();
     private:
         //-------------------------------------------------
         /// An enum describing the possible transition
@@ -165,11 +165,11 @@ namespace CSPong
         f32 m_fadeInTime;
         f32 m_fadeOutTime;
         TransitionState m_transitionState;
-        CSCore::StateSPtr m_targetState;
-        CSUI::WidgetSPtr m_fadeImageView;
-        CSCore::SmoothStepTween<f32> m_fadeTween;
-        CSCore::Event<TransitionDelegate> m_transitionInFinishedEvent;
-        CSCore::Event<TransitionDelegate> m_transitionOutStartedEvent;
+        CS::StateSPtr m_targetState;
+        CS::WidgetSPtr m_fadeImageView;
+        CS::SmoothStepTween<f32> m_fadeTween;
+        CS::Event<TransitionDelegate> m_transitionInFinishedEvent;
+        CS::Event<TransitionDelegate> m_transitionOutStartedEvent;
     };
 }
 

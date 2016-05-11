@@ -47,14 +47,14 @@ namespace CSPong
     
     //----------------------------------------------------------
     //----------------------------------------------------------
-    TouchControllerComponent::TouchControllerComponent(const DynamicBodyComponentSPtr& in_body, const CSRendering::CameraComponentSPtr& in_cameraComponent)
+    TouchControllerComponent::TouchControllerComponent(const DynamicBodyComponentSPtr& in_body, const CS::CameraComponentSPtr& in_cameraComponent)
     : m_body(in_body), m_cameraComponent(in_cameraComponent)
     {
         
     }
     //----------------------------------------------------------
     //----------------------------------------------------------
-    bool TouchControllerComponent::IsA(CSCore::InterfaceIDType in_interfaceId) const
+    bool TouchControllerComponent::IsA(CS::InterfaceIDType in_interfaceId) const
     {
         return in_interfaceId == TouchControllerComponent::InterfaceID;
     }
@@ -62,9 +62,9 @@ namespace CSPong
     //----------------------------------------------------
     void TouchControllerComponent::OnAddedToScene()
     {
-        auto pointerSystem = CSCore::Application::Get()->GetSystem<CSInput::PointerSystem>();
-        m_pointerDownConnection = pointerSystem->GetPointerDownEvent().OpenConnection(CSCore::MakeDelegate(this, &TouchControllerComponent::OnPointerDown));
-        m_pointerMovedConnection = pointerSystem->GetPointerMovedEvent().OpenConnection(CSCore::MakeDelegate(this, &TouchControllerComponent::OnPointerMoved));
+        auto pointerSystem = CS::Application::Get()->GetSystem<CS::PointerSystem>();
+        m_pointerDownConnection = pointerSystem->GetPointerDownEvent().OpenConnection(CS::MakeDelegate(this, &TouchControllerComponent::OnPointerDown));
+        m_pointerMovedConnection = pointerSystem->GetPointerMovedEvent().OpenConnection(CS::MakeDelegate(this, &TouchControllerComponent::OnPointerMoved));
     }
     //----------------------------------------------------
     //----------------------------------------------------
@@ -75,22 +75,22 @@ namespace CSPong
     }
     //----------------------------------------------------
     //----------------------------------------------------
-    void TouchControllerComponent::UpdateTargetPosition(const CSCore::Vector2& in_screenPos)
+    void TouchControllerComponent::UpdateTargetPosition(const CS::Vector2& in_screenPos)
     {
-        CSCore::Ray worldRay = m_cameraComponent->Unproject(in_screenPos);
+        CS::Ray worldRay = m_cameraComponent->Unproject(in_screenPos);
         
         f32 distanceToGroundPlace = -worldRay.vOrigin.z / worldRay.vDirection.z;
         m_targetPos = worldRay.vOrigin + (worldRay.vDirection * distanceToGroundPlace);
     }
     //-----------------------------------------------------------
     //-----------------------------------------------------------
-    void TouchControllerComponent::OnPointerDown(const CSInput::Pointer& in_pointer, f64 in_timestamp, CSInput::Pointer::InputType in_inputType)
+    void TouchControllerComponent::OnPointerDown(const CS::Pointer& in_pointer, f64 in_timestamp, CS::Pointer::InputType in_inputType)
     {
         UpdateTargetPosition(in_pointer.GetPosition());
     }
     //-----------------------------------------------------------
     //-----------------------------------------------------------
-    void TouchControllerComponent::OnPointerMoved(const CSInput::Pointer& in_pointer, f64 in_timestamp)
+    void TouchControllerComponent::OnPointerMoved(const CS::Pointer& in_pointer, f64 in_timestamp)
     {
         UpdateTargetPosition(in_pointer.GetPosition());
     }
@@ -98,9 +98,9 @@ namespace CSPong
     //----------------------------------------------------
     void TouchControllerComponent::OnFixedUpdate(f32 in_timeSinceLastUpdate)
     {
-        CSCore::Vector3 currentPos(GetEntity()->GetTransform().GetWorldPosition());
-        CSCore::Vector3 direction(m_targetPos - currentPos);
+        CS::Vector3 currentPos(GetEntity()->GetTransform().GetWorldPosition());
+        CS::Vector3 direction(m_targetPos - currentPos);
         
-        m_body->ApplyImpulse(CSCore::Vector2(0.0f, direction.y) * k_maxForce * in_timeSinceLastUpdate);
+        m_body->ApplyImpulse(CS::Vector2(0.0f, direction.y) * k_maxForce * in_timeSinceLastUpdate);
     }
 }

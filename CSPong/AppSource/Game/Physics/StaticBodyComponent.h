@@ -43,7 +43,7 @@ namespace CSPong
     ///
     /// @author S Downie
     //------------------------------------------------------------
-    class StaticBodyComponent : public CSCore::Component
+    class StaticBodyComponent : public CS::Component
     {
     public:
         CS_DECLARE_NAMEDTYPE(StaticBodyComponent);
@@ -53,7 +53,7 @@ namespace CSPong
         /// @param The physics system.
         /// @param The size of the physics body.
         //-----------------------------------------------------
-        StaticBodyComponent(PhysicsSystem* in_physicsSystem, const CSCore::Vector2& in_size);
+        StaticBodyComponent(PhysicsSystem* in_physicsSystem, const CS::Vector2& in_size);
         //----------------------------------------------------------
         /// @author Ian Copland
         ///
@@ -61,13 +61,13 @@ namespace CSPong
         ///
         /// @return Whether the class matches the comparison type
         //----------------------------------------------------------
-        bool IsA(CSCore::InterfaceIDType in_interfaceId) const override;
+        bool IsA(CS::InterfaceIDType in_interfaceId) const override;
         //-----------------------------------------------------
         /// @author Ian Copland
         ///
         /// @return The size of the physics body.
         //-----------------------------------------------------
-        const CSCore::Vector2& GetSize() const;
+        const CS::Vector2& GetSize() const;
     private:
         //-----------------------------------------------------
         /// Called when the component is added to the scene.
@@ -94,7 +94,7 @@ namespace CSPong
         void OnRemovedFromScene() override;
         
         PhysicsSystem* m_physicsSystem;
-        const CSCore::Vector2 m_size;
+        const CS::Vector2 m_size;
     };
 }
 

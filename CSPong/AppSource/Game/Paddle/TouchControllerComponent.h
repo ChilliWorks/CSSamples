@@ -43,7 +43,7 @@ namespace CSPong
     ///
     /// @author S Downie
     //------------------------------------------------------------
-    class TouchControllerComponent final : public CSCore::Component
+    class TouchControllerComponent final : public CS::Component
     {
     public:
         
@@ -57,7 +57,7 @@ namespace CSPong
         /// @param Physics body used to move the object
         /// @param Camera used to project input into world space
         //----------------------------------------------------------
-        TouchControllerComponent(const DynamicBodyComponentSPtr& in_body, const CSRendering::CameraComponentSPtr& in_cameraComponent);
+        TouchControllerComponent(const DynamicBodyComponentSPtr& in_body, const CS::CameraComponentSPtr& in_cameraComponent);
         //----------------------------------------------------------
         /// @author S Downie
         ///
@@ -65,7 +65,7 @@ namespace CSPong
         ///
         /// @return Whether the class matches the comparison type
         //----------------------------------------------------------
-        bool IsA(CSCore::InterfaceIDType in_interfaceId) const override;
+        bool IsA(CS::InterfaceIDType in_interfaceId) const override;
         
     private:
         
@@ -98,7 +98,7 @@ namespace CSPong
         /// @param The timestamp.
         /// @param Input type
         //-----------------------------------------------------------
-        void OnPointerDown(const CSInput::Pointer& in_pointer, f64 in_timestamp, CSInput::Pointer::InputType in_inputType);
+        void OnPointerDown(const CS::Pointer& in_pointer, f64 in_timestamp, CS::Pointer::InputType in_inputType);
         //-----------------------------------------------------------
         /// Called when the window receives cursor/touch input.
         /// Moves the entity of this component along the ground axis
@@ -109,7 +109,7 @@ namespace CSPong
         /// @param The pointer
         /// @param The timestamp.
         //-----------------------------------------------------------
-        void OnPointerMoved(const CSInput::Pointer& in_pointer, f64 in_timestamp);
+        void OnPointerMoved(const CS::Pointer& in_pointer, f64 in_timestamp);
         //----------------------------------------------------
         /// @author S Downie
         ///
@@ -124,16 +124,16 @@ namespace CSPong
         ///
         /// @param Screen space position
         //----------------------------------------------------
-        void UpdateTargetPosition(const CSCore::Vector2& in_screenPos);
+        void UpdateTargetPosition(const CS::Vector2& in_screenPos);
         
     private:
         
-        CSCore::EventConnectionUPtr m_pointerDownConnection;
-        CSCore::EventConnectionUPtr m_pointerMovedConnection;
+        CS::EventConnectionUPtr m_pointerDownConnection;
+        CS::EventConnectionUPtr m_pointerMovedConnection;
         DynamicBodyComponentSPtr m_body;
-        CSRendering::CameraComponentSPtr m_cameraComponent;
+        CS::CameraComponentSPtr m_cameraComponent;
         
-        CSCore::Vector3 m_targetPos;
+        CS::Vector3 m_targetPos;
         
         f32 m_currentSpeed = 0.0f;
     };

@@ -39,7 +39,7 @@
  ==============================
  
  The main hub and entry point of a CS app is the Application class. The application class
- is a singleton (accessible via CSCore::Application::Get()) which receives lifecycle events from the OS.
+ is a singleton (accessible via CS::Application::Get()) which receives lifecycle events from the OS.
  Each app must sub-class Application which allows them to override certain functionality.
  
  Application has the following lifecycle events:
@@ -59,9 +59,9 @@
 ///
 /// @author S Downie
 ///
-/// @return Instance of CSCore::Application
+/// @return Instance of CS::Application
 //---------------------------------------------------------
-CSCore::Application* CreateApplication()
+CS::Application* CreateApplication()
 {
     return new CSPong::App();
 }
@@ -93,11 +93,11 @@ namespace CSPong
          in CS; app system and state systems. App systems are owned by the application and are tied to its lifecycle. Once created, app systems can be accessed via
          the following:
          
-            CSCore::Application::Get()->GetSystem<MySystemClass>();
+            CS::Application::Get()->GetSystem<MySystemClass>();
          
          Common systems have named accessors:
          
-            CSCore::Application::Get()->GetFileSystem();
+            CS::Application::Get()->GetFileSystem();
          
          
          In order to be as modular as possible, application will delegate some of the system creation to this function. 
@@ -127,9 +127,9 @@ namespace CSPong
          Next: 'State Management' in App::PushInitialState()
          */
         
-        CreateSystem<CSRendering::CSModelProvider>();
-        CreateSystem<CSRendering::CSAnimProvider>();
-        CreateSystem<CSInput::Accelerometer>();
+        CreateSystem<CS::CSModelProvider>();
+        CreateSystem<CS::CSAnimProvider>();
+        CreateSystem<CS::Accelerometer>();
     }
     //---------------------------------------------------------
     //---------------------------------------------------------
@@ -162,7 +162,7 @@ namespace CSPong
          Next: 'State Lifecycles' in SplashState.cpp
          */
         
-        GetStateManager()->Push(CSCore::StateSPtr(new SplashState()));
+        GetStateManager()->Push(CS::StateSPtr(new SplashState()));
     }
     //---------------------------------------------------------
     //---------------------------------------------------------

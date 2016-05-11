@@ -43,7 +43,7 @@ namespace CSPong
     ///
     /// @author S Downie
     //------------------------------------------------------------
-    class PhysicsSystem final : public CSCore::StateSystem
+    class PhysicsSystem final : public CS::StateSystem
     {
     public:
         CS_DECLARE_NAMEDTYPE(PhysicsSystem);
@@ -63,7 +63,7 @@ namespace CSPong
         ///
         /// @return Whether the class matches the comparison type
         //----------------------------------------------------------
-        bool IsA(CSCore::InterfaceIDType in_interfaceId) const override;
+        bool IsA(CS::InterfaceIDType in_interfaceId) const override;
     private:
         friend class DynamicBodyComponent;
         friend class StaticBodyComponent;

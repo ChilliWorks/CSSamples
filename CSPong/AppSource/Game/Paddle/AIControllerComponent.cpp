@@ -44,7 +44,7 @@ namespace CSPong
     
     //----------------------------------------------------------
     //----------------------------------------------------------
-    AIControllerComponent::AIControllerComponent(const DynamicBodyComponentSPtr& in_body, const CSCore::EntitySPtr& in_targetEntity)
+    AIControllerComponent::AIControllerComponent(const DynamicBodyComponentSPtr& in_body, const CS::EntitySPtr& in_targetEntity)
     : m_body(in_body), m_target(in_targetEntity)
     {
         m_targetBody = m_target->GetComponent<DynamicBodyComponent>();
@@ -52,7 +52,7 @@ namespace CSPong
     }
     //----------------------------------------------------------
     //----------------------------------------------------------
-    bool AIControllerComponent::IsA(CSCore::InterfaceIDType in_interfaceId) const
+    bool AIControllerComponent::IsA(CS::InterfaceIDType in_interfaceId) const
     {
         return in_interfaceId == AIControllerComponent::InterfaceID;
     }
@@ -61,25 +61,25 @@ namespace CSPong
     void AIControllerComponent::Reset()
     {
         CS_ASSERT(GetEntity() != nullptr, "Must have an entity to reset");
-        CSCore::Vector3 currentPos(GetEntity()->GetTransform().GetLocalPosition());
+        CS::Vector3 currentPos(GetEntity()->GetTransform().GetLocalPosition());
         GetEntity()->GetTransform().SetPosition(currentPos.x, 0.0f, currentPos.z);
     }
     //----------------------------------------------------
     //----------------------------------------------------
-    bool AIControllerComponent::IsTargetMovingTowardsUs(const CSCore::Vector3& in_currentPos) const
+    bool AIControllerComponent::IsTargetMovingTowardsUs(const CS::Vector3& in_currentPos) const
     {
-        CSCore::Vector3 ourDirection = CSCore::Vector3::Normalise(CSCore::Vector3::k_zero - in_currentPos);
-        CSCore::Vector2 targetDirection = CSCore::Vector2::Normalise(m_targetBody->GetVelocity());
+        CS::Vector3 ourDirection = CS::Vector3::Normalise(CS::Vector3::k_zero - in_currentPos);
+        CS::Vector2 targetDirection = CS::Vector2::Normalise(m_targetBody->GetVelocity());
         
-        return CSCore::Vector2::DotProduct(ourDirection.XY(), targetDirection) < 0.0f;
+        return CS::Vector2::DotProduct(ourDirection.XY(), targetDirection) < 0.0f;
     }
     //----------------------------------------------------------
     //----------------------------------------------------------
     void AIControllerComponent::OnFixedUpdate(f32 in_timeSinceLastUpdate)
     {
         //If ball is not coming towards us then just return to the centre
-        CSCore::Vector3 currentPos(GetEntity()->GetTransform().GetWorldPosition());
-        CSCore::Vector3 targetPos;
+        CS::Vector3 currentPos(GetEntity()->GetTransform().GetWorldPosition());
+        CS::Vector3 targetPos;
         if(IsTargetMovingTowardsUs(currentPos) == true)
         {
             targetPos = m_target->GetTransform().GetWorldPosition();
@@ -90,8 +90,8 @@ namespace CSPong
             targetPos.y = 0.0f;
         }
         
-        CSCore::Vector3 distance(targetPos - currentPos);
+        CS::Vector3 distance(targetPos - currentPos);
         
-        m_body->ApplyImpulse(CSCore::Vector2(0.0f, distance.y) * k_maxForce * in_timeSinceLastUpdate);
+        m_body->ApplyImpulse(CS::Vector2(0.0f, distance.y) * k_maxForce * in_timeSinceLastUpdate);
     }
 }

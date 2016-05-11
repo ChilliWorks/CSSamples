@@ -95,8 +95,8 @@ namespace CSPong
          */
         
         //Load the GUI and add it to the window
-        auto mainMenuViewDef = CSCore::Application::Get()->GetResourcePool()->LoadResource<CSUI::WidgetTemplate>(CSCore::StorageLocation::k_package, "GUI/MainMenu.csui");
-        CSUI::WidgetSPtr mainMenuView = CSCore::Application::Get()->GetWidgetFactory()->Create(mainMenuViewDef);
+        auto mainMenuViewDef = CS::Application::Get()->GetResourcePool()->LoadResource<CS::WidgetTemplate>(CS::StorageLocation::k_package, "GUI/MainMenu.csui");
+        CS::WidgetSPtr mainMenuView = CS::Application::Get()->GetWidgetFactory()->Create(mainMenuViewDef);
         GetUICanvas()->AddWidget(mainMenuView);
         
 
@@ -107,7 +107,7 @@ namespace CSPong
         m_playButton->SetInputEnabled(false);
         
         //Create a tween that will slide the UI onto the screen. This will be used to offset the button from its stated position.
-        m_playButtonTween = CSCore::MakeEaseInOutBackTween(-1.0f, 0.0f, 1.0f);
+        m_playButtonTween = CS::MakeEaseInOutBackTween(-1.0f, 0.0f, 1.0f);
         
         /*
          ==============================
@@ -124,22 +124,22 @@ namespace CSPong
          
          Next: 'Entities' in GameState::OnInit
          */
-        m_playButtonConnection = m_playButton->GetReleasedInsideEvent().OpenConnection([this](CSUI::Widget* in_widget, const CSInput::Pointer& in_pointer, CSInput::Pointer::InputType in_inputType)
+        m_playButtonConnection = m_playButton->GetReleasedInsideEvent().OpenConnection([this](CS::Widget* in_widget, const CS::Pointer& in_pointer, CS::Pointer::InputType in_inputType)
         {
             m_playButton->SetInputEnabled(false);
-            m_playButtonTween.Play(CSCore::TweenPlayMode::k_onceReverse);
-            m_playButtonTween.SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
+            m_playButtonTween.Play(CS::TweenPlayMode::k_onceReverse);
+            m_playButtonTween.SetOnEndDelegate([this](CS::EaseInOutBackTween<f32>* in_tween)
             {
-                m_transitionSystem->Transition(CSCore::StateSPtr(new GameState()));
+                m_transitionSystem->Transition(CS::StateSPtr(new GameState()));
             });
         });
         
         m_transitionInConnection = m_transitionSystem->GetTransitionInFinishedEvent().OpenConnection([this]()
         {
-            m_playButtonTween.Play(CSCore::TweenPlayMode::k_once);
+            m_playButtonTween.Play(CS::TweenPlayMode::k_once);
             
             //Once the animation is finished allow the user to press the button
-            m_playButtonTween.SetOnEndDelegate([this](CSCore::EaseInOutBackTween<f32>* in_tween)
+            m_playButtonTween.SetOnEndDelegate([this](CS::EaseInOutBackTween<f32>* in_tween)
             {
                 m_playButton->SetInputEnabled(true);
             });
@@ -150,7 +150,7 @@ namespace CSPong
     void MainMenuState::OnUpdate(f32 dt)
     {
         m_playButtonTween.Update(dt);
-        m_playButton->SetRelativePosition(CSCore::Vector2(m_playButtonTween.GetValue(), m_playButton->GetLocalRelativePosition().y));
+        m_playButton->SetRelativePosition(CS::Vector2(m_playButtonTween.GetValue(), m_playButton->GetLocalRelativePosition().y));
     }
 }
 

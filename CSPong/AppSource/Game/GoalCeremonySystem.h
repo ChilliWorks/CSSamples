@@ -46,7 +46,7 @@ namespace CSPong
     ///
     /// @author S Downie
     //------------------------------------------------------------
-    class GoalCeremonySystem final : public CSCore::StateSystem
+    class GoalCeremonySystem final : public CS::StateSystem
     {
     public: 
 
@@ -71,7 +71,7 @@ namespace CSPong
         ///
         /// @return Whether the class matches the comparison type
         //----------------------------------------------------------
-        bool IsA(CSCore::InterfaceIDType in_interfaceId) const override;
+        bool IsA(CS::InterfaceIDType in_interfaceId) const override;
         //---------------------------------------------------
         /// Play the goal ceremony
         ///
@@ -132,12 +132,12 @@ namespace CSPong
         
     private:
         
-        CSCore::EaseOutBackTween<CSCore::Vector2> m_scaleTween;
-        CSCore::EaseOutBackTween<f32> m_rotationTween;
-        CSUI::WidgetSPtr m_goalView;
-        CSUI::WidgetSPtr m_winView;
-        CSUI::WidgetSPtr m_loseView;
-        CSUI::WidgetSPtr m_currentView;
+        CS::EaseOutBackTween<CS::Vector2> m_scaleTween;
+        CS::EaseOutBackTween<f32> m_rotationTween;
+        CS::WidgetSPtr m_goalView;
+        CS::WidgetSPtr m_winView;
+        CS::WidgetSPtr m_loseView;
+        CS::WidgetSPtr m_currentView;
     };
 }
 

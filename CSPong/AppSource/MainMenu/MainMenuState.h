@@ -43,7 +43,7 @@ namespace CSPong
     ///
     /// @author S Downie
     //------------------------------------------------------------
-    class MainMenuState final : public CSCore::State
+    class MainMenuState final : public CS::State
     {
     public:
         //------------------------------------------------------
@@ -75,10 +75,10 @@ namespace CSPong
     private:
         
         TransitionSystem* m_transitionSystem;
-        CSCore::EventConnectionUPtr m_transitionInConnection;
-        CSCore::EventConnectionUPtr m_playButtonConnection;
-        CSCore::EaseInOutBackTween<f32> m_playButtonTween;
-        CSUI::WidgetSPtr m_playButton;
+        CS::EventConnectionUPtr m_transitionInConnection;
+        CS::EventConnectionUPtr m_playButtonConnection;
+        CS::EaseInOutBackTween<f32> m_playButtonTween;
+        CS::WidgetSPtr m_playButton;
     };
 }
 

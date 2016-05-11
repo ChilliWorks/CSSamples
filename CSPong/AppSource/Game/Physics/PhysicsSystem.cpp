@@ -47,8 +47,8 @@ namespace CSPong
         //---------------------------------------------------------
         struct CollisionResolution
         {
-            CSCore::Vector2 m_intersectionResolution;
-            CSCore::Vector2 m_collisionDirection;
+            CS::Vector2 m_intersectionResolution;
+            CS::Vector2 m_collisionDirection;
         };
         //---------------------------------------------------------
         /// Tests for collision between two dynamic bodies. If
@@ -65,43 +65,43 @@ namespace CSPong
         //---------------------------------------------------------
         bool TestCollision(const DynamicBodyComponent* in_bodyA, const DynamicBodyComponent* in_bodyB, CollisionResolution& out_resolution)
         {
-            const CSCore::Entity* entityA = in_bodyA->GetEntity();
-            const CSCore::Entity* entityB = in_bodyB->GetEntity();
+            const CS::Entity* entityA = in_bodyA->GetEntity();
+            const CS::Entity* entityB = in_bodyB->GetEntity();
             
-            const CSCore::Rectangle rectA(entityA->GetTransform().GetWorldPosition().XY(), in_bodyA->GetSize());
-            const CSCore::Rectangle rectB(entityB->GetTransform().GetWorldPosition().XY(), in_bodyB->GetSize());
+            const CS::Rectangle rectA(entityA->GetTransform().GetWorldPosition().XY(), in_bodyA->GetSize());
+            const CS::Rectangle rectB(entityB->GetTransform().GetWorldPosition().XY(), in_bodyB->GetSize());
             
             if (rectA.Left() < rectB.Right() && rectA.Right() > rectB.Left() && rectA.Bottom() < rectB.Top() && rectA.Top() > rectB.Bottom())
             {
                 f32 minIntersection = 9999999.0f;
-                out_resolution.m_collisionDirection = CSCore::Vector2(1.0f, 0.0f);
+                out_resolution.m_collisionDirection = CS::Vector2(1.0f, 0.0f);
                 
                 f32 intersection = rectB.Right() - rectA.Left();
                 if (intersection < minIntersection)
                 {
                     minIntersection = intersection;
-                    out_resolution.m_collisionDirection = CSCore::Vector2(1.0f, 0.0f);
+                    out_resolution.m_collisionDirection = CS::Vector2(1.0f, 0.0f);
                 }
                 
                 intersection = rectA.Right() - rectB.Left();
                 if (intersection < minIntersection)
                 {
                     minIntersection = intersection;
-                    out_resolution.m_collisionDirection = CSCore::Vector2(-1.0f, 0.0f);
+                    out_resolution.m_collisionDirection = CS::Vector2(-1.0f, 0.0f);
                 }
                 
                 intersection = rectB.Top() - rectA.Bottom();
                 if (intersection < minIntersection)
                 {
                     minIntersection = intersection;
-                    out_resolution.m_collisionDirection = CSCore::Vector2(0.0f, 1.0f);
+                    out_resolution.m_collisionDirection = CS::Vector2(0.0f, 1.0f);
                 }
                 
                 intersection = rectA.Top() - rectB.Bottom();
                 if (intersection < minIntersection)
                 {
                     minIntersection = intersection;
-                    out_resolution.m_collisionDirection = CSCore::Vector2(0.0f, -1.0f);
+                    out_resolution.m_collisionDirection = CS::Vector2(0.0f, -1.0f);
                 }
                 
                 out_resolution.m_intersectionResolution = out_resolution.m_collisionDirection * minIntersection;
@@ -127,43 +127,43 @@ namespace CSPong
         //---------------------------------------------------------
         bool TestCollision(const DynamicBodyComponent* in_dynamic, const StaticBodyComponent* in_static, CollisionResolution& out_resolution)
         {
-            const CSCore::Entity* dynamicEnt = in_dynamic->GetEntity();
-            const CSCore::Entity* staticEnt = in_static->GetEntity();
+            const CS::Entity* dynamicEnt = in_dynamic->GetEntity();
+            const CS::Entity* staticEnt = in_static->GetEntity();
             
-            const CSCore::Rectangle dynamicRect(dynamicEnt->GetTransform().GetWorldPosition().XY(), in_dynamic->GetSize());
-            const CSCore::Rectangle staticRect(staticEnt->GetTransform().GetWorldPosition().XY(), in_static->GetSize());
+            const CS::Rectangle dynamicRect(dynamicEnt->GetTransform().GetWorldPosition().XY(), in_dynamic->GetSize());
+            const CS::Rectangle staticRect(staticEnt->GetTransform().GetWorldPosition().XY(), in_static->GetSize());
             
             if (dynamicRect.Left() < staticRect.Right() && dynamicRect.Right() > staticRect.Left() && dynamicRect.Bottom() < staticRect.Top() && dynamicRect.Top() > staticRect.Bottom())
             {
                 f32 minIntersection = 9999999.0f;
-                out_resolution.m_collisionDirection = CSCore::Vector2(1.0f, 0.0f);
+                out_resolution.m_collisionDirection = CS::Vector2(1.0f, 0.0f);
                 
                 f32 intersection = staticRect.Right() - dynamicRect.Left();
                 if (intersection < minIntersection)
                 {
                     minIntersection = intersection;
-                    out_resolution.m_collisionDirection = CSCore::Vector2(1.0f, 0.0f);
+                    out_resolution.m_collisionDirection = CS::Vector2(1.0f, 0.0f);
                 }
                 
                 intersection = dynamicRect.Right() - staticRect.Left();
                 if (intersection < minIntersection)
                 {
                     minIntersection = intersection;
-                    out_resolution.m_collisionDirection = CSCore::Vector2(-1.0f, 0.0f);
+                    out_resolution.m_collisionDirection = CS::Vector2(-1.0f, 0.0f);
                 }
                 
                 intersection = staticRect.Top() - dynamicRect.Bottom();
                 if (intersection < minIntersection)
                 {
                     minIntersection = intersection;
-                    out_resolution.m_collisionDirection = CSCore::Vector2(0.0f, 1.0f);
+                    out_resolution.m_collisionDirection = CS::Vector2(0.0f, 1.0f);
                 }
                 
                 intersection = dynamicRect.Top() - staticRect.Bottom();
                 if (intersection < minIntersection)
                 {
                     minIntersection = intersection;
-                    out_resolution.m_collisionDirection = CSCore::Vector2(0.0f, -1.0f);
+                    out_resolution.m_collisionDirection = CS::Vector2(0.0f, -1.0f);
                 }
                 
                 out_resolution.m_intersectionResolution = out_resolution.m_collisionDirection * minIntersection;
@@ -185,11 +185,11 @@ namespace CSPong
         //---------------------------------------------------------
         bool TestCollision(const DynamicBodyComponent* in_dynamic, const TriggerComponent* in_static)
         {
-            const CSCore::Entity* dynamicEnt = in_dynamic->GetEntity();
-            const CSCore::Entity* staticEnt = in_static->GetEntity();
+            const CS::Entity* dynamicEnt = in_dynamic->GetEntity();
+            const CS::Entity* staticEnt = in_static->GetEntity();
             
-            CSCore::Rectangle dynamicRect(dynamicEnt->GetTransform().GetWorldPosition().XY(), in_dynamic->GetSize());
-            CSCore::Rectangle staticRect(staticEnt->GetTransform().GetWorldPosition().XY(), in_static->GetSize());
+            CS::Rectangle dynamicRect(dynamicEnt->GetTransform().GetWorldPosition().XY(), in_dynamic->GetSize());
+            CS::Rectangle staticRect(staticEnt->GetTransform().GetWorldPosition().XY(), in_static->GetSize());
             if (dynamicRect.Left() < staticRect.Right() && dynamicRect.Right() > staticRect.Left() && dynamicRect.Bottom() < staticRect.Top() && dynamicRect.Top() > staticRect.Bottom())
             {
                 return true;
@@ -208,7 +208,7 @@ namespace CSPong
     }
     //----------------------------------------------------------
     //----------------------------------------------------------
-    bool PhysicsSystem::IsA(CSCore::InterfaceIDType in_interfaceId) const
+    bool PhysicsSystem::IsA(CS::InterfaceIDType in_interfaceId) const
     {
         return in_interfaceId == PhysicsSystem::InterfaceID;
     }

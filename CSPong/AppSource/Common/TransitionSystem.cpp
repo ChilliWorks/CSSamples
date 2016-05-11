@@ -54,13 +54,13 @@ namespace CSPong
     }
     //-------------------------------------------------
     //-------------------------------------------------
-    bool TransitionSystem::IsA(CSCore::InterfaceIDType in_interfaceId) const
+    bool TransitionSystem::IsA(CS::InterfaceIDType in_interfaceId) const
     {
         return (TransitionSystem::InterfaceID == in_interfaceId);
     }
     //-------------------------------------------------
     //-------------------------------------------------
-    void TransitionSystem::Transition(const CSCore::StateSPtr& in_newState)
+    void TransitionSystem::Transition(const CS::StateSPtr& in_newState)
     {
         if (m_transitionState == TransitionState::k_none)
         {
@@ -68,12 +68,12 @@ namespace CSPong
             
             m_fadeImageView->BringToFront();
             
-            m_fadeTween = CSCore::MakeSmoothStepTween<f32>(0.0f, 1.0f, m_fadeOutTime);
-            m_fadeTween.SetOnEndDelegate([=](CSCore::SmoothStepTween<f32>* in_tween)
+            m_fadeTween = CS::MakeSmoothStepTween<f32>(0.0f, 1.0f, m_fadeOutTime);
+            m_fadeTween.SetOnEndDelegate([=](CS::SmoothStepTween<f32>* in_tween)
             {
-                CSCore::Application::Get()->GetStateManager()->Change(m_targetState);
+                CS::Application::Get()->GetStateManager()->Change(m_targetState);
             });
-            m_fadeTween.Play(CSCore::TweenPlayMode::k_once);
+            m_fadeTween.Play(CS::TweenPlayMode::k_once);
             
             m_targetState = in_newState;
             m_transitionOutStartedEvent.NotifyConnections();
@@ -87,13 +87,13 @@ namespace CSPong
     }
     //-------------------------------------------------
     //-------------------------------------------------
-    CSCore::IConnectableEvent<TransitionSystem::TransitionDelegate>& TransitionSystem::GetTransitionInFinishedEvent()
+    CS::IConnectableEvent<TransitionSystem::TransitionDelegate>& TransitionSystem::GetTransitionInFinishedEvent()
     {
         return m_transitionInFinishedEvent;
     }
     //-------------------------------------------------
     //-------------------------------------------------
-    CSCore::IConnectableEvent<TransitionSystem::TransitionDelegate>& TransitionSystem::GetTransitionOutStartedEvent()
+    CS::IConnectableEvent<TransitionSystem::TransitionDelegate>& TransitionSystem::GetTransitionOutStartedEvent()
     {
         return m_transitionOutStartedEvent;
     }
@@ -101,22 +101,22 @@ namespace CSPong
     //-------------------------------------------------
     void TransitionSystem::OnInit()
     {
-        auto resPool = CSCore::Application::Get()->GetResourcePool();
-        auto texture = resPool->LoadResource<CSRendering::Texture>(CSCore::StorageLocation::k_chilliSource, "Textures/Blank.csimage");
+        auto resPool = CS::Application::Get()->GetResourcePool();
+        auto texture = resPool->LoadResource<CS::Texture>(CS::StorageLocation::k_chilliSource, "Textures/Blank.csimage");
         
-        m_fadeImageView = CSCore::Application::Get()->GetWidgetFactory()->CreateImage();
-        CSUI::DrawableDefCSPtr drawableDef(new CSUI::StandardDrawableDef(texture));
-        m_fadeImageView->GetComponent<CSUI::DrawableComponent>()->ApplyDrawableDef(drawableDef);
+        m_fadeImageView = CS::Application::Get()->GetWidgetFactory()->CreateImage();
+        CS::UIDrawableDefCSPtr drawableDef(new CS::StandardUIDrawableDef(texture));
+        m_fadeImageView->GetComponent<CS::DrawableUIComponent>()->ApplyDrawableDef(drawableDef);
         
         GetState()->GetUICanvas()->AddWidget(m_fadeImageView);
         
-        m_fadeTween = CSCore::MakeSmoothStepTween<f32>(1.0f, 0.0f, m_fadeInTime);
-        m_fadeTween.SetOnEndDelegate([=](CSCore::SmoothStepTween<f32>* in_tween)
+        m_fadeTween = CS::MakeSmoothStepTween<f32>(1.0f, 0.0f, m_fadeInTime);
+        m_fadeTween.SetOnEndDelegate([=](CS::SmoothStepTween<f32>* in_tween)
         {
             m_transitionState = TransitionState::k_none;
             m_transitionInFinishedEvent.NotifyConnections();
         });
-        m_fadeTween.Play(CSCore::TweenPlayMode::k_once);
+        m_fadeTween.Play(CS::TweenPlayMode::k_once);
     }
     //-------------------------------------------------
     //-------------------------------------------------
@@ -125,12 +125,12 @@ namespace CSPong
         if (m_transitionState == TransitionState::k_in || m_transitionState == TransitionState::k_out)
         {
             f32 value = m_fadeTween.Update(in_deltaTime);
-            m_fadeImageView->SetColour(CSCore::Colour(0.0f, 0.0f, 0.0f, value));
+            m_fadeImageView->SetColour(CS::Colour(0.0f, 0.0f, 0.0f, value));
             m_fadeImageView->BringToFront();
         }
         else
         {
-            m_fadeImageView->SetColour(CSCore::Colour(0.0f, 0.0f, 0.0f, 0.0f));
+            m_fadeImageView->SetColour(CS::Colour(0.0f, 0.0f, 0.0f, 0.0f));
         }
     }
     //-------------------------------------------------

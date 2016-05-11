@@ -39,31 +39,31 @@ namespace CSPong
     CS_DEFINE_NAMEDTYPE(DynamicBodyComponent);
     //----------------------------------------------------------
     //----------------------------------------------------------
-    DynamicBodyComponent::DynamicBodyComponent(PhysicsSystem* in_physicsSystem, const CSCore::Vector2& in_size, f32 in_mass, f32 in_dragFactor, f32 in_coefficientOfRestitution)
+    DynamicBodyComponent::DynamicBodyComponent(PhysicsSystem* in_physicsSystem, const CS::Vector2& in_size, f32 in_mass, f32 in_dragFactor, f32 in_coefficientOfRestitution)
         : m_physicsSystem(in_physicsSystem), m_size(in_size), m_mass(in_mass), m_dragFactor(in_dragFactor), m_coefficientOfRestitution(in_coefficientOfRestitution)
     {
     }
     //----------------------------------------------------------
     //----------------------------------------------------------
-    bool DynamicBodyComponent::IsA(CSCore::InterfaceIDType in_interfaceId) const
+    bool DynamicBodyComponent::IsA(CS::InterfaceIDType in_interfaceId) const
     {
         return (DynamicBodyComponent::InterfaceID == in_interfaceId);
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    void DynamicBodyComponent::ApplyImpulse(const CSCore::Vector2& in_impulse)
+    void DynamicBodyComponent::ApplyImpulse(const CS::Vector2& in_impulse)
     {
         m_impulse += in_impulse;
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    void DynamicBodyComponent::SetVelocity(const CSCore::Vector2& in_velocity)
+    void DynamicBodyComponent::SetVelocity(const CS::Vector2& in_velocity)
     {
         m_velocity = in_velocity;
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    const CSCore::Vector2& DynamicBodyComponent::GetSize() const
+    const CS::Vector2& DynamicBodyComponent::GetSize() const
     {
         return m_size;
     }
@@ -75,19 +75,19 @@ namespace CSPong
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    const CSCore::Vector2& DynamicBodyComponent::GetVelocity() const
+    const CS::Vector2& DynamicBodyComponent::GetVelocity() const
     {
         return m_velocity;
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    CSCore::IConnectableEvent<DynamicBodyComponent::CollisionDelegate>& DynamicBodyComponent::GetCollisionEvent()
+    CS::IConnectableEvent<DynamicBodyComponent::CollisionDelegate>& DynamicBodyComponent::GetCollisionEvent()
     {
         return m_collisionEvent;
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    CSCore::IConnectableEvent<DynamicBodyComponent::TriggerDelegate>& DynamicBodyComponent::GetTriggerEvent()
+    CS::IConnectableEvent<DynamicBodyComponent::TriggerDelegate>& DynamicBodyComponent::GetTriggerEvent()
     {
         return m_triggerEvent;
     }
@@ -101,38 +101,38 @@ namespace CSPong
     //------------------------------------------------------------
     void DynamicBodyComponent::OnPhysicsUpdate(f32 in_deltaTime)
     {
-        CSCore::Vector2 accceleration = m_impulse / m_mass;
-        m_impulse = CSCore::Vector2::k_zero;
+        CS::Vector2 accceleration = m_impulse / m_mass;
+        m_impulse = CS::Vector2::k_zero;
         m_velocity += accceleration * in_deltaTime;
         m_velocity *= (1.0f - m_dragFactor);
-        CSCore::Vector2 displacement = m_velocity * in_deltaTime;
+        CS::Vector2 displacement = m_velocity * in_deltaTime;
         
-        CSCore::Vector3 currentPosition = GetEntity()->GetTransform().GetWorldPosition();
-        CSCore::Vector3 newPosition(currentPosition.x + displacement.x, currentPosition.y + displacement.y, currentPosition.z);
+        CS::Vector3 currentPosition = GetEntity()->GetTransform().GetWorldPosition();
+        CS::Vector3 newPosition(currentPosition.x + displacement.x, currentPosition.y + displacement.y, currentPosition.z);
         
         GetEntity()->GetTransform().SetPosition(newPosition);
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    void DynamicBodyComponent::OnDynamicCollision(const CSCore::Vector2& in_collisionDirection, const CSCore::Vector2& in_intersectionResolution, DynamicBodyComponent* in_collidedWith)
+    void DynamicBodyComponent::OnDynamicCollision(const CS::Vector2& in_collisionDirection, const CS::Vector2& in_intersectionResolution, DynamicBodyComponent* in_collidedWith)
     {
         f32 collisionShare = in_collidedWith->GetMass() / (GetMass() + in_collidedWith->GetMass());
         
-        CSCore::Vector2 displacement = in_intersectionResolution * collisionShare;
+        CS::Vector2 displacement = in_intersectionResolution * collisionShare;
         GetEntity()->GetTransform().MoveBy(displacement.x, displacement.y, 0.0f);
         
-        CSCore::Vector2 velocityChange = collisionShare * ((1.0f + m_coefficientOfRestitution) * in_collisionDirection * CSCore::Vector2::DotProduct(m_velocity, in_collisionDirection));
+        CS::Vector2 velocityChange = collisionShare * ((1.0f + m_coefficientOfRestitution) * in_collisionDirection * CS::Vector2::DotProduct(m_velocity, in_collisionDirection));
         m_velocity -= velocityChange;
         
         m_collisionEvent.NotifyConnections(in_collisionDirection, in_collidedWith->GetEntity());
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    void DynamicBodyComponent::OnStaticCollision(const CSCore::Vector2& in_collisionDirection, const CSCore::Vector2& in_intersectionResolution, StaticBodyComponent* in_collidedWith)
+    void DynamicBodyComponent::OnStaticCollision(const CS::Vector2& in_collisionDirection, const CS::Vector2& in_intersectionResolution, StaticBodyComponent* in_collidedWith)
     {
         GetEntity()->GetTransform().MoveBy(in_intersectionResolution.x, in_intersectionResolution.y, 0.0f);
         
-        CSCore::Vector2 velocityChange = (1.0f + m_coefficientOfRestitution) * in_collisionDirection * CSCore::Vector2::DotProduct(m_velocity, in_collisionDirection);
+        CS::Vector2 velocityChange = (1.0f + m_coefficientOfRestitution) * in_collisionDirection * CS::Vector2::DotProduct(m_velocity, in_collisionDirection);
         m_velocity -= velocityChange;
         
         m_collisionEvent.NotifyConnections(in_collisionDirection, in_collidedWith->GetEntity());

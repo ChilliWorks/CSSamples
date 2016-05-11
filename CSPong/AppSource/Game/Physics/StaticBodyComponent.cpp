@@ -35,19 +35,19 @@ namespace CSPong
     CS_DEFINE_NAMEDTYPE(StaticBodyComponent);
     //-----------------------------------------------------
     //-----------------------------------------------------
-    StaticBodyComponent::StaticBodyComponent(PhysicsSystem* in_physicsSystem, const CSCore::Vector2& in_size)
+    StaticBodyComponent::StaticBodyComponent(PhysicsSystem* in_physicsSystem, const CS::Vector2& in_size)
         : m_physicsSystem(in_physicsSystem), m_size(in_size)
     {
     }
     //----------------------------------------------------------
     //----------------------------------------------------------
-    bool StaticBodyComponent::IsA(CSCore::InterfaceIDType in_interfaceId) const
+    bool StaticBodyComponent::IsA(CS::InterfaceIDType in_interfaceId) const
     {
         return (StaticBodyComponent::InterfaceID == in_interfaceId);
     }
     //-----------------------------------------------------
     //-----------------------------------------------------
-    const CSCore::Vector2& StaticBodyComponent::GetSize() const
+    const CS::Vector2& StaticBodyComponent::GetSize() const
     {
         return m_size;
     }

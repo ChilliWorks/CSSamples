@@ -70,13 +70,13 @@ namespace CSPong
     }
     //----------------------------------------------------------
     //----------------------------------------------------------
-    bool GameEntityFactory::IsA(CSCore::InterfaceIDType in_interfaceId) const
+    bool GameEntityFactory::IsA(CS::InterfaceIDType in_interfaceId) const
     {
         return in_interfaceId == GameEntityFactory::InterfaceID;
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    CSCore::EntityUPtr GameEntityFactory::CreateCamera() const
+    CS::EntityUPtr GameEntityFactory::CreateCamera() const
     {
         /*
          ==============================
@@ -92,7 +92,7 @@ namespace CSPong
          ParticleComponent or AnimatedMeshComponent. The Entity class exposes methods for adding, removing
          and querying for components.
          
-            CSRendering::StaticMeshComponentSPtr staticMeshComponent = renderComponentFactory->CreateAnimatedMeshComponent(mesh, material);
+            CS::StaticMeshComponentSPtr staticMeshComponent = renderComponentFactory->CreateAnimatedMeshComponent(mesh, material);
             entity->AddComponent(staticMeshComponent);
             staticMeshComponent = entity->GetComponent<StaticMeshComponent>();
             staticMeshComponent->RemoveFromEntity();
@@ -108,9 +108,9 @@ namespace CSPong
          Next: 'Camera' in GameEntityFactory::CreateCamera()
          */
         
-        CSCore::EntityUPtr camera(CSCore::Entity::Create());
+        CS::EntityUPtr camera(CS::Entity::Create());
         
-        CameraTiltComponentSPtr cameraTiltComponent(new CameraTiltComponent(CSCore::Vector3::k_unitPositiveZ));
+        CameraTiltComponentSPtr cameraTiltComponent(new CameraTiltComponent(CS::Vector3::k_unitPositiveZ));
         camera->AddComponent(cameraTiltComponent);
         
         /*
@@ -139,17 +139,17 @@ namespace CSPong
         const f32 k_fov = 3.14f / 3.0f;
         const f32 k_viewportHeight = 100.0f;
         f32 dist = (0.5f * k_viewportHeight) / std::tan(k_fov * 0.5f);
-        auto renderFactory = CSCore::Application::Get()->GetSystem<CSRendering::RenderComponentFactory>();
+        auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
         
-        CSRendering::CameraComponentSPtr cameraComponent = renderFactory->CreatePerspectiveCameraComponent(k_fov, 10.0f, 150.0f);
+        CS::CameraComponentSPtr cameraComponent = renderFactory->CreatePerspectiveCameraComponent(k_fov, 10.0f, 150.0f);
         camera->AddComponent(cameraComponent);
-        camera->GetTransform().SetLookAt(CSCore::Vector3::k_unitNegativeZ * dist, CSCore::Vector3::k_zero, CSCore::Vector3::k_unitPositiveY);
+        camera->GetTransform().SetLookAt(CS::Vector3::k_unitNegativeZ * dist, CS::Vector3::k_zero, CS::Vector3::k_unitPositiveY);
         
         return camera;
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    CSCore::EntityUPtr GameEntityFactory::CreateDiffuseLight() const
+    CS::EntityUPtr GameEntityFactory::CreateDiffuseLight() const
     {
         /*
          ============================
@@ -160,14 +160,14 @@ namespace CSPong
          created through the Render Component Factory. The engine provides 3 different types of 
          light: Ambient, Directional and Point.
          
-             CSRendering::AmbientLightComponentSPtr ambientLightComponent = renderFactory->CreateAmbientLightComponent();
-             ambientLightComponent->SetColour(CSCore::Colour(0.4f, 0.4f, 0.4f, 1.0f));
+             CS::AmbientLightComponentSPtr ambientLightComponent = renderFactory->CreateAmbientLightComponent();
+             ambientLightComponent->SetColour(CS::Colour(0.4f, 0.4f, 0.4f, 1.0f));
              
-             CSRendering::DirectionalLightComponentSPtr directionalLightComponent = renderFactory->CreateDirectionalLightComponent();
-             directionalLightComponent->SetColour(CSCore::Colour(0.6f, 0.6f, 0.6f, 1.0f));
+             CS::DirectionalLightComponentSPtr directionalLightComponent = renderFactory->CreateDirectionalLightComponent();
+             directionalLightComponent->SetColour(CS::Colour(0.6f, 0.6f, 0.6f, 1.0f));
              
-             CSRendering::PointLightComponentSPtr pointLightComponent = renderFactory->CreateDirectionalLightComponent();
-             pointLightComponent->SetColour(CSCore::Colour(0.6f, 0.6f, 0.6f, 1.0f));
+             CS::PointLightComponentSPtr pointLightComponent = renderFactory->CreateDirectionalLightComponent();
+             pointLightComponent->SetColour(CS::Colour(0.6f, 0.6f, 0.6f, 1.0f));
          
          Ambient lights apply light evenly to all objects in the scene emulating light
          that has reflected multiple times and has no apparent source. Directional lights apply 
@@ -196,43 +196,43 @@ namespace CSPong
          Next: 'Resources' in GameEntityFactory::CreateBall()
          */
         
-        CSCore::EntityUPtr light(CSCore::Entity::Create());
+        CS::EntityUPtr light(CS::Entity::Create());
         
-        auto renderFactory = CSCore::Application::Get()->GetSystem<CSRendering::RenderComponentFactory>();
+        auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
         
-        CSRendering::DirectionalLightComponentSPtr lightComponent = renderFactory->CreateDirectionalLightComponent(1024);
+        CS::DirectionalLightComponentSPtr lightComponent = renderFactory->CreateDirectionalLightComponent(1024);
         lightComponent->SetIntensity(2.0f);
-        lightComponent->SetColour(CSCore::Colour::k_orange);
+        lightComponent->SetColour(CS::Colour::k_orange);
         
         const f32 k_distanceFromGround = 70.0f;
-        CSCore::Vector3 lightDir(-1, 1, 1);
+        CS::Vector3 lightDir(-1, 1, 1);
         lightDir.Normalise();
-        CSCore::Vector3 lightPos = -lightDir * k_distanceFromGround;
+        CS::Vector3 lightPos = -lightDir * k_distanceFromGround;
         
         lightComponent->SetShadowVolume(130.0f, 130.0f, 1.0f, 130.0f);
         lightComponent->SetShadowTolerance(0.05f);
-        light->GetTransform().SetLookAt(lightPos, CSCore::Vector3::k_zero, CSCore::Vector3::k_unitPositiveY);
+        light->GetTransform().SetLookAt(lightPos, CS::Vector3::k_zero, CS::Vector3::k_unitPositiveY);
         light->AddComponent(lightComponent);
         
         return light;
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    CSCore::EntityUPtr GameEntityFactory::CreateAmbientLight() const
+    CS::EntityUPtr GameEntityFactory::CreateAmbientLight() const
     {
-        CSCore::EntityUPtr light(CSCore::Entity::Create());
+        CS::EntityUPtr light(CS::Entity::Create());
         
-        auto renderFactory = CSCore::Application::Get()->GetSystem<CSRendering::RenderComponentFactory>();
+        auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
         
-        CSRendering::AmbientLightComponentSPtr lightComponent = renderFactory->CreateAmbientLightComponent();
-        lightComponent->SetColour(CSCore::Colour::k_white * 0.5f);
+        CS::AmbientLightComponentSPtr lightComponent = renderFactory->CreateAmbientLightComponent();
+        lightComponent->SetColour(CS::Colour::k_white * 0.5f);
         light->AddComponent(lightComponent);
         
         return light;
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    CSCore::EntityUPtr GameEntityFactory::CreateBall() const
+    CS::EntityUPtr GameEntityFactory::CreateBall() const
     {
         /*
          =============================
@@ -245,13 +245,13 @@ namespace CSPong
          will load it from disk. All loaded resources are immutable and are therefore returned
          as const shared pointers.
          
-            CSRendering::TextureCSPtr texture = resourcePool->LoadResource<CSRendering::Texture>(CSCore::StorageLocation::k_package, "Texture.png");
+            CS::TextureCSPtr texture = resourcePool->LoadResource<CS::Texture>(CS::StorageLocation::k_package, "Texture.png");
          
          The resource pool provides methods for asynchonous loading. In this case the resource is
          not returned immediately instead being returned through a callback provided when calling
          load.
          
-             resourcePool->LoadResourceAsync<CSRendering::Texture>(CSCore::StorageLocation::k_package, "Texture.png", [](const CSRendering::TextureCSPtr& in_texture)
+             resourcePool->LoadResourceAsync<CS::Texture>(CS::StorageLocation::k_package, "Texture.png", [](const CS::TextureCSPtr& in_texture)
              {
                 //Do something.
              });
@@ -260,8 +260,8 @@ namespace CSPong
          the resource is still pooled but it must be given a unique identifier and a mutable 
          instance is returned. This can be queried from the pool using GetResource().
          
-             CSRendering::TextureSPtr mutableTexture = resourcePool->CreateResource("MyTexture");
-             CSRendering::TextureCSPtr texture = resourcePool->GetResource("MyTexture");
+             CS::TextureSPtr mutableTexture = resourcePool->CreateResource("MyTexture");
+             CS::TextureCSPtr texture = resourcePool->GetResource("MyTexture");
          
          Resources that are created manually must also be built manually (for instance texture has a build method that takes in image data, format, etc).
          
@@ -273,8 +273,8 @@ namespace CSPong
          Next: 'Materials' in GameEntityFactory::CreateBall()
          */
         
-        auto resourcePool = CSCore::Application::Get()->GetResourcePool();
-        CSRendering::MeshCSPtr mesh = resourcePool->LoadResource<CSRendering::Mesh>(CSCore::StorageLocation::k_package, "Models/Ball.csmodel");
+        auto resourcePool = CS::Application::Get()->GetResourcePool();
+        CS::MeshCSPtr mesh = resourcePool->LoadResource<CS::Mesh>(CS::StorageLocation::k_package, "Models/Ball.csmodel");
         
         /*
          =============================
@@ -294,8 +294,8 @@ namespace CSPong
          from disk. To help with this a material factory has been provided with convienence
          methods for creating mutable instances of each of the material types.
          
-            CSRendering::MaterialFactory* materialFactory = CSCore::Application::Get()->GetSystem<MaterialFactory>();
-            CSRendering::MaterialSPtr spriteMaterial = materialFactory->CreateSprite("UniqueId", texture);
+            CS::MaterialFactory* materialFactory = CS::Application::Get()->GetSystem<MaterialFactory>();
+            CS::MaterialSPtr spriteMaterial = materialFactory->CreateSprite("UniqueId", texture);
          
          Objects with the same material can be rendered in the same batch and therefore it is important to reduce the number of materials by batching textures.
          
@@ -304,15 +304,15 @@ namespace CSPong
          Next: 'Texture Atlases' in GameEntityFactory::CreateScoreSprite()
          */
         
-        CSRendering::MaterialCSPtr material = resourcePool->LoadResource<CSRendering::Material>(CSCore::StorageLocation::k_package, "Materials/Models/Models.csmaterial");
+        CS::MaterialCSPtr material = resourcePool->LoadResource<CS::Material>(CS::StorageLocation::k_package, "Materials/Models/Models.csmaterial");
         
-        CSCore::EntityUPtr ball(CSCore::Entity::Create());
+        CS::EntityUPtr ball(CS::Entity::Create());
         
-        auto renderFactory = CSCore::Application::Get()->GetSystem<CSRendering::RenderComponentFactory>();
-        CSRendering::StaticMeshComponentSPtr meshComponent = renderFactory->CreateStaticMeshComponent(mesh, material);
+        auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
+        CS::StaticMeshComponentSPtr meshComponent = renderFactory->CreateStaticMeshComponent(mesh, material);
         ball->AddComponent(meshComponent);
         
-        CSCore::Vector2 collisionSize = mesh->GetAABB().GetSize().XY();
+        CS::Vector2 collisionSize = mesh->GetAABB().GetSize().XY();
         DynamicBodyComponentSPtr dynamicBody(new DynamicBodyComponent(m_physicsSystem, collisionSize, 1.0f, 0.0f, 1.0f));
         ball->AddComponent(dynamicBody);
         
@@ -325,27 +325,27 @@ namespace CSPong
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    CSCore::EntityUPtr GameEntityFactory::CreatePlayerPaddle(const CSCore::EntitySPtr& in_camera) const
+    CS::EntityUPtr GameEntityFactory::CreatePlayerPaddle(const CS::EntitySPtr& in_camera) const
     {
-        CSCore::EntityUPtr paddle(CSCore::Entity::Create());
+        CS::EntityUPtr paddle(CS::Entity::Create());
         
-        auto renderFactory = CSCore::Application::Get()->GetSystem<CSRendering::RenderComponentFactory>();
-        auto resourcePool = CSCore::Application::Get()->GetResourcePool();
+        auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
+        auto resourcePool = CS::Application::Get()->GetResourcePool();
         
-        CSRendering::MeshCSPtr mesh = resourcePool->LoadResource<CSRendering::Mesh>(CSCore::StorageLocation::k_package, "Models/Paddle/PaddleLeft.csmodel");
-        CSRendering::MaterialCSPtr material = resourcePool->LoadResource<CSRendering::Material>(CSCore::StorageLocation::k_package, "Materials/Models/Models.csmaterial");
+        CS::MeshCSPtr mesh = resourcePool->LoadResource<CS::Mesh>(CS::StorageLocation::k_package, "Models/Paddle/PaddleLeft.csmodel");
+        CS::MaterialCSPtr material = resourcePool->LoadResource<CS::Material>(CS::StorageLocation::k_package, "Materials/Models/Models.csmaterial");
         
-        CSRendering::StaticMeshComponentSPtr meshComponent = renderFactory->CreateStaticMeshComponent(mesh, material);
+        CS::StaticMeshComponentSPtr meshComponent = renderFactory->CreateStaticMeshComponent(mesh, material);
         paddle->AddComponent(meshComponent);
         
-        CSCore::Vector2 collisionSize = mesh->GetAABB().GetSize().XY();
+        CS::Vector2 collisionSize = mesh->GetAABB().GetSize().XY();
         DynamicBodyComponentSPtr dynamicBody(new DynamicBodyComponent(m_physicsSystem, collisionSize, 100.0f, 0.2f, 0.6f));
         paddle->AddComponent(dynamicBody);
         
-        TouchControllerComponentSPtr touchComponent(new TouchControllerComponent(dynamicBody, in_camera->GetComponent<CSRendering::CameraComponent>()));
+        TouchControllerComponentSPtr touchComponent(new TouchControllerComponent(dynamicBody, in_camera->GetComponent<CS::CameraComponent>()));
         paddle->AddComponent(touchComponent);
         
-        CSRendering::MeshCSPtr arenaMesh = resourcePool->LoadResource<CSRendering::Mesh>(CSCore::StorageLocation::k_package, "Models/Arena.csmodel");
+        CS::MeshCSPtr arenaMesh = resourcePool->LoadResource<CS::Mesh>(CS::StorageLocation::k_package, "Models/Arena.csmodel");
         f32 offsetX = arenaMesh->GetAABB().GetSize().x * -k_paddlePercentageOffsetFromCentre;
         paddle->GetTransform().SetPosition(offsetX, 0.0f, 0.0f);
         
@@ -353,27 +353,27 @@ namespace CSPong
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    CSCore::EntityUPtr GameEntityFactory::CreateOppositionPaddle(const CSCore::EntitySPtr& in_ball) const
+    CS::EntityUPtr GameEntityFactory::CreateOppositionPaddle(const CS::EntitySPtr& in_ball) const
     {
-        CSCore::EntityUPtr paddle(CSCore::Entity::Create());
+        CS::EntityUPtr paddle(CS::Entity::Create());
         
-        auto renderFactory = CSCore::Application::Get()->GetSystem<CSRendering::RenderComponentFactory>();
-        auto resourcePool = CSCore::Application::Get()->GetResourcePool();
+        auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
+        auto resourcePool = CS::Application::Get()->GetResourcePool();
         
-        CSRendering::MeshCSPtr mesh = resourcePool->LoadResource<CSRendering::Mesh>(CSCore::StorageLocation::k_package, "Models/Paddle/PaddleRight.csmodel");
-        CSRendering::MaterialCSPtr material = resourcePool->LoadResource<CSRendering::Material>(CSCore::StorageLocation::k_package, "Materials/Models/Models.csmaterial");
+        CS::MeshCSPtr mesh = resourcePool->LoadResource<CS::Mesh>(CS::StorageLocation::k_package, "Models/Paddle/PaddleRight.csmodel");
+        CS::MaterialCSPtr material = resourcePool->LoadResource<CS::Material>(CS::StorageLocation::k_package, "Materials/Models/Models.csmaterial");
         
-        CSRendering::StaticMeshComponentSPtr meshComponent = renderFactory->CreateStaticMeshComponent(mesh, material);
+        CS::StaticMeshComponentSPtr meshComponent = renderFactory->CreateStaticMeshComponent(mesh, material);
         paddle->AddComponent(meshComponent);
         
-        CSCore::Vector2 collisionSize = mesh->GetAABB().GetSize().XY();
+        CS::Vector2 collisionSize = mesh->GetAABB().GetSize().XY();
         DynamicBodyComponentSPtr dynamicBody(new DynamicBodyComponent(m_physicsSystem, collisionSize, 100.0f, 0.2f, 0.6f));
         paddle->AddComponent(dynamicBody);
         
         AIControllerComponentSPtr aiComponent(new AIControllerComponent(dynamicBody, in_ball));
         paddle->AddComponent(aiComponent);
         
-        CSRendering::MeshCSPtr arenaMesh = resourcePool->LoadResource<CSRendering::Mesh>(CSCore::StorageLocation::k_package, "Models/Arena.csmodel");
+        CS::MeshCSPtr arenaMesh = resourcePool->LoadResource<CS::Mesh>(CS::StorageLocation::k_package, "Models/Arena.csmodel");
         f32 offsetX = arenaMesh->GetAABB().GetSize().x * k_paddlePercentageOffsetFromCentre;
         paddle->GetTransform().SetPosition(offsetX, 0.0f, 0.0f);
         
@@ -381,44 +381,44 @@ namespace CSPong
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    CSCore::EntityUPtr GameEntityFactory::CreateArena() const
+    CS::EntityUPtr GameEntityFactory::CreateArena() const
     {
-        CSCore::EntityUPtr arena(CSCore::Entity::Create());
+        CS::EntityUPtr arena(CS::Entity::Create());
         
-        auto renderFactory = CSCore::Application::Get()->GetSystem<CSRendering::RenderComponentFactory>();
-        auto resourcePool = CSCore::Application::Get()->GetResourcePool();
+        auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
+        auto resourcePool = CS::Application::Get()->GetResourcePool();
         
-        CSRendering::MeshCSPtr mesh = resourcePool->LoadResource<CSRendering::Mesh>(CSCore::StorageLocation::k_package, "Models/Arena.csmodel");
-        CSRendering::MaterialCSPtr material = resourcePool->LoadResource<CSRendering::Material>(CSCore::StorageLocation::k_package, "Materials/Models/Models.csmaterial");
+        CS::MeshCSPtr mesh = resourcePool->LoadResource<CS::Mesh>(CS::StorageLocation::k_package, "Models/Arena.csmodel");
+        CS::MaterialCSPtr material = resourcePool->LoadResource<CS::Material>(CS::StorageLocation::k_package, "Materials/Models/Models.csmaterial");
         
         const f32 k_border = 1.0f;
-        const CSCore::Vector2 k_arenaDimensions(mesh->GetAABB().GetSize().XY() * 0.9f);
+        const CS::Vector2 k_arenaDimensions(mesh->GetAABB().GetSize().XY() * 0.9f);
         
-        CSRendering::StaticMeshComponentSPtr meshComponent = renderFactory->CreateStaticMeshComponent(mesh, material);
+        CS::StaticMeshComponentSPtr meshComponent = renderFactory->CreateStaticMeshComponent(mesh, material);
         meshComponent->SetShadowCastingEnabled(false);
         arena->AddComponent(meshComponent);
         
-        CSCore::EntitySPtr bottomEdge(CSCore::Entity::Create());
-        bottomEdge->GetTransform().SetPosition(CSCore::Vector3(0.0f, -k_arenaDimensions.y * 0.5f - k_border * 0.5f, 0.0f));
-        StaticBodyComponentSPtr bottomEdgeStaticBody(new StaticBodyComponent(m_physicsSystem, CSCore::Vector2(k_arenaDimensions.x + k_border * 2.0f, k_border)));
+        CS::EntitySPtr bottomEdge(CS::Entity::Create());
+        bottomEdge->GetTransform().SetPosition(CS::Vector3(0.0f, -k_arenaDimensions.y * 0.5f - k_border * 0.5f, 0.0f));
+        StaticBodyComponentSPtr bottomEdgeStaticBody(new StaticBodyComponent(m_physicsSystem, CS::Vector2(k_arenaDimensions.x + k_border * 2.0f, k_border)));
         bottomEdge->AddComponent(bottomEdgeStaticBody);
         arena->AddEntity(bottomEdge);
         
-        CSCore::EntitySPtr topEdge(CSCore::Entity::Create());
-        topEdge->GetTransform().SetPosition(CSCore::Vector3(0.0f, k_arenaDimensions.y * 0.5f + k_border * 0.5f, 0.0f));
-        StaticBodyComponentSPtr topEdgeStaticBody(new StaticBodyComponent(m_physicsSystem, CSCore::Vector2(k_arenaDimensions.x + k_border * 2.0f, k_border)));
+        CS::EntitySPtr topEdge(CS::Entity::Create());
+        topEdge->GetTransform().SetPosition(CS::Vector3(0.0f, k_arenaDimensions.y * 0.5f + k_border * 0.5f, 0.0f));
+        StaticBodyComponentSPtr topEdgeStaticBody(new StaticBodyComponent(m_physicsSystem, CS::Vector2(k_arenaDimensions.x + k_border * 2.0f, k_border)));
         topEdge->AddComponent(topEdgeStaticBody);
         arena->AddEntity(topEdge);
         
-        CSCore::EntitySPtr leftEdge(CSCore::Entity::Create());
-        leftEdge->GetTransform().SetPosition(CSCore::Vector3(-k_arenaDimensions.x * 0.5f - k_border * 0.5f, 0.0f, 0.0f));
-        TriggerComponentSPtr leftEdgeTrigger(new TriggerComponent(m_physicsSystem, CSCore::Vector2(k_border, k_arenaDimensions.y)));
+        CS::EntitySPtr leftEdge(CS::Entity::Create());
+        leftEdge->GetTransform().SetPosition(CS::Vector3(-k_arenaDimensions.x * 0.5f - k_border * 0.5f, 0.0f, 0.0f));
+        TriggerComponentSPtr leftEdgeTrigger(new TriggerComponent(m_physicsSystem, CS::Vector2(k_border, k_arenaDimensions.y)));
         leftEdge->AddComponent(leftEdgeTrigger);
         arena->AddEntity(leftEdge);
         
-        CSCore::EntitySPtr rightEdge(CSCore::Entity::Create());
-        rightEdge->GetTransform().SetPosition(CSCore::Vector3(k_arenaDimensions.x * 0.5f + k_border * 0.5f, 0.0f, 0.0f));
-        TriggerComponentSPtr rightEdgeTrigger(new TriggerComponent(m_physicsSystem, CSCore::Vector2(k_border, k_arenaDimensions.y)));
+        CS::EntitySPtr rightEdge(CS::Entity::Create());
+        rightEdge->GetTransform().SetPosition(CS::Vector3(k_arenaDimensions.x * 0.5f + k_border * 0.5f, 0.0f, 0.0f));
+        TriggerComponentSPtr rightEdgeTrigger(new TriggerComponent(m_physicsSystem, CS::Vector2(k_border, k_arenaDimensions.y)));
         rightEdge->AddComponent(rightEdgeTrigger);
         arena->AddEntity(rightEdge);
         
@@ -429,7 +429,7 @@ namespace CSPong
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
-    CSCore::EntityUPtr GameEntityFactory::CreateScoreSprite(const CSCore::Vector2& in_size, CSRendering::AlignmentAnchor in_alignmentAnchor) const
+    CS::EntityUPtr GameEntityFactory::CreateScoreSprite(const CS::Vector2& in_size, CS::AlignmentAnchor in_alignmentAnchor) const
     {
         /*
          ===================================
@@ -442,8 +442,8 @@ namespace CSPong
          Just like other resources, a texture altas is loaded from the resource manager. Once loaded the 'virtual' texture (or sprite frame)
          can be accessed by querying the atlas using a 'Texture Id'. For example:
          
-            CSRendering::TextureAltasCSPtr atlas = resourcePool->LoadResource<CSRendering::TextureAtlas>(CSCore::StorageLocation::k_package, "Atlas.csatlas");
-            CSRendering::UVs virtualTextureUVs = atlas->GetFrameUVs("Frame1");
+            CS::TextureAltasCSPtr atlas = resourcePool->LoadResource<CS::TextureAtlas>(CS::StorageLocation::k_package, "Atlas.csatlas");
+            CS::UVs virtualTextureUVs = atlas->GetFrameUVs("Frame1");
          
          Typically when working with an atlas the component using it would deal with the virtual texture.
          When creating a SpriteComponent through the Render Component Factory the atlas and the virtual texture id are
@@ -454,15 +454,15 @@ namespace CSPong
          This concludes the Chilli Source Tour!
          */
         
-        auto renderFactory = CSCore::Application::Get()->GetSystem<CSRendering::RenderComponentFactory>();
-        auto resPool = CSCore::Application::Get()->GetResourcePool();
-        auto digitAtlas = resPool->LoadResource<CSRendering::TextureAtlas>(CSCore::StorageLocation::k_package, "TextureAtlases/Digits/Digits.csatlas");
-        auto digitMaterial = resPool->LoadResource<CSRendering::Material>(CSCore::StorageLocation::k_package, "Materials/Digits/Digits.csmaterial");
-        CSRendering::SpriteComponentSPtr spriteComponent = renderFactory->CreateSpriteComponent(in_size, digitAtlas, "0", digitMaterial, CSRendering::SpriteComponent::SizePolicy::k_fitMaintainingAspect);
+        auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
+        auto resPool = CS::Application::Get()->GetResourcePool();
+        auto digitAtlas = resPool->LoadResource<CS::TextureAtlas>(CS::StorageLocation::k_package, "TextureAtlases/Digits/Digits.csatlas");
+        auto digitMaterial = resPool->LoadResource<CS::Material>(CS::StorageLocation::k_package, "Materials/Digits/Digits.csmaterial");
+        CS::SpriteComponentSPtr spriteComponent = renderFactory->CreateSpriteComponent(in_size, digitAtlas, "0", digitMaterial, CS::SizePolicy::k_fitMaintainingAspect);
         spriteComponent->SetColour(0.5f, 0.5f, 0.5f, 0.5f);
         spriteComponent->SetOriginAlignment(in_alignmentAnchor);
         
-        CSCore::EntityUPtr scoreEnt = CSCore::Entity::Create();
+        CS::EntityUPtr scoreEnt = CS::Entity::Create();
         scoreEnt->AddComponent(spriteComponent);
         return scoreEnt;
     }

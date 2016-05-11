@@ -86,30 +86,30 @@ namespace CSPong
          Next: 'Components' in GameEntityFactory::CreateCamera
          */
         
-        GetScene()->SetClearColour(CSCore::Colour::k_black);
+        GetScene()->SetClearColour(CS::Colour::k_black);
         
-        CSCore::EntitySPtr camera = m_gameEntityFactory->CreateCamera();
+        CS::EntitySPtr camera = m_gameEntityFactory->CreateCamera();
         GetScene()->Add(camera);
 
-        CSCore::EntitySPtr ambientLight = m_gameEntityFactory->CreateAmbientLight();
+        CS::EntitySPtr ambientLight = m_gameEntityFactory->CreateAmbientLight();
         GetScene()->Add(ambientLight);
         
-        CSCore::EntitySPtr diffuseLight = m_gameEntityFactory->CreateDiffuseLight();
+        CS::EntitySPtr diffuseLight = m_gameEntityFactory->CreateDiffuseLight();
         GetScene()->Add(diffuseLight);
         
-        CSCore::EntitySPtr arena = m_gameEntityFactory->CreateArena();
+        CS::EntitySPtr arena = m_gameEntityFactory->CreateArena();
         GetScene()->Add(arena);
         
         m_ball = m_gameEntityFactory->CreateBall();
         GetScene()->Add(m_ball);
         
-        CSCore::EntitySPtr playerPaddle = m_gameEntityFactory->CreatePlayerPaddle(camera);
+        CS::EntitySPtr playerPaddle = m_gameEntityFactory->CreatePlayerPaddle(camera);
         GetScene()->Add(playerPaddle);
         
         m_oppositionPaddle = m_gameEntityFactory->CreateOppositionPaddle(m_ball);
         GetScene()->Add(m_oppositionPaddle);
         
-        m_scoreChangedConnection = m_scoringSystem->GetScoreChangedEvent().OpenConnection(CSCore::MakeDelegate(this, &GameState::OnGoalScored));
+        m_scoreChangedConnection = m_scoringSystem->GetScoreChangedEvent().OpenConnection(CS::MakeDelegate(this, &GameState::OnGoalScored));
         
         m_transitionInConnection = m_transitionSystem->GetTransitionInFinishedEvent().OpenConnection([=]()
         {
@@ -130,14 +130,14 @@ namespace CSPong
         {
             m_goalCeremonySystem->PlayWin([=]()
             {
-                m_transitionSystem->Transition(CSCore::StateSPtr(new MainMenuState()));
+                m_transitionSystem->Transition(CS::StateSPtr(new MainMenuState()));
             });
         }
         else if(in_scores[1] >= k_targetScore)
         {
             m_goalCeremonySystem->PlayLose([=]()
             {
-                m_transitionSystem->Transition(CSCore::StateSPtr(new MainMenuState()));
+                m_transitionSystem->Transition(CS::StateSPtr(new MainMenuState()));
             });
         }
         else

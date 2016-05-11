@@ -115,15 +115,15 @@ namespace CSPong
         //Chilli source has several "Storage Locations". These correspond to the sandbox locations
         //of most mobile platforms. k_package is the most commonly used and refers to the bundle on iOS and the
         //APK on Android.
-        auto splashViewDef = CSCore::Application::Get()->GetResourcePool()->LoadResource<CSUI::WidgetTemplate>(CSCore::StorageLocation::k_package, "GUI/Splash.csui");
-        m_splashView = CSCore::Application::Get()->GetWidgetFactory()->Create(splashViewDef);
+        auto splashViewDef = CS::Application::Get()->GetResourcePool()->LoadResource<CS::WidgetTemplate>(CS::StorageLocation::k_package, "GUI/Splash.csui");
+        m_splashView = CS::Application::Get()->GetWidgetFactory()->Create(splashViewDef);
         
         //Each state has a ui canvas. The canvas is rendered after the update loop.
         //Adding a widget to the canvas will cause it to be rendered.
         GetUICanvas()->AddWidget(m_splashView);
         
         //Set the clear colour of the screen
-        GetScene()->SetClearColour(CSCore::Colour(0.424f, 0.365f, 0.357f, 1.0f));
+        GetScene()->SetClearColour(CS::Colour(0.424f, 0.365f, 0.357f, 1.0f));
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
@@ -134,7 +134,7 @@ namespace CSPong
             m_timer += in_timeSinceLastUpdate;
             if (m_timer > k_timer)
             {
-                m_transitionSystem->Transition(CSCore::StateSPtr(new MainMenuState()));
+                m_transitionSystem->Transition(CS::StateSPtr(new MainMenuState()));
             }
         }
     }

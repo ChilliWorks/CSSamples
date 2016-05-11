@@ -42,7 +42,7 @@ namespace CSPong
     ///
     /// @author S Downie
     //------------------------------------------------------------
-    class BallControllerComponent final : public CSCore::Component
+    class BallControllerComponent final : public CS::Component
     {
     public:
         
@@ -60,7 +60,7 @@ namespace CSPong
         ///
         /// @return Whether the class matches the comparison type
         //----------------------------------------------------------
-        bool IsA(CSCore::InterfaceIDType in_interfaceId) const override;
+        bool IsA(CS::InterfaceIDType in_interfaceId) const override;
         //----------------------------------------------------
         /// Activate the ball and starts it moving.
         ///
@@ -86,13 +86,13 @@ namespace CSPong
         /// @param The collision direction.
         /// @param The entity collided with.
         //----------------------------------------------------
-        void OnCollision(const CSCore::Vector2& in_direction, CSCore::Entity* in_collidedWith);
+        void OnCollision(const CS::Vector2& in_direction, CS::Entity* in_collidedWith);
         
     private:
         
         DynamicBodyComponent* m_dynamicBodyComponent;
-        CSCore::Vector2 m_currentDirection;
-        CSCore::EventConnectionUPtr m_collisionConnection;
+        CS::Vector2 m_currentDirection;
+        CS::EventConnectionUPtr m_collisionConnection;
         
         bool m_active = true;
     };

@@ -45,7 +45,7 @@ namespace CSPong
     ///
     /// @author S Downie
     //------------------------------------------------------------
-    class DynamicBodyComponent final : public CSCore::Component
+    class DynamicBodyComponent final : public CS::Component
     {
     public:
         
@@ -60,7 +60,7 @@ namespace CSPong
         /// @param The direction of the collision.
         /// @param The entity collided with.
         //----------------------------------------------------------
-        using CollisionDelegate = std::function<void(const CSCore::Vector2&, CSCore::Entity*)>;
+        using CollisionDelegate = std::function<void(const CS::Vector2&, CS::Entity*)>;
         //----------------------------------------------------------
         /// A delegate that will be called whenever the dynamic
         /// body collides with a trigger.
@@ -69,7 +69,7 @@ namespace CSPong
         ///
         /// @param The entity collided with.
         //----------------------------------------------------------
-        using TriggerDelegate = std::function<void(CSCore::Entity*)>;
+        using TriggerDelegate = std::function<void(CS::Entity*)>;
         //----------------------------------------------------------
         /// @author Ian Copland
         ///
@@ -80,7 +80,7 @@ namespace CSPong
         /// greater drag.
         /// @param The coefficient of restitution of the body.
         //----------------------------------------------------------
-        DynamicBodyComponent(PhysicsSystem* in_physicsSystem, const CSCore::Vector2& in_size, f32 in_mass, f32 in_dragFactor, f32 in_coefficientOfRestitution);
+        DynamicBodyComponent(PhysicsSystem* in_physicsSystem, const CS::Vector2& in_size, f32 in_mass, f32 in_dragFactor, f32 in_coefficientOfRestitution);
         //----------------------------------------------------------
         /// @author Ian Copland
         ///
@@ -88,7 +88,7 @@ namespace CSPong
         ///
         /// @return Whether the class matches the comparison type
         //----------------------------------------------------------
-        bool IsA(CSCore::InterfaceIDType in_interfaceId) const override;
+        bool IsA(CS::InterfaceIDType in_interfaceId) const override;
         //------------------------------------------------------------
         /// Applies an impulse to the dynamic body. The impulse is
         /// accumualated over the course of a phyics frame and applied
@@ -100,7 +100,7 @@ namespace CSPong
         /// @param Direction of impact (i.e. surface normal of collision body)
         /// @param The overlap vector if the tow objects intersect
         //------------------------------------------------------------
-        void ApplyImpulse(const CSCore::Vector2& in_impulse);
+        void ApplyImpulse(const CS::Vector2& in_impulse);
         //------------------------------------------------------------
         /// Sets the current velocity of the physics body. In most
         /// cases it is better to use ApplyImpluse() instead of directly
@@ -110,13 +110,13 @@ namespace CSPong
         ///
         /// @param The new velocity.
         //------------------------------------------------------------
-        void SetVelocity(const CSCore::Vector2& in_velocity);
+        void SetVelocity(const CS::Vector2& in_velocity);
         //------------------------------------------------------------
         /// @author Ian Copland
         ///
         /// @return The size of the physics body.
         //------------------------------------------------------------
-        const CSCore::Vector2& GetSize() const;
+        const CS::Vector2& GetSize() const;
         //------------------------------------------------------------
         /// @author Ian Copland
         ///
@@ -128,21 +128,21 @@ namespace CSPong
         ///
         /// @return The current velocity of the physics body.
         //------------------------------------------------------------
-        const CSCore::Vector2& GetVelocity() const;
+        const CS::Vector2& GetVelocity() const;
         //------------------------------------------------------------
         /// @author Ian Copland
         ///
         /// @param An event that can be listened to in order to receive
         /// callbacks when a collision occurs.
         //------------------------------------------------------------
-        CSCore::IConnectableEvent<CollisionDelegate>& GetCollisionEvent();
+        CS::IConnectableEvent<CollisionDelegate>& GetCollisionEvent();
         //------------------------------------------------------------
         /// @author Ian Copland
         ///
         /// @param An event that can be listened to in order to receive
         /// callbacks when a trigger occurs.
         //------------------------------------------------------------
-        CSCore::IConnectableEvent<TriggerDelegate>& GetTriggerEvent();
+        CS::IConnectableEvent<TriggerDelegate>& GetTriggerEvent();
         
     private:
         friend class PhysicsSystem;
@@ -182,7 +182,7 @@ namespace CSPong
         /// between the bodies.
         /// @param The dynamic body this is in collision with.
         //------------------------------------------------------------
-        void OnDynamicCollision(const CSCore::Vector2& in_collisionDirection, const CSCore::Vector2& in_intersectionResolution, DynamicBodyComponent* in_collidedWith);
+        void OnDynamicCollision(const CS::Vector2& in_collisionDirection, const CS::Vector2& in_intersectionResolution, DynamicBodyComponent* in_collidedWith);
         //------------------------------------------------------------
         /// Called when the dynamic body collides with a static body.
         /// This will resolve the collision by moving the body such
@@ -198,7 +198,7 @@ namespace CSPong
         /// between the bodies.
         /// @param The static body this is in collision with.
         //------------------------------------------------------------
-        void OnStaticCollision(const CSCore::Vector2& in_collisionDirection, const CSCore::Vector2& in_intersectionResolution, StaticBodyComponent* in_collidedWith);
+        void OnStaticCollision(const CS::Vector2& in_collisionDirection, const CS::Vector2& in_intersectionResolution, StaticBodyComponent* in_collidedWith);
         //------------------------------------------------------------
         /// Called when the dynamic body collides with a trigger. This
         /// will fire the trigger event.
@@ -221,14 +221,14 @@ namespace CSPong
         void OnRemovedFromScene() override;
         
         PhysicsSystem* m_physicsSystem;
-        const CSCore::Vector2 m_size;
+        const CS::Vector2 m_size;
         const f32 m_mass;
         const f32 m_dragFactor;
         const f32 m_coefficientOfRestitution;
-        CSCore::Vector2 m_impulse;
-        CSCore::Vector2 m_velocity;
-        CSCore::Event<CollisionDelegate> m_collisionEvent;
-        CSCore::Event<TriggerDelegate> m_triggerEvent;
+        CS::Vector2 m_impulse;
+        CS::Vector2 m_velocity;
+        CS::Event<CollisionDelegate> m_collisionEvent;
+        CS::Event<TriggerDelegate> m_triggerEvent;
     };
 }
 

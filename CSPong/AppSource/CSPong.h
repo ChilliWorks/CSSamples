@@ -39,7 +39,7 @@ namespace CSPong
     /// system creation and for pushing the initial state onto
     /// the state manager hierarchy
     //---------------------------------------------------------
-    class App final : public CSCore::Application
+    class App final : public CS::Application
     {
     public:
         //---------------------------------------------------------

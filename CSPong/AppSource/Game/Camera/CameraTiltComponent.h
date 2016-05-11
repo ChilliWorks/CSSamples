@@ -40,7 +40,7 @@ namespace CSPong
     ///
     /// @author S Downie
     //------------------------------------------------------------
-    class CameraTiltComponent final : public CSCore::Component
+    class CameraTiltComponent final : public CS::Component
     {
     public:
         
@@ -52,7 +52,7 @@ namespace CSPong
         ///
         /// @param Camera view direction
         //----------------------------------------------------------
-        CameraTiltComponent(const CSCore::Vector3& in_viewDirection);
+        CameraTiltComponent(const CS::Vector3& in_viewDirection);
         //----------------------------------------------------------
         /// @author S Downie
         ///
@@ -60,7 +60,7 @@ namespace CSPong
         ///
         /// @return Whether the class matches the comparison type
         //----------------------------------------------------------
-        bool IsA(CSCore::InterfaceIDType in_interfaceId) const override;
+        bool IsA(CS::InterfaceIDType in_interfaceId) const override;
         
     private:
         
@@ -91,10 +91,10 @@ namespace CSPong
         
     private:
         
-        CSCore::Vector3 m_tiltVelocity;
-        CSCore::Vector3 m_unitTiltOffset;
-        CSCore::Vector3 m_restingViewDirection;
-        CSInput::Accelerometer* m_accelerometer = nullptr;
+        CS::Vector3 m_tiltVelocity;
+        CS::Vector3 m_unitTiltOffset;
+        CS::Vector3 m_restingViewDirection;
+        CS::Accelerometer* m_accelerometer = nullptr;
     };
 }
 

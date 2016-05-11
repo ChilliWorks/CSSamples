@@ -39,14 +39,14 @@ namespace CSPong
     
     //----------------------------------------------------------
     //----------------------------------------------------------
-    CameraTiltComponent::CameraTiltComponent(const CSCore::Vector3& in_viewDirection)
+    CameraTiltComponent::CameraTiltComponent(const CS::Vector3& in_viewDirection)
     : m_restingViewDirection(in_viewDirection)
     {
         
     }
     //----------------------------------------------------------
     //----------------------------------------------------------
-    bool CameraTiltComponent::IsA(CSCore::InterfaceIDType in_interfaceId) const
+    bool CameraTiltComponent::IsA(CS::InterfaceIDType in_interfaceId) const
     {
         return in_interfaceId == CameraTiltComponent::InterfaceID;
     }
@@ -54,7 +54,7 @@ namespace CSPong
     //----------------------------------------------------
     void CameraTiltComponent::OnAddedToScene()
     {
-        m_accelerometer = CSCore::Application::Get()->GetSystem<CSInput::Accelerometer>();
+        m_accelerometer = CS::Application::Get()->GetSystem<CS::Accelerometer>();
         
         if(m_accelerometer != nullptr)
         {
@@ -78,29 +78,29 @@ namespace CSPong
     {
         if (m_accelerometer != nullptr)
         {
-            const f32 k_angleFromFlat = -CSCore::MathUtils::k_pi * 0.25f;
+            const f32 k_angleFromFlat = -CS::MathUtils::k_pi * 0.25f;
             const f32 k_accelerationFactor = 40.0f;
             const f32 k_deadzoneLimit = 10.0f;
             const f32 k_drag = 0.85f;
             const f32 k_scale = 1.0f;
             
             //calculate the offset from the perfect down vector from the accelerometer
-            CSCore::Matrix4 matZDownSpace;
+            CS::Matrix4 matZDownSpace;
             matZDownSpace.RotateX(-k_angleFromFlat);
-            CSCore::Vector3 perfectDown = CSCore::Vector3::k_unitNegativeZ;
-            CSCore::Vector3 reading = m_accelerometer->GetAcceleration();
-            CSCore::Vector3 actualDown = reading * matZDownSpace;
-            CSCore::Vector3 offset = perfectDown - actualDown;
-            CSCore::Vector3 offsetXY = CSCore::Vector3(offset.x, offset.y, 0.0f);
-            CSCore::Vector3 offsetXYDirection = CSCore::Vector3::Normalise(offsetXY);
+            CS::Vector3 perfectDown = CS::Vector3::k_unitNegativeZ;
+            CS::Vector3 reading = m_accelerometer->GetAcceleration();
+            CS::Vector3 actualDown = reading * matZDownSpace;
+            CS::Vector3 offset = perfectDown - actualDown;
+            CS::Vector3 offsetXY = CS::Vector3(offset.x, offset.y, 0.0f);
+            CS::Vector3 offsetXYDirection = CS::Vector3::Normalise(offsetXY);
             
             //calculate the angle and magnitude of the acceleration
-            f32 angle = -CSCore::MathUtils::k_pi / 2.0f - atan2(offsetXYDirection.y, offsetXYDirection.x);
+            f32 angle = -CS::MathUtils::k_pi / 2.0f - atan2(offsetXYDirection.y, offsetXYDirection.x);
             f32 accelerationMagnitude = offsetXY.Length() * k_accelerationFactor * in_timeSinceLastUpdate;
             
             //calulate the acceleration vector taking into account a small deadzone
             f32 deadZoneMagnitude = k_deadzoneLimit * in_timeSinceLastUpdate;
-            CSCore::Vector3 acceleration;
+            CS::Vector3 acceleration;
             if (accelerationMagnitude > deadZoneMagnitude)
             {
                 acceleration.x = std::sin(angle) * (accelerationMagnitude - deadZoneMagnitude) * k_scale;
@@ -109,7 +109,7 @@ namespace CSPong
             }
             else
             {
-                acceleration = CSCore::Vector3::k_zero;
+                acceleration = CS::Vector3::k_zero;
             }
             
             //calculate the velocity and offset and apply drag.
@@ -118,11 +118,11 @@ namespace CSPong
             m_unitTiltOffset += m_tiltVelocity * in_timeSinceLastUpdate;
             m_unitTiltOffset *= k_drag;
             
-            CSCore::Vector3 position(GetEntity()->GetTransform().GetLocalPosition());
-            CSCore::Vector3 target(position + m_restingViewDirection);
+            CS::Vector3 position(GetEntity()->GetTransform().GetLocalPosition());
+            CS::Vector3 target(position + m_restingViewDirection);
             target += m_unitTiltOffset * m_restingViewDirection.Length();
             
-            GetEntity()->GetTransform().SetLookAt(position, target, CSCore::Vector3::k_unitPositiveY);
+            GetEntity()->GetTransform().SetLookAt(position, target, CS::Vector3::k_unitPositiveY);
         }
     }
 }

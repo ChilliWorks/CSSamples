@@ -46,7 +46,7 @@ namespace CSPong
     ///
     /// @author S Downie
     //------------------------------------------------------------
-    class SplashState final : public CSCore::State
+    class SplashState final : public CS::State
     {
     public: 
         //------------------------------------------------------
@@ -79,7 +79,7 @@ namespace CSPong
         
         TransitionSystem* m_transitionSystem;
         f32 m_timer = 0.0f;
-        CSUI::WidgetSPtr m_splashView;
+        CS::WidgetSPtr m_splashView;
     };
 }
 

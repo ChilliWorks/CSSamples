@@ -54,7 +54,7 @@ namespace CSPong
     }
     //----------------------------------------------------------
     //----------------------------------------------------------
-    bool ScoringSystem::IsA(CSCore::InterfaceIDType in_interfaceId) const
+    bool ScoringSystem::IsA(CS::InterfaceIDType in_interfaceId) const
     {
         return in_interfaceId == ScoringSystem::InterfaceID;
     }
@@ -69,28 +69,28 @@ namespace CSPong
         
         auto entityFactory = GetState()->GetSystem<GameEntityFactory>();
         auto scene = GetState()->GetScene();
-        const CSCore::Vector2 k_digitSize(20, 20);
+        const CS::Vector2 k_digitSize(20, 20);
         const f32 distanceFromGround = 6.0f;
         
         const f32 k_paddingFromCentre = 10.0f;
         
-        CSCore::EntitySPtr player1TensEntity = entityFactory->CreateScoreSprite(k_digitSize, CSRendering::AlignmentAnchor::k_middleRight);
-        m_scoreViews[0].first = player1TensEntity->GetComponent<CSRendering::SpriteComponent>();
+        CS::EntitySPtr player1TensEntity = entityFactory->CreateScoreSprite(k_digitSize, CS::AlignmentAnchor::k_middleRight);
+        m_scoreViews[0].first = player1TensEntity->GetComponent<CS::SpriteComponent>();
         player1TensEntity->GetTransform().SetPosition(-k_paddingFromCentre - k_digitSize.x, 0.0f, distanceFromGround);
         scene->Add(player1TensEntity);
         
-        CSCore::EntitySPtr player1SinglesEntity = entityFactory->CreateScoreSprite(k_digitSize, CSRendering::AlignmentAnchor::k_middleRight);
-        m_scoreViews[0].second = player1SinglesEntity->GetComponent<CSRendering::SpriteComponent>();
+        CS::EntitySPtr player1SinglesEntity = entityFactory->CreateScoreSprite(k_digitSize, CS::AlignmentAnchor::k_middleRight);
+        m_scoreViews[0].second = player1SinglesEntity->GetComponent<CS::SpriteComponent>();
         player1SinglesEntity->GetTransform().SetPosition(-k_paddingFromCentre, 0.0f, distanceFromGround);
         scene->Add(player1SinglesEntity);
 
-        CSCore::EntitySPtr player2TensEntity = entityFactory->CreateScoreSprite(k_digitSize, CSRendering::AlignmentAnchor::k_middleLeft);
-        m_scoreViews[1].first = player2TensEntity->GetComponent<CSRendering::SpriteComponent>();
+        CS::EntitySPtr player2TensEntity = entityFactory->CreateScoreSprite(k_digitSize, CS::AlignmentAnchor::k_middleLeft);
+        m_scoreViews[1].first = player2TensEntity->GetComponent<CS::SpriteComponent>();
         player2TensEntity->GetTransform().SetPosition(k_paddingFromCentre, 0.0f, distanceFromGround);
         scene->Add(player2TensEntity);
         
-        CSCore::EntitySPtr player2SinglesEntity = entityFactory->CreateScoreSprite(k_digitSize, CSRendering::AlignmentAnchor::k_middleLeft);
-        m_scoreViews[1].second = player2SinglesEntity->GetComponent<CSRendering::SpriteComponent>();
+        CS::EntitySPtr player2SinglesEntity = entityFactory->CreateScoreSprite(k_digitSize, CS::AlignmentAnchor::k_middleLeft);
+        m_scoreViews[1].second = player2SinglesEntity->GetComponent<CS::SpriteComponent>();
         player2SinglesEntity->GetTransform().SetPosition(k_paddingFromCentre + k_digitSize.x, 0.0f, distanceFromGround);
         scene->Add(player2SinglesEntity);
     }
@@ -98,11 +98,11 @@ namespace CSPong
     //------------------------------------------------
     void ScoringSystem::AddBallBody(const DynamicBodyComponentSPtr& in_body)
     {
-        m_ballTriggerConnections.push_back(in_body->GetTriggerEvent().OpenConnection(CSCore::MakeDelegate(this, &ScoringSystem::OnBallHitTrigger)));
+        m_ballTriggerConnections.push_back(in_body->GetTriggerEvent().OpenConnection(CS::MakeDelegate(this, &ScoringSystem::OnBallHitTrigger)));
     }
     //------------------------------------------------
     //------------------------------------------------
-    void ScoringSystem::AddGoalTrigger(const CSCore::EntitySPtr& in_trigger, u32 in_playerIndex)
+    void ScoringSystem::AddGoalTrigger(const CS::EntitySPtr& in_trigger, u32 in_playerIndex)
     {
         CS_ASSERT(in_playerIndex < k_numPlayers, "Index out of range");
         
@@ -110,7 +110,7 @@ namespace CSPong
     }
     //------------------------------------------------
     //------------------------------------------------
-    void ScoringSystem::OnBallHitTrigger(CSCore::Entity* in_trigger)
+    void ScoringSystem::OnBallHitTrigger(CS::Entity* in_trigger)
     {
         for(u32 i=0; i<m_goaltriggers.size(); ++i)
         {
@@ -132,10 +132,10 @@ namespace CSPong
         if(m_scores[in_playerIndex] <= 99)
         {
             u32 tens = m_scores[in_playerIndex]/10;
-            m_scoreViews[in_playerIndex].first->SetTextureAtlasId(CSCore::ToString(tens));
+            m_scoreViews[in_playerIndex].first->SetTextureAtlasId(CS::ToString(tens));
             
             u32 singles = m_scores[in_playerIndex]%10;
-            m_scoreViews[in_playerIndex].second->SetTextureAtlasId(CSCore::ToString(singles));
+            m_scoreViews[in_playerIndex].second->SetTextureAtlasId(CS::ToString(singles));
         }
         else
         {
@@ -146,7 +146,7 @@ namespace CSPong
     }
     //----------------------------------------------------
     //----------------------------------------------------
-    CSCore::IConnectableEvent<ScoringSystem::ScoreChangedDelegate>& ScoringSystem::GetScoreChangedEvent()
+    CS::IConnectableEvent<ScoringSystem::ScoreChangedDelegate>& ScoringSystem::GetScoreChangedEvent()
     {
         return m_scoreChangedEvent;
     }
