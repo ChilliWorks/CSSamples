@@ -71,7 +71,7 @@ namespace CSPong
          to determine their world space position, scale and orientation. 
          
          The behaviour of an entity is goverened by the components it has attached to it. An example of this is the opposition paddle
-         entity which has a StaticMeshComponent which describes how it is rendered and an AIControllerComponent which moves the entity towards the ball. This is really powerful as it allows
+         entity which has a StaticModelComponent which describes how it is rendered and an AIControllerComponent which moves the entity towards the ball. This is really powerful as it allows
          behaviour to be customised from building blocks without having to change exisiting code. For instance the player paddle is controlled by pointer input via the TouchControllerComponent 
          however this could easily be detached and replaced by an AccelerometerControllerComponent; while the opposition paddle is controlled by an AIComponent but both player and opposition have the same render component.
          Another example could be a player entity in an RPG game that collects abilities as they progress, each ability's logic could be controlled by a component.

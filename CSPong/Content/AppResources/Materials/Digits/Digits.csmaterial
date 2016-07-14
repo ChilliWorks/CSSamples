@@ -1,4 +1,4 @@
-<Material type = "Sprite">
+<Material type = "Unlit">
     <RenderStates>
         <Lighting enabled="false" />
         <DepthWrite enabled="false" />

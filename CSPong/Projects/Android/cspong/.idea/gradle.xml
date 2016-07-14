@@ -15,6 +15,15 @@
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
+        <option name="myModules">
+          <set>
+            <option value="$PROJECT_DIR$/../../../ChilliSource/Projects/Android/chillisource" />
+            <option value="$PROJECT_DIR$/../../../ChilliSource/Projects/Android/playapkexpansion" />
+            <option value="$PROJECT_DIR$/../../../ChilliSource/Projects/Android/playlicensing" />
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+          </set>
+        </option>
       </GradleProjectSettings>
     </option>
   </component>

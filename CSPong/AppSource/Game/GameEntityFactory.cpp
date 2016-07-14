@@ -43,7 +43,9 @@
 #include <ChilliSource/Rendering/Base.h>
 #include <ChilliSource/Rendering/Camera.h>
 #include <ChilliSource/Rendering/Lighting.h>
+#include <ChilliSource/Rendering/Material.h>
 #include <ChilliSource/Rendering/Model.h>
+#include <ChilliSource/Rendering/Sprite.h>
 #include <ChilliSource/Rendering/Texture.h>
 
 namespace CSPong
@@ -92,9 +94,9 @@ namespace CSPong
          ParticleComponent or AnimatedMeshComponent. The Entity class exposes methods for adding, removing
          and querying for components.
          
-            CS::StaticMeshComponentSPtr staticMeshComponent = renderComponentFactory->CreateAnimatedMeshComponent(mesh, material);
+            CS::StaticModelComponentSPtr staticMeshComponent = renderComponentFactory->CreateAnimatedMeshComponent(mesh, material);
             entity->AddComponent(staticMeshComponent);
-            staticMeshComponent = entity->GetComponent<StaticMeshComponent>();
+            staticMeshComponent = entity->GetComponent<StaticModelComponent>();
             staticMeshComponent->RemoveFromEntity();
          
          Much like systems, Components receive lifecycle events such as OnUpdate(), OnSuspend() and
@@ -224,8 +226,7 @@ namespace CSPong
         
         auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
         
-        CS::AmbientLightComponentSPtr lightComponent = renderFactory->CreateAmbientLightComponent();
-        lightComponent->SetColour(CS::Colour::k_white * 0.5f);
+        CS::AmbientLightComponentSPtr lightComponent = renderFactory->CreateAmbientLightComponent(CS::Colour::k_white * 0.5f);
         light->AddComponent(lightComponent);
         
         return light;
@@ -274,7 +275,7 @@ namespace CSPong
          */
         
         auto resourcePool = CS::Application::Get()->GetResourcePool();
-        CS::MeshCSPtr mesh = resourcePool->LoadResource<CS::Mesh>(CS::StorageLocation::k_package, "Models/Ball.csmodel");
+        CS::ModelCSPtr mesh = resourcePool->LoadResource<CS::Model>(CS::StorageLocation::k_package, "Models/Ball.csmodel");
         
         /*
          =============================
@@ -309,7 +310,7 @@ namespace CSPong
         CS::EntityUPtr ball(CS::Entity::Create());
         
         auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
-        CS::StaticMeshComponentSPtr meshComponent = renderFactory->CreateStaticMeshComponent(mesh, material);
+        CS::StaticModelComponentSPtr meshComponent = renderFactory->CreateStaticModelComponent(mesh, material);
         ball->AddComponent(meshComponent);
         
         CS::Vector2 collisionSize = mesh->GetAABB().GetSize().XY();
@@ -332,10 +333,10 @@ namespace CSPong
         auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
         auto resourcePool = CS::Application::Get()->GetResourcePool();
         
-        CS::MeshCSPtr mesh = resourcePool->LoadResource<CS::Mesh>(CS::StorageLocation::k_package, "Models/Paddle/PaddleLeft.csmodel");
+        CS::ModelCSPtr mesh = resourcePool->LoadResource<CS::Model>(CS::StorageLocation::k_package, "Models/Paddle/PaddleLeft.csmodel");
         CS::MaterialCSPtr material = resourcePool->LoadResource<CS::Material>(CS::StorageLocation::k_package, "Materials/Models/Models.csmaterial");
         
-        CS::StaticMeshComponentSPtr meshComponent = renderFactory->CreateStaticMeshComponent(mesh, material);
+        CS::StaticModelComponentSPtr meshComponent = renderFactory->CreateStaticModelComponent(mesh, material);
         paddle->AddComponent(meshComponent);
         
         CS::Vector2 collisionSize = mesh->GetAABB().GetSize().XY();
@@ -345,7 +346,7 @@ namespace CSPong
         TouchControllerComponentSPtr touchComponent(new TouchControllerComponent(dynamicBody, in_camera->GetComponent<CS::CameraComponent>()));
         paddle->AddComponent(touchComponent);
         
-        CS::MeshCSPtr arenaMesh = resourcePool->LoadResource<CS::Mesh>(CS::StorageLocation::k_package, "Models/Arena.csmodel");
+        CS::ModelCSPtr arenaMesh = resourcePool->LoadResource<CS::Model>(CS::StorageLocation::k_package, "Models/Arena.csmodel");
         f32 offsetX = arenaMesh->GetAABB().GetSize().x * -k_paddlePercentageOffsetFromCentre;
         paddle->GetTransform().SetPosition(offsetX, 0.0f, 0.0f);
         
@@ -360,10 +361,10 @@ namespace CSPong
         auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
         auto resourcePool = CS::Application::Get()->GetResourcePool();
         
-        CS::MeshCSPtr mesh = resourcePool->LoadResource<CS::Mesh>(CS::StorageLocation::k_package, "Models/Paddle/PaddleRight.csmodel");
+        CS::ModelCSPtr mesh = resourcePool->LoadResource<CS::Model>(CS::StorageLocation::k_package, "Models/Paddle/PaddleRight.csmodel");
         CS::MaterialCSPtr material = resourcePool->LoadResource<CS::Material>(CS::StorageLocation::k_package, "Materials/Models/Models.csmaterial");
         
-        CS::StaticMeshComponentSPtr meshComponent = renderFactory->CreateStaticMeshComponent(mesh, material);
+        CS::StaticModelComponentSPtr meshComponent = renderFactory->CreateStaticModelComponent(mesh, material);
         paddle->AddComponent(meshComponent);
         
         CS::Vector2 collisionSize = mesh->GetAABB().GetSize().XY();
@@ -373,7 +374,7 @@ namespace CSPong
         AIControllerComponentSPtr aiComponent(new AIControllerComponent(dynamicBody, in_ball));
         paddle->AddComponent(aiComponent);
         
-        CS::MeshCSPtr arenaMesh = resourcePool->LoadResource<CS::Mesh>(CS::StorageLocation::k_package, "Models/Arena.csmodel");
+        CS::ModelCSPtr arenaMesh = resourcePool->LoadResource<CS::Model>(CS::StorageLocation::k_package, "Models/Arena.csmodel");
         f32 offsetX = arenaMesh->GetAABB().GetSize().x * k_paddlePercentageOffsetFromCentre;
         paddle->GetTransform().SetPosition(offsetX, 0.0f, 0.0f);
         
@@ -388,13 +389,13 @@ namespace CSPong
         auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
         auto resourcePool = CS::Application::Get()->GetResourcePool();
         
-        CS::MeshCSPtr mesh = resourcePool->LoadResource<CS::Mesh>(CS::StorageLocation::k_package, "Models/Arena.csmodel");
+        CS::ModelCSPtr mesh = resourcePool->LoadResource<CS::Model>(CS::StorageLocation::k_package, "Models/Arena.csmodel");
         CS::MaterialCSPtr material = resourcePool->LoadResource<CS::Material>(CS::StorageLocation::k_package, "Materials/Models/Models.csmaterial");
         
         const f32 k_border = 1.0f;
         const CS::Vector2 k_arenaDimensions(mesh->GetAABB().GetSize().XY() * 0.9f);
         
-        CS::StaticMeshComponentSPtr meshComponent = renderFactory->CreateStaticMeshComponent(mesh, material);
+        CS::StaticModelComponentSPtr meshComponent = renderFactory->CreateStaticModelComponent(mesh, material);
         meshComponent->SetShadowCastingEnabled(false);
         arena->AddComponent(meshComponent);
         

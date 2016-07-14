@@ -61,14 +61,14 @@
 ///
 /// @return Instance of CS::Application
 //---------------------------------------------------------
-CS::Application* CreateApplication()
+CS::Application* CreateApplication(CS::SystemInfoCUPtr systemInfo) noexcept
 {
-    return new CSPong::App();
+    return new CSPong::App(std::move(systemInfo));
 }
 
 #if defined(CS_TARGETPLATFORM_ANDROID) && defined(CS_ANDROIDFLAVOUR_GOOGLEPLAY)
 
-std::string GetGooglePlayLvlPublicKey()
+std::string GetGooglePlayLvlPublicKey() noexcept
 {
     //Enter your Google Play LVL public key here if you are building for Google Play on Android
     return "";
@@ -80,7 +80,14 @@ namespace CSPong
 {
     //---------------------------------------------------------
     //---------------------------------------------------------
-    void App::CreateSystems()
+    App::App(CS::SystemInfoCUPtr systemInfo) noexcept
+    : Application(std::move(systemInfo))
+    {
+    }
+    
+    //---------------------------------------------------------
+    //---------------------------------------------------------
+    void App::CreateSystems() noexcept
     {
         /*
          ==============================
@@ -133,12 +140,12 @@ namespace CSPong
     }
     //---------------------------------------------------------
     //---------------------------------------------------------
-    void App::OnInit()
+    void App::OnInit() noexcept
     {
     }
     //---------------------------------------------------------
     //---------------------------------------------------------
-    void App::PushInitialState()
+    void App::PushInitialState() noexcept
     {
         /*
          ==============================
@@ -166,7 +173,7 @@ namespace CSPong
     }
     //---------------------------------------------------------
     //---------------------------------------------------------
-    void App::OnDestroy()
+    void App::OnDestroy() noexcept
     {
     }
 }

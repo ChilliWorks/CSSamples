@@ -43,31 +43,39 @@ namespace CSPong
     {
     public:
         //---------------------------------------------------------
+        /// Constructor
+        ///
+        /// @author Ian Copland
+        //---------------------------------------------------------
+        App(CS::SystemInfoCUPtr systemInfo) noexcept;
+        
+    private:
+        //---------------------------------------------------------
         /// Overloaded method in which app systems can be created
         ///
         /// @author S Downie
         //---------------------------------------------------------
-        void CreateSystems() override;
+        void CreateSystems() noexcept override;
         //---------------------------------------------------------
         /// Called after all app system have been created allowing
         /// any system dependent initialisation
         ///
         /// @author S Downie
         //---------------------------------------------------------
-        void OnInit() override;
+        void OnInit() noexcept override;
         //---------------------------------------------------------
         /// This is where the first app state is pushed onto
         /// the state hierarchy.
         ///
         /// @author S Downie
         //---------------------------------------------------------
-        void PushInitialState() override;
+        void PushInitialState() noexcept override;
         //---------------------------------------------------------
         /// Mirrors OnInit and is called when the app is destroyed
         ///
         /// @author S Downie
         //---------------------------------------------------------
-        void OnDestroy() override;
+        void OnDestroy() noexcept override;
     };
 }
 

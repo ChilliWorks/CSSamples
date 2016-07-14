@@ -1,4 +1,4 @@
-<Material type="StaticBlinnShadowed">
+<Material type="Blinn">
     <Lighting>
         <Emissive value="0.0 0.0 0.0 1.0" />
         <Ambient value="1.0 1.0 1.0 1.0" />
