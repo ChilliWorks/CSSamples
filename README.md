@@ -5,6 +5,6 @@ A collection of sample projects demoing the ChilliSource game engine.
 
 Links
 -----
-* ChilliWorks [Website](http://chilli-works.com/)
-* ChilliSource [Documentation](http://chilli-source.chilli-works.com/docs/)
+* ChilliSource [Website](http://www.chillisourceengine.com/)
+* ChilliSource [Documentation](http://www.chillisourceengine.com/tutorials/)
 * ChilliSource [Repository](https://github.com/ChilliWorks/ChilliSource)
