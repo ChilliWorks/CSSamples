@@ -202,9 +202,7 @@ namespace CSPong
         
         auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
         
-        CS::DirectionalLightComponentSPtr lightComponent = renderFactory->CreateDirectionalLightComponent(1024);
-        lightComponent->SetIntensity(2.0f);
-        lightComponent->SetColour(CS::Colour::k_orange);
+        CS::DirectionalLightComponentSPtr lightComponent = renderFactory->CreateDirectionalLightComponent(CS::DirectionalLightComponent::ShadowQuality::k_medium, CS::Colour::k_orange, 2.0f);
         
         const f32 k_distanceFromGround = 70.0f;
         CS::Vector3 lightDir(-1, 1, 1);
