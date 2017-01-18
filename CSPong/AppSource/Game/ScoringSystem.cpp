@@ -68,7 +68,7 @@ namespace CSPong
         }
         
         auto entityFactory = GetState()->GetSystem<GameEntityFactory>();
-        auto scene = GetState()->GetScene();
+        auto scene = GetState()->GetMainScene();
         const CS::Vector2 k_digitSize(20, 20);
         const f32 distanceFromGround = 6.0f;
         

@@ -8,6 +8,6 @@
         <Transparency enabled="true" />
     </RenderStates>
     <Textures>
-        <Texture image-name="TextureAtlases/Digits/Digits.csimage" />
+        <Texture file-name="TextureAtlases/Digits/Digits.csimage" />
     </Textures>
 </Material>

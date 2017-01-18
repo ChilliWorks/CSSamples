@@ -86,28 +86,28 @@ namespace CSPong
          Next: 'Components' in GameEntityFactory::CreateCamera
          */
         
-        GetScene()->SetClearColour(CS::Colour::k_black);
+        GetMainScene()->SetClearColour(CS::Colour::k_black);
         
         CS::EntitySPtr camera = m_gameEntityFactory->CreateCamera();
-        GetScene()->Add(camera);
+        GetMainScene()->Add(camera);
 
         CS::EntitySPtr ambientLight = m_gameEntityFactory->CreateAmbientLight();
-        GetScene()->Add(ambientLight);
+        GetMainScene()->Add(ambientLight);
         
         CS::EntitySPtr diffuseLight = m_gameEntityFactory->CreateDiffuseLight();
-        GetScene()->Add(diffuseLight);
+        GetMainScene()->Add(diffuseLight);
         
         CS::EntitySPtr arena = m_gameEntityFactory->CreateArena();
-        GetScene()->Add(arena);
+        GetMainScene()->Add(arena);
         
         m_ball = m_gameEntityFactory->CreateBall();
-        GetScene()->Add(m_ball);
+        GetMainScene()->Add(m_ball);
         
         CS::EntitySPtr playerPaddle = m_gameEntityFactory->CreatePlayerPaddle(camera);
-        GetScene()->Add(playerPaddle);
+        GetMainScene()->Add(playerPaddle);
         
         m_oppositionPaddle = m_gameEntityFactory->CreateOppositionPaddle(m_ball);
-        GetScene()->Add(m_oppositionPaddle);
+        GetMainScene()->Add(m_oppositionPaddle);
         
         m_scoreChangedConnection = m_scoringSystem->GetScoreChangedEvent().OpenConnection(CS::MakeDelegate(this, &GameState::OnGoalScored));
         

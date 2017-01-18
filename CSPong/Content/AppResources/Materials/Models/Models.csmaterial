@@ -10,6 +10,6 @@
         <Culling enabled="true"/>
     </RenderStates>
     <Textures>
-        <Texture location="Package" image-name="Textures/Models.csimage" mipmapped="true" />
+        <Texture location="Package" file-name="Textures/Models.csimage" mipmapped="true" />
     </Textures>
 </Material>

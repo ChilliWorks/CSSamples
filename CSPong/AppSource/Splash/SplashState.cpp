@@ -123,7 +123,7 @@ namespace CSPong
         GetUICanvas()->AddWidget(m_splashView);
         
         //Set the clear colour of the screen
-        GetScene()->SetClearColour(CS::Colour(0.424f, 0.365f, 0.357f, 1.0f));
+        GetMainScene()->SetClearColour(CS::Colour(0.424f, 0.365f, 0.357f, 1.0f));
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
