@@ -36,11 +36,13 @@
 #include <Game/Physics/PhysicsSystem.h>
 #include <MainMenu/MainMenuState.h>
 
+#include <ChilliSource/Core/Resource.h>
 #include <ChilliSource/Core/Base.h>
 #include <ChilliSource/Core/Delegate.h>
 #include <ChilliSource/Core/Scene.h>
 #include <ChilliSource/Rendering/Camera.h>
 #include <ChilliSource/Rendering/Lighting.h>
+#include <ChilliSource/Audio/CricketAudio.h>
 
 namespace CSPong
 {
@@ -57,6 +59,7 @@ namespace CSPong
         m_scoringSystem = CreateSystem<ScoringSystem>();
         m_goalCeremonySystem = CreateSystem<GoalCeremonySystem>();
         m_gameEntityFactory = CreateSystem<GameEntityFactory>(m_physicsSystem, m_scoringSystem);
+        m_audioPlayer = CreateSystem<CS::CkAudioPlayer>();
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
@@ -109,6 +112,35 @@ namespace CSPong
         m_oppositionPaddle = m_gameEntityFactory->CreateOppositionPaddle(m_ball);
         GetMainScene()->Add(m_oppositionPaddle);
         
+        /*
+         ===================================
+         Chilli Source Tour: Audio
+         ===================================
+         
+         Chilli Source has an optional Cricket audio module http://www.crickettechnology.com/. The modules are created in CSPong.cpp.
+         
+         For short SFX samples, Cricket works by loading audio banks (which are a collection of sounds batched together). The bank is created as a simple xml file with a .ckbk extension (see PrebuiltResources/SFX for an example).
+         The audio bank is then built into a binary format using the CkTool.jar (this is incorporated into the "BuildAll" content process).
+         
+         At runtime the banks are loaded like any other resource and sound effects are then created from the bank. As you would expect the SFX has a play function that allows you to optionally loop the sound and 
+         other functions for changing the volume, pitch, etc. For simple fire and forget sound effects you can use the CkAudioPlayer for convenience (as we are doing here).
+         
+         If you need to play larger audio samples (such as music), it makes no sense to load the entire sample into memory, instead you can use the CreateFromStream method to stream the file directly (or again use the CkAudioPlayer::PlayMusic).
+         
+         In this demo we have SFX for when a goal is scored and background music
+         
+         -----------------------------------
+         
+         This concludes the Chilli Source Tour!
+         */
+        auto resourcePool = CS::Application::Get()->GetResourcePool();
+        m_audioBank = resourcePool->LoadResource<CS::CkBank>(CS::StorageLocation::k_package, "SFX/SFX.ckb");
+        m_audioPlayer->SetMusicVolume(0.5f);
+        m_audioPlayer->PlayMusic(CS::StorageLocation::k_package, "Music/GameMusic.cks");
+        
+        
+        
+        
         m_scoreChangedConnection = m_scoringSystem->GetScoreChangedEvent().OpenConnection(CS::MakeDelegate(this, &GameState::OnGoalScored));
         
         m_transitionInConnection = m_transitionSystem->GetTransitionInFinishedEvent().OpenConnection([=]()
@@ -120,6 +152,8 @@ namespace CSPong
     //------------------------------------------------------------
     void GameState::OnGoalScored(const ScoringSystem::Scores& in_scores)
     {
+        m_audioPlayer->PlayEffect(m_audioBank, "GoalScored");
+        
         BallControllerComponentSPtr ballController = m_ball->GetComponent<BallControllerComponent>();
         ballController->Deactivate();
         

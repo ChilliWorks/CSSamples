@@ -86,11 +86,14 @@ namespace CSPong
         CS::EntitySPtr m_ball;
         CS::EntitySPtr m_oppositionPaddle;
         
+        CS::CkBankCSPtr m_audioBank;
+        
         TransitionSystem* m_transitionSystem;
         PhysicsSystem* m_physicsSystem;
         ScoringSystem* m_scoringSystem;
         GoalCeremonySystem* m_goalCeremonySystem;
         GameEntityFactory* m_gameEntityFactory;
+        CS::CkAudioPlayer* m_audioPlayer;
     };
 }
 

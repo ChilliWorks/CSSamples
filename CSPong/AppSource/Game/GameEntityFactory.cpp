@@ -449,8 +449,8 @@ namespace CSPong
          passed in.
          
          -----------------------------------
-         
-         This concludes the Chilli Source Tour!
+
+         Next: 'Audio' in GameState::OnInit
          */
         
         auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();

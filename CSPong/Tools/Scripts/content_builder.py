@@ -33,11 +33,15 @@ import model_builder
 import text_builder
 import texture_atlas_builder
 import texture_builder
+import sfx_builder
+import music_builder
 
 model_directory_path = "Models/"
 text_directory_path = "Text/"
 texture_atlas_directory_path = "TextureAtlases/"
 texture_directory_path = "Textures/"
+sfx_directory_path = "SFX/"
+music_directory_path = "Music/"
 
 #------------------------------------------------------------------------------
 # The entry point into the script.
@@ -58,6 +62,8 @@ def main(args):
 	text_builder.build(os.path.join(input_path, text_directory_path), os.path.join(output_path, text_directory_path))
 	texture_atlas_builder.build(os.path.join(input_path, texture_atlas_directory_path), os.path.join(output_path, texture_atlas_directory_path))
 	texture_builder.build(os.path.join(input_path, texture_directory_path), os.path.join(output_path, texture_directory_path))
+	sfx_builder.build(os.path.join(input_path, sfx_directory_path), os.path.join(output_path, sfx_directory_path))
+	music_builder.build(os.path.join(input_path, music_directory_path), os.path.join(output_path, music_directory_path))
 
 if __name__ == "__main__":
 	main(sys.argv)
