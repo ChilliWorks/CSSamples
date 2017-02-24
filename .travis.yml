@@ -1,0 +1,7 @@
+language: objective-c
+script:
+    # Build Chilli Source - CSPong
+    - xcodebuild -project CSPong/ChilliSource/Projects/iOS/ChilliSource.xcodeproj -sdk iphonesimulator -configuration Release
+
+    # Build CSPong
+    - xcodebuild -project CSPong/Projects/iOS/CSPong.xcodeproj -sdk iphonesimulator -configuration Release

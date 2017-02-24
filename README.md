@@ -3,6 +3,10 @@ CSSamples
 
 A collection of sample projects demoing the ChilliSource game engine.
 
+|               | iOS           | Android       | Windows
+| ------------- |:-------------:|:-------------:|:-------------:|
+| Build Status  | [![Build Status](https://travis-ci.org/ChilliWorks/CSSamples.svg?branch=master)](https://travis-ci.org/ChilliWorks/CSSamples) | *TODO* | *TODO* | |
+
 Links
 -----
 * ChilliSource [Website](http://www.chillisourceengine.com/)
