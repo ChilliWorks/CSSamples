@@ -89,12 +89,10 @@ namespace CSPong
          is a module that can provide any functionality that applies to a single game object, i.e rendering 
          a model or representing a collision body.
          
-         Components are often created through factories like the Render Component Factory. This provides
-         convenience methods for creating all rendering related components such as SpriteComponent
-         ParticleComponent or AnimatedMeshComponent. The Entity class exposes methods for adding, removing
+         Components are usually created via their constructors and the Entity class exposes methods for adding, removing
          and querying for components.
          
-            CS::StaticModelComponentSPtr staticMeshComponent = renderComponentFactory->CreateAnimatedMeshComponent(mesh, material);
+            CS::StaticModelComponentSPtr staticMeshComponent = std::make_shared<CS::StaticModelComponent>(mesh, material);
             entity->AddComponent(staticMeshComponent);
             staticMeshComponent = entity->GetComponent<StaticModelComponent>();
             staticMeshComponent->RemoveFromEntity();
@@ -122,10 +120,10 @@ namespace CSPong
          
          In Chilli Source a camera is simply an entity with a Camera Component attached to it. There
          are two types of Camera Component each providing a different type of projection: Perspective
-         or Orthographic. Both of them are created through the Render Component Factory.
+         or Orthographic.
          
-            PerspectiveCameraComponentUPtr perspectiveCameraComponent = renderComponentFactory->CreatePerspectiveCameraComponent(fov, nearPlane, farPlane);
-            OrthographicCameraComponentUPtr orthographicCameraComponent = renderComponentFactory->CreateOrthographicCameraComponent(viewportSize, nearPlane, farPlane);
+            PerspectiveCameraComponentUPtr perspectiveCameraComponent = PerspectiveCameraComponentUPtr(new PerspectiveCameraComponent(aspect, fov, nearPlane, farPlane));
+            OrthographicCameraComponentUPtr orthographicCameraComponent = OrthographicCameraComponentUPtr(new OrthographicCameraComponent(viewportSize, nearPlane, farPlane));
          
          The position and direction of the camera are based on the position and orientation of the
          camera entity. Methods such as SetLookAt() on an Entities Transform provide a convenient
@@ -141,9 +139,9 @@ namespace CSPong
         const f32 k_fov = 3.14f / 3.0f;
         const f32 k_viewportHeight = 100.0f;
         f32 dist = (0.5f * k_viewportHeight) / std::tan(k_fov * 0.5f);
-        auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
         
-        CS::CameraComponentSPtr cameraComponent = renderFactory->CreatePerspectiveCameraComponent(k_fov, 10.0f, 150.0f);
+        auto screen = CS::Application::Get()->GetScreen();
+        CS::CameraComponentSPtr cameraComponent = std::make_shared<CS::PerspectiveCameraComponent>(screen->GetResolution().x/screen->GetResolution().y, k_fov, 10.0f, 150.0f);
         camera->AddComponent(cameraComponent);
         camera->GetTransform().SetLookAt(CS::Vector3::k_unitNegativeZ * dist, CS::Vector3::k_zero, CS::Vector3::k_unitPositiveY);
         
@@ -158,18 +156,14 @@ namespace CSPong
          Chilli Source Tour: Lighting
          ============================
          
-         Like Cameras, Lights are entities with a Light Component attached to it. These can also be 
-         created through the Render Component Factory. The engine provides 3 different types of 
+         Like Cameras, Lights are entities with a Light Component attached to it. The engine provides 3 different types of
          light: Ambient, Directional and Point.
          
-             CS::AmbientLightComponentSPtr ambientLightComponent = renderFactory->CreateAmbientLightComponent();
-             ambientLightComponent->SetColour(CS::Colour(0.4f, 0.4f, 0.4f, 1.0f));
+             CS::AmbientLightComponentSPtr ambientLightComponent = std::make_shared<CS::AmbientLightComponent>(CS::Colour(0.4f, 0.4f, 0.4f, 1.0f)));
              
-             CS::DirectionalLightComponentSPtr directionalLightComponent = renderFactory->CreateDirectionalLightComponent();
-             directionalLightComponent->SetColour(CS::Colour(0.6f, 0.6f, 0.6f, 1.0f));
+             CS::DirectionalLightComponentSPtr directionalLightComponent = std::make_shared<CS::DirectionalLightComponent>(CS::Colour(0.6f, 0.6f, 0.6f, 1.0f)));
              
-             CS::PointLightComponentSPtr pointLightComponent = renderFactory->CreateDirectionalLightComponent();
-             pointLightComponent->SetColour(CS::Colour(0.6f, 0.6f, 0.6f, 1.0f));
+             CS::PointLightComponentSPtr pointLightComponent = std::make_shared<CS::PointLightComponent>(CS::Colour(0.6f, 0.6f, 0.6f, 1.0f)));
          
          Ambient lights apply light evenly to all objects in the scene emulating light
          that has reflected multiple times and has no apparent source. Directional lights apply 
@@ -186,7 +180,7 @@ namespace CSPong
          is also useful for setting the direction of a light.
          
          Directional lights can cast shadows. To enable shadows on a directional light, simply
-         pass a non-zero shadow map resolution when creating the component. Shadows require a
+         pass the shadow map resolution qualitu when creating the component. Shadows require a
          small amount of configuration before use. First of all the shadow volume needs to be
          set. This is the area in which objects can cast shadows in front of the light. Secondly
          the shadow tolerence typically needs to be set. This is a small offset used in the shadow
@@ -200,9 +194,7 @@ namespace CSPong
         
         CS::EntityUPtr light(CS::Entity::Create());
         
-        auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
-        
-        CS::DirectionalLightComponentSPtr lightComponent = renderFactory->CreateDirectionalLightComponent(CS::DirectionalLightComponent::ShadowQuality::k_medium, CS::Colour::k_orange, 2.0f);
+        CS::DirectionalLightComponentSPtr lightComponent = std::make_shared<CS::DirectionalLightComponent>(CS::DirectionalLightComponent::ShadowQuality::k_medium, CS::Colour::k_orange, 2.0f);
         
         const f32 k_distanceFromGround = 70.0f;
         CS::Vector3 lightDir(-1, 1, 1);
@@ -222,9 +214,7 @@ namespace CSPong
     {
         CS::EntityUPtr light(CS::Entity::Create());
         
-        auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
-        
-        CS::AmbientLightComponentSPtr lightComponent = renderFactory->CreateAmbientLightComponent(CS::Colour::k_white * 0.5f);
+        CS::AmbientLightComponentSPtr lightComponent = std::make_shared<CS::AmbientLightComponent>(CS::Colour::k_white * 0.5f);
         light->AddComponent(lightComponent);
         
         return light;
@@ -307,8 +297,7 @@ namespace CSPong
         
         CS::EntityUPtr ball(CS::Entity::Create());
         
-        auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
-        CS::StaticModelComponentSPtr meshComponent = renderFactory->CreateStaticModelComponent(mesh, material);
+        CS::StaticModelComponentSPtr meshComponent = std::make_shared<CS::StaticModelComponent>(mesh, material);
         ball->AddComponent(meshComponent);
         
         CS::Vector2 collisionSize = mesh->GetAABB().GetSize().XY();
@@ -328,13 +317,12 @@ namespace CSPong
     {
         CS::EntityUPtr paddle(CS::Entity::Create());
         
-        auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
         auto resourcePool = CS::Application::Get()->GetResourcePool();
         
         CS::ModelCSPtr mesh = resourcePool->LoadResource<CS::Model>(CS::StorageLocation::k_package, "Models/Paddle/PaddleLeft.csmodel");
         CS::MaterialCSPtr material = resourcePool->LoadResource<CS::Material>(CS::StorageLocation::k_package, "Materials/Models/Models.csmaterial");
         
-        CS::StaticModelComponentSPtr meshComponent = renderFactory->CreateStaticModelComponent(mesh, material);
+        CS::StaticModelComponentSPtr meshComponent = std::make_shared<CS::StaticModelComponent>(mesh, material);
         paddle->AddComponent(meshComponent);
         
         CS::Vector2 collisionSize = mesh->GetAABB().GetSize().XY();
@@ -356,13 +344,12 @@ namespace CSPong
     {
         CS::EntityUPtr paddle(CS::Entity::Create());
         
-        auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
         auto resourcePool = CS::Application::Get()->GetResourcePool();
         
         CS::ModelCSPtr mesh = resourcePool->LoadResource<CS::Model>(CS::StorageLocation::k_package, "Models/Paddle/PaddleRight.csmodel");
         CS::MaterialCSPtr material = resourcePool->LoadResource<CS::Material>(CS::StorageLocation::k_package, "Materials/Models/Models.csmaterial");
         
-        CS::StaticModelComponentSPtr meshComponent = renderFactory->CreateStaticModelComponent(mesh, material);
+        CS::StaticModelComponentSPtr meshComponent = std::make_shared<CS::StaticModelComponent>(mesh, material);
         paddle->AddComponent(meshComponent);
         
         CS::Vector2 collisionSize = mesh->GetAABB().GetSize().XY();
@@ -384,7 +371,6 @@ namespace CSPong
     {
         CS::EntityUPtr arena(CS::Entity::Create());
         
-        auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
         auto resourcePool = CS::Application::Get()->GetResourcePool();
         
         CS::ModelCSPtr mesh = resourcePool->LoadResource<CS::Model>(CS::StorageLocation::k_package, "Models/Arena.csmodel");
@@ -393,7 +379,7 @@ namespace CSPong
         const f32 k_border = 1.0f;
         const CS::Vector2 k_arenaDimensions(mesh->GetAABB().GetSize().XY() * 0.9f);
         
-        CS::StaticModelComponentSPtr meshComponent = renderFactory->CreateStaticModelComponent(mesh, material);
+        CS::StaticModelComponentSPtr meshComponent = std::make_shared<CS::StaticModelComponent>(mesh, material);
         meshComponent->SetShadowCastingEnabled(false);
         arena->AddComponent(meshComponent);
         
@@ -445,19 +431,17 @@ namespace CSPong
             CS::UVs virtualTextureUVs = atlas->GetFrameUVs("Frame1");
          
          Typically when working with an atlas the component using it would deal with the virtual texture.
-         When creating a SpriteComponent through the Render Component Factory the atlas and the virtual texture id are
-         passed in.
+         When creating a SpriteComponent the atlas and the virtual texture id are passed in.
          
          -----------------------------------
 
          Next: 'Audio' in GameState::OnInit
          */
         
-        auto renderFactory = CS::Application::Get()->GetSystem<CS::RenderComponentFactory>();
         auto resPool = CS::Application::Get()->GetResourcePool();
         auto digitAtlas = resPool->LoadResource<CS::TextureAtlas>(CS::StorageLocation::k_package, "TextureAtlases/Digits/Digits.csatlas");
         auto digitMaterial = resPool->LoadResource<CS::Material>(CS::StorageLocation::k_package, "Materials/Digits/Digits.csmaterial");
-        CS::SpriteComponentSPtr spriteComponent = renderFactory->CreateSpriteComponent(in_size, digitAtlas, "0", digitMaterial, CS::SizePolicy::k_fitMaintainingAspect);
+        CS::SpriteComponentSPtr spriteComponent = std::make_shared<CS::SpriteComponent>(digitMaterial, digitAtlas, "0", in_size, CS::SizePolicy::k_fitMaintainingAspect);
         spriteComponent->SetColour(0.5f, 0.5f, 0.5f, 0.5f);
         spriteComponent->SetOriginAlignment(in_alignmentAnchor);
         
