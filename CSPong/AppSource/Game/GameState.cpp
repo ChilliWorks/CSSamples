@@ -59,7 +59,10 @@ namespace CSPong
         m_scoringSystem = CreateSystem<ScoringSystem>();
         m_goalCeremonySystem = CreateSystem<GoalCeremonySystem>();
         m_gameEntityFactory = CreateSystem<GameEntityFactory>(m_physicsSystem, m_scoringSystem);
+        
+#ifndef CS_TARGETPLATFORM_RPI
         m_audioPlayer = CreateSystem<CS::CkAudioPlayer>();
+#endif
     }
     //------------------------------------------------------------
     //------------------------------------------------------------
@@ -133,10 +136,12 @@ namespace CSPong
          
          This concludes the Chilli Source Tour!
          */
+#ifndef CS_TARGETPLATFORM_RPI
         auto resourcePool = CS::Application::Get()->GetResourcePool();
         m_audioBank = resourcePool->LoadResource<CS::CkBank>(CS::StorageLocation::k_package, "SFX/SFX.ckb");
         m_audioPlayer->SetMusicVolume(0.5f);
         m_audioPlayer->PlayMusic(CS::StorageLocation::k_package, "Music/GameMusic.cks");
+#endif
         
         
         
@@ -152,7 +157,9 @@ namespace CSPong
     //------------------------------------------------------------
     void GameState::OnGoalScored(const ScoringSystem::Scores& in_scores)
     {
+#ifndef CS_TARGETPLATFORM_RPI
         m_audioPlayer->PlayEffect(m_audioBank, "GoalScored");
+#endif
         
         BallControllerComponentSPtr ballController = m_ball->GetComponent<BallControllerComponent>();
         ballController->Deactivate();

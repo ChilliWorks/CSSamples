@@ -39,3 +39,5 @@ obj/
 .DS_Store
 Thumbs.db
 *.pyc
+CSPong/Projects/RPi/Build
+CSPong/Projects/RPi/Output

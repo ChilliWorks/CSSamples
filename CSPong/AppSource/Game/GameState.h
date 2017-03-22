@@ -86,7 +86,9 @@ namespace CSPong
         CS::EntitySPtr m_ball;
         CS::EntitySPtr m_oppositionPaddle;
         
+#ifndef CS_TARGETPLATFORM_RPI
         CS::CkBankCSPtr m_audioBank;
+#endif
         
         TransitionSystem* m_transitionSystem;
         PhysicsSystem* m_physicsSystem;
