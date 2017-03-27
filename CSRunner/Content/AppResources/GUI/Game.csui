@@ -1,0 +1,25 @@
+{
+  "Type": "Widget",
+  "RelSize": "1 1",
+  "InputEnabled": "false",
+  "Children": [
+    {
+      "Type": "Label",
+      "Name": "Time",
+      "RelSize": "0.5 0.15",
+      "RelPosition": "0.01 0",
+      "OriginAnchor": "TopLeft",
+      "ParentalAnchor": "TopLeft",
+      "Text": "0s",
+      "Font": {
+        "Path": "Fonts/Impact.csfont",
+        "Location": "Package"
+      },
+      "HorizontalJustification": "Left",
+      "VerticalJustification": "Centre",
+      "MaxNumberOfLines": "1",
+      "TextColour": "1 1 1 1",
+      "TextScale": "1"
+    }
+  ]
+}

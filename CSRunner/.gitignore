@@ -1,0 +1,41 @@
+################################
+# Visual Studio Ignore Files
+################################
+Projects/Windows/Build/
+.vs/
+*.user
+*.opensdf
+*.opendb
+*.sdf
+
+################################
+# XCode Ignore Files
+################################
+xcuserdata/
+Projects/iOS/XcodeBuiltAssets/
+*.xcscmblueprint
+
+################################
+# Android Studio Ignore Files
+################################
+Projects/Android/csrunner/.gradle/
+Projects/Android/csrunner/.idea/libraries/
+Projects/Android/csrunner/app/build/
+Projects/Android/csrunner/app/src/main/assets/
+Projects/Android/csrunner/app/src/main/libs/armeabi-v7a/
+Projects/Android/csrunner/app/src/main/libs/armeabi/
+Projects/Android/csrunner/app/src/main/libs/arm64-v8a/
+Projects/Android/csrunner/app/src/main/libs/x86/
+Projects/Android/csrunner/app/src/main/libs/x86_64/
+Projects/Android/csrunner/build/
+Projects/Android/csrunner/local.properties
+Projects/Android/csrunner/.idea/workspace.xml
+
+################################
+# General Ignore Files
+################################
+bin/
+obj/
+.DS_Store
+Thumbs.db
+*.pyc

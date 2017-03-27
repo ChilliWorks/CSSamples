@@ -1,3 +1,6 @@
 [submodule "CSPong/ChilliSource"]
 	path = CSPong/ChilliSource
 	url = https://github.com/ChilliWorks/ChilliSource.git
+[submodule "CSRunner/ChilliSource"]
+	path = CSRunner/ChilliSource
+	url = https://github.com/ChilliWorks/ChilliSource.git

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<bank name="SFX">
+    <sound name="Jump" source="Jump.wav" />
+    <sound name="Slide" source="Slide.wav" />
+    <sound name="Break" source="Break.wav" />
+</bank>

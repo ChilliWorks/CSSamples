@@ -26,7 +26,7 @@
 //  THE SOFTWARE.
 //
 
-#include <Common/TransitionSystem.h>
+#include <Transition/TransitionSystem.h>
 
 #include <ChilliSource/Core/Base.h>
 #include <ChilliSource/Core/Math.h>
@@ -37,7 +37,7 @@
 #include <ChilliSource/UI/Drawable.h>
 #include <ChilliSource/Rendering/Texture.h>
 
-namespace CSPong
+namespace CSRunner
 {
     CS_DEFINE_NAMEDTYPE(TransitionSystem);
     //-------------------------------------------------
@@ -71,9 +71,9 @@ namespace CSPong
             
             m_fadeTween = CS::MakeSmoothStepTween<f32>(0.0f, 1.0f, m_fadeOutTime);
             m_fadeTween.SetOnEndDelegate([=](CS::SmoothStepTween<f32>* in_tween)
-                                         {
-                                             CS::Application::Get()->GetStateManager()->Change(m_targetState);
-                                         });
+            {
+                CS::Application::Get()->GetStateManager()->Change(m_targetState);
+            });
             m_fadeTween.Play(CS::TweenPlayMode::k_once);
             
             m_targetState = in_newState;
@@ -113,11 +113,11 @@ namespace CSPong
         
         m_fadeTween = CS::MakeSmoothStepTween<f32>(1.0f, 0.0f, m_fadeInTime);
         m_fadeTween.SetOnEndDelegate([=](CS::SmoothStepTween<f32>* in_tween)
-                                     {
-                                         m_fadeImageView->RemoveFromParent();
-                                         m_transitionState = TransitionState::k_none;
-                                         m_transitionInFinishedEvent.NotifyConnections();
-                                     });
+        {
+            m_fadeImageView->RemoveFromParent();
+            m_transitionState = TransitionState::k_none;
+            m_transitionInFinishedEvent.NotifyConnections();
+        });
         m_fadeTween.Play(CS::TweenPlayMode::k_once);
     }
     //-------------------------------------------------

@@ -1,0 +1,8 @@
+{
+  "Type": "Image",
+  "Drawable": {
+    "Type": "Standard",
+    "TextureLocation": "Package",
+    "TexturePath": "Textures/GUI/Splash.csimage"
+  }
+}
