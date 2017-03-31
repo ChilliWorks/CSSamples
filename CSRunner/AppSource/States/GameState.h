@@ -83,6 +83,7 @@ namespace CSRunner
         TransitionSystem* m_transitionSystem;
         PlayerController* m_playerController;
         CS::CkAudioPlayer* m_audioPlayer = nullptr;
+        CS::Keyboard* m_keyboard;
         
         CS::EventConnectionUPtr m_dragMovedEventConnection;
         CS::EventConnectionUPtr m_obstacleCollisionEventConnection;

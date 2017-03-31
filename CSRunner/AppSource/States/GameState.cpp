@@ -39,6 +39,7 @@
 #include <ChilliSource/Rendering/Texture.h>
 #include <ChilliSource/UI/Base.h>
 #include <ChilliSource/UI/Text.h>
+#include <ChilliSource/Input/Keyboard.h>
 
 #include <Collision/CollisionSystem.h>
 #include <Player/PlayerController.h>
@@ -147,6 +148,8 @@ namespace CSRunner
         m_obstacleCollisionEventConnection = m_collisionSystem->GetPlayerObstacleCollisionEvent().OpenConnection(CS::MakeDelegate(this, &GameState::OnPlayerObstacleCollision));
         
         m_minDragDistance = CS::Application::Get()->GetScreen()->GetResolution().y * 0.025f;
+        
+        m_keyboard = CS::Application::Get()->GetSystem<CS::Keyboard>();
     }
 
     //------------------------------------------------------------
@@ -156,6 +159,18 @@ namespace CSRunner
         {
             m_timeSurvived += timeSinceLastUpdate;
             m_timeSurvivedLabel->SetText("Survived for " + CS::ToString((u32)m_timeSurvived) + " seconds");
+            
+            if(m_keyboard != nullptr)
+            {
+                if(m_keyboard->IsKeyDown(CS::KeyCode::k_up) || m_keyboard->IsKeyDown(CS::KeyCode::k_w))
+                {
+                    m_playerController->Jump();
+                }
+                else if(m_keyboard->IsKeyDown(CS::KeyCode::k_down) || m_keyboard->IsKeyDown(CS::KeyCode::k_s))
+                {
+                    m_playerController->Slide();
+                }
+            }
         }
     }
     
