@@ -58,7 +58,7 @@ namespace CSRunner
         TransitionSystem* m_transitionSystem;
         CS::GestureSystem* m_gestureSystem;
         
-        f32 m_timeSurvived;
+        u32 m_timeSurvived;
     };
 }
 

@@ -31,15 +31,23 @@
 #include <ChilliSource/Core/Resource.h>
 #include <ChilliSource/Core/State.h>
 #include <ChilliSource/Core/Scene.h>
+#include <ChilliSource/Core/Json/JsonUtils.h>
 #include <ChilliSource/Input/Gesture.h>
 #include <ChilliSource/UI/Base.h>
 #include <ChilliSource/UI/Text.h>
 
+#include <json/json.h>
+
 namespace CSRunner
 {
+    namespace
+    {
+        const std::string k_saveDataPath = "SavedData.json";
+        const std::string k_saveDataBestTimeKey = "BestTime";
+    }
     //------------------------------------------------------------
     GameoverState::GameoverState(f32 timeSurvived) noexcept
-    : m_timeSurvived(timeSurvived)
+    : m_timeSurvived((u32)timeSurvived)
     {
         
     }
@@ -58,8 +66,29 @@ namespace CSRunner
         auto gameoverViewDef = CS::Application::Get()->GetResourcePool()->LoadResource<CS::WidgetTemplate>(CS::StorageLocation::k_package, "GUI/Gameover.csui");
         CS::WidgetSPtr gameoverView = CS::Application::Get()->GetWidgetFactory()->Create(gameoverViewDef);
         GetUICanvas()->AddWidget(gameoverView);
-        auto timeSurvivedLabel = gameoverView->GetWidgetRecursive("Time")->GetComponent<CS::TextUIComponent>();
-        timeSurvivedLabel->SetText("You survived for " + CS::ToString((u32)m_timeSurvived) + " seconds");
+
+        //Grab the current best time
+        Json::Value root;
+        u32 bestTimeSurvived = 0;
+        if(CS::JsonUtils::ReadJson(CS::StorageLocation::k_saveData, k_saveDataPath, root) == true)
+        {
+            bestTimeSurvived = root.get(k_saveDataBestTimeKey, 0u).asUInt();
+        }
+        
+        auto timeSurvivedLabel = gameoverView->GetWidgetRecursive("LastTime")->GetComponent<CS::TextUIComponent>();
+        timeSurvivedLabel->SetText("You survived for " + CS::ToString(m_timeSurvived) + " seconds");
+        
+        std::string bestTimePrefix;
+        if(m_timeSurvived > bestTimeSurvived)
+        {
+            bestTimeSurvived = m_timeSurvived;
+            bestTimePrefix = "NEW ";
+            root[k_saveDataBestTimeKey] = bestTimeSurvived;
+            CS::JsonUtils::WriteJson(CS::StorageLocation::k_saveData, k_saveDataPath, root);
+        }
+        
+        auto bestTimeLabel = gameoverView->GetWidgetRecursive("BestTime")->GetComponent<CS::TextUIComponent>();
+        bestTimeLabel->SetText(bestTimePrefix + "Best time " + CS::ToString(bestTimeSurvived) + " seconds");
         
         auto tapGesture = std::make_shared<CS::TapGesture>();
         m_tapEventConnection = tapGesture->GetTappedEvent().OpenConnection([this](const CS::TapGesture* gesture, const CS::Vector2& pos)

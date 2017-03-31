@@ -5,8 +5,25 @@
   "Children": [
     {
       "Type": "Label",
-      "Name": "Time",
+      "Name": "LastTime",
       "RelSize": "0.8 0.2",
+      "RelPosition": "0 0.15",
+      "Text": "0s",
+      "Font": {
+        "Path": "Fonts/Impact.csfont",
+        "Location": "Package"
+      },
+      "HorizontalJustification": "Centre",
+      "VerticalJustification": "Centre",
+      "MaxNumberOfLines": "1",
+      "TextColour": "0.7 0.7 0.7 1",
+      "TextScale": "1.5"
+    },
+    {
+      "Type": "Label",
+      "Name": "BestTime",
+      "RelSize": "0.8 0.2",
+      "RelPosition": "0 -0.15",
       "Text": "0s",
       "Font": {
         "Path": "Fonts/Impact.csfont",
@@ -16,7 +33,7 @@
       "VerticalJustification": "Centre",
       "MaxNumberOfLines": "1",
       "TextColour": "1 1 1 1",
-      "TextScale": "1.5"
+      "TextScale": "1"
     }
   ]
 }
