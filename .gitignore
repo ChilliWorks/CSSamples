@@ -32,6 +32,14 @@ CSPong/Projects/Android/cspong/local.properties
 CSPong/Projects/Android/cspong/.idea/workspace.xml
 
 ################################
+# RPi Ignore Files
+################################
+CSRunner/Projects/RPi/Build
+CSRunner/Projects/RPi/Output
+CSPong/Projects/RPi/Build
+CSPong/Projects/RPi/Output
+
+################################
 # General Ignore Files
 ################################
 bin/
@@ -42,3 +50,4 @@ Thumbs.db
 CSPong/Projects/RPi/Build
 CSPong/Projects/RPi/Output
 CSRunner.VC.db
+
