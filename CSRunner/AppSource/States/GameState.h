@@ -65,6 +65,20 @@ namespace CSRunner
         ///
         void OnDragged(const CS::DragGesture* gesture, const CS::DragGesture::DragInfo& info) noexcept;
         
+        /// Called by the gamepad system when an axis such as d-pad or analogue stick has moved.
+        /// Used to make the runner jump or slide depending on the direction of movement
+        ///
+        /// @param gamepad
+        ///     Gamepad that changed
+        /// @param timestamp
+        ///     Time at which axis was moved
+        /// @param mappedAxis
+        ///     Id we used when registering our axis mapping
+        /// @param position
+        ///     Axis positions
+        ///
+        void OnGamepadAxisMoved(const CS::Gamepad& gamepad, f64 timestamp, u32 actionId, f32 position) noexcept;
+        
         /// Called by the collision system when the player collides with the obstacle and the given index
         ///
         /// @param index
@@ -87,6 +101,7 @@ namespace CSRunner
         
         CS::EventConnectionUPtr m_dragMovedEventConnection;
         CS::EventConnectionUPtr m_obstacleCollisionEventConnection;
+        CS::EventConnectionUPtr m_gamepadAxisEventConnection;
         
         CS::TextUIComponent* m_timeSurvivedLabel = nullptr;
         

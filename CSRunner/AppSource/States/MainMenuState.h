@@ -54,11 +54,16 @@ namespace CSRunner
         ///
         void OnUpdate(f32 timeSinceLastUpdate) noexcept override;
         
+        /// Disassemble the UI and begin transiton to the game
+        ///
+        void StartTransitionOut();
+        
     private:
         
         TransitionSystem* m_transitionSystem;
         CS::EventConnectionUPtr m_transitionInConnection;
         CS::EventConnectionUPtr m_playButtonConnection;
+        CS::EventConnectionUPtr m_gamepadButtonEventConnection;
         CS::EaseInOutBackTween<f32> m_playButtonTween;
         CS::WidgetSPtr m_playButton;
     };

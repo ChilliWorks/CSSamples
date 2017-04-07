@@ -33,6 +33,7 @@
 #include <ChilliSource/Core/Scene.h>
 #include <ChilliSource/UI/Base.h>
 #include <ChilliSource/UI/Button.h>
+#include <ChilliSource/Input/Gamepad.h>
 
 namespace CSRunner
 {
@@ -63,12 +64,7 @@ namespace CSRunner
         
         m_playButtonConnection = m_playButton->GetReleasedInsideEvent().OpenConnection([this](CS::Widget* in_widget, const CS::Pointer& in_pointer, CS::Pointer::InputType in_inputType)
         {
-            m_playButton->SetInputEnabled(false);
-            m_playButtonTween.Play(CS::TweenPlayMode::k_onceReverse);
-            m_playButtonTween.SetOnEndDelegate([this](CS::EaseInOutBackTween<f32>* in_tween)
-            {
-                m_transitionSystem->Transition(std::make_shared<GameState>());
-            });
+            StartTransitionOut();
         });
         
         m_transitionInConnection = m_transitionSystem->GetTransitionInFinishedEvent().OpenConnection([this]()
@@ -79,7 +75,31 @@ namespace CSRunner
             m_playButtonTween.SetOnEndDelegate([this](CS::EaseInOutBackTween<f32>* in_tween)
             {
                 m_playButton->SetInputEnabled(true);
+                
+                auto gamepadSystem = CS::Application::Get()->GetSystem<CS::GamepadSystem>();
+                if(gamepadSystem != nullptr)
+                {
+                    m_gamepadButtonEventConnection = gamepadSystem->GetButtonPressureChangedEvent().OpenConnection([this](const CS::Gamepad& gamepad, f64 timestamp, u32 buttonIndex, f32 pressure)
+                    {
+                        if(pressure >= 0.5f)
+                        {
+                            StartTransitionOut();
+                        }
+                    });
+                }
             });
+        });
+    }
+    
+    //-----------------------------------------------------------
+    void MainMenuState::StartTransitionOut()
+    {
+        m_gamepadButtonEventConnection.reset();
+        m_playButton->SetInputEnabled(false);
+        m_playButtonTween.Play(CS::TweenPlayMode::k_onceReverse);
+        m_playButtonTween.SetOnEndDelegate([this](CS::EaseInOutBackTween<f32>* in_tween)
+        {
+            m_transitionSystem->Transition(std::make_shared<GameState>());
         });
     }
     

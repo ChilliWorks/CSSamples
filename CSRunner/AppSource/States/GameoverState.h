@@ -54,6 +54,7 @@ namespace CSRunner
     private:
         
         CS::EventConnectionUPtr m_tapEventConnection;
+        CS::EventConnectionUPtr m_gamepadButtonEventConnection;
         
         TransitionSystem* m_transitionSystem;
         CS::GestureSystem* m_gestureSystem;

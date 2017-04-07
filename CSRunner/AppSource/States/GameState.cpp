@@ -40,6 +40,7 @@
 #include <ChilliSource/UI/Base.h>
 #include <ChilliSource/UI/Text.h>
 #include <ChilliSource/Input/Keyboard.h>
+#include <ChilliSource/Input/Gamepad.h>
 
 #include <Collision/CollisionSystem.h>
 #include <Player/PlayerController.h>
@@ -53,6 +54,8 @@ namespace CSRunner
 {
     namespace
     {
+        constexpr u32 k_moveGamepadAction = 0;
+        
         /// The viewport of the camera has a fixed width so that you always see the same distance in front
         /// but the height will adapt to maintain display aspect ratio
         ///
@@ -139,15 +142,37 @@ namespace CSRunner
         GetUICanvas()->AddWidget(gameView);
         m_timeSurvivedLabel = gameView->GetWidgetRecursive("Time")->GetComponent<CS::TextUIComponent>();
         
-        //Subscribe for drag events that we use to make the player jump and slide
-        auto gesture = std::make_shared<CS::DragGesture>();
-        m_dragMovedEventConnection = gesture->GetDragMovedEvent().OpenConnection(CS::MakeDelegate(this, &GameState::OnDragged));
-        m_gestureSystem->AddGesture(gesture);
         
         //Subscribe for collision events
         m_obstacleCollisionEventConnection = m_collisionSystem->GetPlayerObstacleCollisionEvent().OpenConnection(CS::MakeDelegate(this, &GameState::OnPlayerObstacleCollision));
         
         m_minDragDistance = CS::Application::Get()->GetScreen()->GetResolution().y * 0.025f;
+        
+        
+        //Subscribe for events that we use to make the player jump and slide on the various platforms
+        auto gesture = std::make_shared<CS::DragGesture>();
+        m_dragMovedEventConnection = gesture->GetDragMovedEvent().OpenConnection(CS::MakeDelegate(this, &GameState::OnDragged));
+        m_gestureSystem->AddGesture(gesture);
+        
+        auto gamepadSystem = CS::Application::Get()->GetSystem<CS::GamepadSystem>();
+        if(gamepadSystem != nullptr)
+        {
+            CS::Gamepad gamepad;
+            if(gamepadSystem->TryGetGamepadWithIndex(0, gamepad))
+            {
+                if(gamepad.IsAxisSupported(CS::GamepadAxis::k_y) == false)
+                {
+                    CS_LOG_WARNING("Gamepad doesn't have the required y axis input");
+                }
+            }
+            
+            //Map the jump/slide command for each supported controller.
+            gamepadSystem->SetDefaultActionMapping(k_moveGamepadAction, CS::GamepadAxis::k_y);
+            gamepadSystem->SetActionMapping(k_moveGamepadAction, CS::GamepadMappings::PS4::k_name, CS::GamepadMappings::PS4::k_dpadY, true);
+            gamepadSystem->SetActionMapping(k_moveGamepadAction, CS::GamepadMappings::PS4::k_name, CS::GamepadMappings::PS4::k_lStickY);
+    
+            m_gamepadAxisEventConnection = gamepadSystem->GetMappedAxisPositionChangedEvent().OpenConnection(CS::MakeDelegate(this, &GameState::OnGamepadAxisMoved));
+        }
         
         m_keyboard = CS::Application::Get()->GetSystem<CS::Keyboard>();
     }
@@ -188,6 +213,7 @@ namespace CSRunner
                 //Close our connection so we don't get any more events
                 m_dragMovedEventConnection.reset();
                 m_obstacleCollisionEventConnection.reset();
+                m_gamepadAxisEventConnection.reset();
                 
                 m_transitionSystem->Transition(std::make_shared<GameoverState>(m_timeSurvived));
             }
@@ -208,10 +234,27 @@ namespace CSRunner
     }
     
     //------------------------------------------------------------
+    void GameState::OnGamepadAxisMoved(const CS::Gamepad& gamepad, f64 timestamp, u32 actionId, f32 position) noexcept
+    {
+        if(gamepad.GetIndex() == 0 && actionId == k_moveGamepadAction)
+        {
+            if(position > 0.1f)
+            {
+                m_playerController->Slide();
+            }
+            else if(position < -0.1f)
+            {
+                m_playerController->Jump();
+            }
+        }
+    }
+    
+    //------------------------------------------------------------
     void GameState::OnDestroy() noexcept
     {
         //Close our connection so we don't get any more events
         m_dragMovedEventConnection.reset();
         m_obstacleCollisionEventConnection.reset();
+        m_gamepadAxisEventConnection.reset();
     }
 }

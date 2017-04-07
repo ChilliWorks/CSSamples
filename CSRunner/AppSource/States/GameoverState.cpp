@@ -32,6 +32,7 @@
 #include <ChilliSource/Core/State.h>
 #include <ChilliSource/Core/Scene.h>
 #include <ChilliSource/Core/Json/JsonUtils.h>
+#include <ChilliSource/Input/Gamepad.h>
 #include <ChilliSource/Input/Gesture.h>
 #include <ChilliSource/UI/Base.h>
 #include <ChilliSource/UI/Text.h>
@@ -97,5 +98,18 @@ namespace CSRunner
             m_tapEventConnection.reset();
         });
         m_gestureSystem->AddGesture(tapGesture);
+        
+        auto gamepadSystem = CS::Application::Get()->GetSystem<CS::GamepadSystem>();
+        if(gamepadSystem != nullptr)
+        {
+            m_gamepadButtonEventConnection = gamepadSystem->GetButtonPressureChangedEvent().OpenConnection([this](const CS::Gamepad& gamepad, f64 timestamp, u32 buttonIndex, f32 pressure)
+            {
+                if(pressure >= 0.5f)
+                {
+                    m_transitionSystem->Transition(std::make_shared<MainMenuState>());
+                    m_gamepadButtonEventConnection.reset();
+                }
+            });
+        }
     }
 }
