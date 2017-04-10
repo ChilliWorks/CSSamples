@@ -168,8 +168,8 @@ namespace CSRunner
             
             //Map the jump/slide command for each supported controller.
             gamepadSystem->SetDefaultActionMapping(k_moveGamepadAction, CS::GamepadAxis::k_y);
-            gamepadSystem->SetActionMapping(k_moveGamepadAction, CS::GamepadMappings::PS4::k_name, CS::GamepadMappings::PS4::k_dpadY, true);
-            gamepadSystem->SetActionMapping(k_moveGamepadAction, CS::GamepadMappings::PS4::k_name, CS::GamepadMappings::PS4::k_lStickY);
+            gamepadSystem->SetActionMapping(k_moveGamepadAction, CS::GamepadMappings::PS4::k_name, CS::GamepadMappings::PS4::k_dpadY, CS::GamepadMappings::PS4::k_dpadYShouldInvert);
+            gamepadSystem->SetActionMapping(k_moveGamepadAction, CS::GamepadMappings::PS4::k_name, CS::GamepadMappings::PS4::k_lStickY, CS::GamepadMappings::PS4::k_lStickYShouldInvert);
     
             m_gamepadAxisEventConnection = gamepadSystem->GetMappedAxisPositionChangedEvent().OpenConnection(CS::MakeDelegate(this, &GameState::OnGamepadAxisMoved));
         }
