@@ -139,10 +139,12 @@ namespace CSPong
         CreateSystem<CS::CSAnimProvider>();
         CreateSystem<CS::Accelerometer>();
         
+#ifndef CS_TARGETPLATFORM_RPI
         //If you have purchased a source code license from Cricket Technology, this product is covered by the source code license (http://www.crickettechnology.com/source_license).
         //Otherwise, this product is covered by the free license (http://www.crickettechnology.com/free_license).
         CreateSystem<CS::CkBankProvider>();
         CreateSystem<CS::CricketAudioSystem>();
+#endif
     }
     //---------------------------------------------------------
     //---------------------------------------------------------

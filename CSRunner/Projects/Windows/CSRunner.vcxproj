@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{490C36E0-8A30-443A-97B9-852FA8F9D4D3}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>CSRunner</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)Build\$(ProjectName)\Output\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)Build\$(ProjectName)\Intermediate\$(Platform)\$(Configuration)\a\b\</IntDir>
+    <IncludePath>$(ProjectDir)..\..\AppSource;$(ProjectDir)..\..\ChilliSource\Source;$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Headers;$(ProjectDir)..\..\ChilliSource\Libraries\CricketAudio\Windows\Headers;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Libs\$(Platform)\$(Configuration);$(ProjectDir)..\..\ChilliSource\Libraries\CricketAudio\Windows\Libs\$(Platform)\$(Configuration);$(ProjectDir)Build\ChilliSource\Output\$(Platform)\$(Configuration);$(LibraryPath)</LibraryPath>
+    <CustomBuildBeforeTargets>PostBuildEvent</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)Build\$(ProjectName)\Output\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)Build\$(ProjectName)\Intermediate\$(Platform)\$(Configuration)\a\b\</IntDir>
+    <IncludePath>$(ProjectDir)..\..\AppSource;$(ProjectDir)..\..\ChilliSource\Source;$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Headers;$(ProjectDir)..\..\ChilliSource\Libraries\CricketAudio\Windows\Headers;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Libs\$(Platform)\$(Configuration);$(ProjectDir)..\..\ChilliSource\Libraries\CricketAudio\Windows\Libs\$(Platform)\$(Configuration);$(ProjectDir)Build\ChilliSource\Output\$(Platform)\$(Configuration);$(LibraryPath)</LibraryPath>
+    <CustomBuildBeforeTargets>PostBuildEvent</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Build\$(ProjectName)\Output\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)Build\$(ProjectName)\Intermediate\$(Platform)\$(Configuration)\a\b\</IntDir>
+    <IncludePath>$(ProjectDir)..\..\AppSource;$(ProjectDir)..\..\ChilliSource\Source;$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Headers;$(ProjectDir)..\..\ChilliSource\Libraries\CricketAudio\Windows\Headers;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Libs\$(Platform)\$(Configuration);$(ProjectDir)..\..\ChilliSource\Libraries\CricketAudio\Windows\Libs\$(Platform)\$(Configuration);$(ProjectDir)Build\ChilliSource\Output\$(Platform)\$(Configuration);$(LibraryPath)</LibraryPath>
+    <CustomBuildBeforeTargets>PostBuildEvent</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Build\$(ProjectName)\Output\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)Build\$(ProjectName)\Intermediate\$(Platform)\$(Configuration)\a\b\</IntDir>
+    <IncludePath>$(ProjectDir)..\..\AppSource;$(ProjectDir)..\..\ChilliSource\Source;$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Headers;$(ProjectDir)..\..\ChilliSource\Libraries\CricketAudio\Windows\Headers;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)..\..\ChilliSource\Libraries\Core\Windows\Libs\$(Platform)\$(Configuration);$(ProjectDir)..\..\ChilliSource\Libraries\CricketAudio\Windows\Libs\$(Platform)\$(Configuration);$(ProjectDir)Build\ChilliSource\Output\$(Platform)\$(Configuration);$(LibraryPath)</LibraryPath>
+    <CustomBuildBeforeTargets>PostBuildEvent</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;GLEW_STATIC;SFML_STATIC;CS_TARGETPLATFORM_WINDOWS;CS_ENABLE_DEBUG;CS_LOGLEVEL_VERBOSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile />
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opengl32.lib;winmm.lib;XAudio2.lib;zlibstat.lib;glew32s.lib;sfml-system-s-d.lib;sfml-window-s-d.lib;ck.lib;CSBase.lib;ChilliSource.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/IGNORE:4099 /NODEFAULTLIB:libcmt.lib %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <CustomBuildStep>
+      <Command>python "$(ProjectDir)..\..\ChilliSource\Tools\Scripts\copy_windows_resources.py" "$(ProjectDir)\" "$(TargetDir)\"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Message>Building Resources</Message>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>CSForceBuildTo.alwaysrun</Outputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;GLEW_STATIC;SFML_STATIC;CS_TARGETPLATFORM_WINDOWS;CS_ENABLE_DEBUG;CS_LOGLEVEL_VERBOSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+      <PrecompiledHeaderFile />
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalOptions>/IGNORE:4099 /NODEFAULTLIB:libcmt.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opengl32.lib;winmm.lib;XAudio2.lib;zlibstat.lib;glew32s.lib;sfml-system-s-d.lib;sfml-window-s-d.lib;ck.lib;CSBase.lib;ChilliSource.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <CustomBuildStep>
+      <Command>python "$(ProjectDir)..\..\ChilliSource\Tools\Scripts\copy_windows_resources.py" "$(ProjectDir)\" "$(TargetDir)\"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Message>Building Resources</Message>
+      <Outputs>CSForceBuildTo.alwaysrun</Outputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;GLEW_STATIC;SFML_STATIC;CS_TARGETPLATFORM_WINDOWS;CS_LOGLEVEL_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeaderFile />
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opengl32.lib;winmm.lib;XAudio2.lib;zlibstat.lib;glew32s.lib;sfml-system-s.lib;sfml-window-s.lib;ck.lib;CSBase.lib;ChilliSource.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/IGNORE:4099 /NODEFAULTLIB:libcmt.lib %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <CustomBuildStep>
+      <Command>python "$(ProjectDir)..\..\ChilliSource\Tools\Scripts\copy_windows_resources.py" "$(ProjectDir)\" "$(TargetDir)\"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Message>Building Resources</Message>
+      <Outputs>CSForceBuildTo.alwaysrun</Outputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;GLEW_STATIC;SFML_STATIC;CS_TARGETPLATFORM_WINDOWS;CS_LOGLEVEL_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeaderFile />
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opengl32.lib;winmm.lib;XAudio2.lib;zlibstat.lib;glew32s.lib;sfml-system-s.lib;sfml-window-s.lib;ck.lib;CSBase.lib;ChilliSource.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/IGNORE:4099 /NODEFAULTLIB:libcmt.lib %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <CustomBuildStep>
+      <Command>python "$(ProjectDir)..\..\ChilliSource\Tools\Scripts\copy_windows_resources.py" "$(ProjectDir)\" "$(TargetDir)\"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Message>Building Resources</Message>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>CSForceBuildTo.alwaysrun</Outputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\AppSource\Animation\KeyframeAnimation.cpp" />
+    <ClCompile Include="..\..\AppSource\App.cpp" />
+    <ClCompile Include="..\..\AppSource\Collision\CollisionSystem.cpp" />
+    <ClCompile Include="..\..\AppSource\Environment\LevelGeneratorSystem.cpp" />
+    <ClCompile Include="..\..\AppSource\Player\PlayerController.cpp" />
+    <ClCompile Include="..\..\AppSource\States\GameoverState.cpp" />
+    <ClCompile Include="..\..\AppSource\States\GameState.cpp" />
+    <ClCompile Include="..\..\AppSource\States\MainMenuState.cpp" />
+    <ClCompile Include="..\..\AppSource\States\SplashState.cpp" />
+    <ClCompile Include="..\..\AppSource\Transition\TransitionSystem.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\AppSource\Animation\KeyframeAnimation.h" />
+    <ClInclude Include="..\..\AppSource\App.h" />
+    <ClInclude Include="..\..\AppSource\Collision\CollisionSystem.h" />
+    <ClInclude Include="..\..\AppSource\Environment\LevelGeneratorSystem.h" />
+    <ClInclude Include="..\..\AppSource\ForwardDeclarations.h" />
+    <ClInclude Include="..\..\AppSource\GameConfig.h" />
+    <ClInclude Include="..\..\AppSource\Player\PlayerController.h" />
+    <ClInclude Include="..\..\AppSource\States\GameoverState.h" />
+    <ClInclude Include="..\..\AppSource\States\GameState.h" />
+    <ClInclude Include="..\..\AppSource\States\MainMenuState.h" />
+    <ClInclude Include="..\..\AppSource\States\SplashState.h" />
+    <ClInclude Include="..\..\AppSource\Transition\TransitionSystem.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

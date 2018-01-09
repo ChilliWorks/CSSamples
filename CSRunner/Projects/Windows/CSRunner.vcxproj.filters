@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="AppSource">
+      <UniqueIdentifier>{e3af39e3-66f2-4fc8-81be-2e2ff69be4f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppSource\Animation">
+      <UniqueIdentifier>{dc332a1c-b02d-4154-a5a0-2a145cdeef50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppSource\Transition">
+      <UniqueIdentifier>{7f12a0f5-c21d-40ee-af54-043d30c71236}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppSource\Collision">
+      <UniqueIdentifier>{688a854e-f521-4d8c-8308-895450688f66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppSource\Environment">
+      <UniqueIdentifier>{2c93df2a-a5f0-488a-9c6d-246d67120ea7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppSource\Player">
+      <UniqueIdentifier>{c57bb8b9-de7b-4659-a80b-45530b6cafc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AppSource\States">
+      <UniqueIdentifier>{0b7f6adc-6efe-48ad-a3f9-5dfcdd9c6b5f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\AppSource\App.cpp">
+      <Filter>AppSource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Animation\KeyframeAnimation.cpp">
+      <Filter>AppSource\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Transition\TransitionSystem.cpp">
+      <Filter>AppSource\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Collision\CollisionSystem.cpp">
+      <Filter>AppSource\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Environment\LevelGeneratorSystem.cpp">
+      <Filter>AppSource\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\States\GameoverState.cpp">
+      <Filter>AppSource\States</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\States\GameState.cpp">
+      <Filter>AppSource\States</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\States\MainMenuState.cpp">
+      <Filter>AppSource\States</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\States\SplashState.cpp">
+      <Filter>AppSource\States</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\AppSource\Player\PlayerController.cpp">
+      <Filter>AppSource\Player</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\AppSource\App.h">
+      <Filter>AppSource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\ForwardDeclarations.h">
+      <Filter>AppSource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\GameConfig.h">
+      <Filter>AppSource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Animation\KeyframeAnimation.h">
+      <Filter>AppSource\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Transition\TransitionSystem.h">
+      <Filter>AppSource\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Collision\CollisionSystem.h">
+      <Filter>AppSource\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Environment\LevelGeneratorSystem.h">
+      <Filter>AppSource\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\States\GameoverState.h">
+      <Filter>AppSource\States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\States\GameState.h">
+      <Filter>AppSource\States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\States\MainMenuState.h">
+      <Filter>AppSource\States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\States\SplashState.h">
+      <Filter>AppSource\States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\AppSource\Player\PlayerController.h">
+      <Filter>AppSource\Player</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

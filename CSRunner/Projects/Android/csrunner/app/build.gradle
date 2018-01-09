@@ -1,0 +1,157 @@
+//
+//  build.gradle
+//  CSRunner
+//  Created by Ian Copland on 12/03/2015.
+//
+//  The MIT License (MIT)
+//
+//  Copyright (c) 2015 Tag Games Limited
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+//
+
+apply plugin: 'com.android.application'
+apply from: '../../../../ChilliSource/Tools/Scripts/android-build.gradle'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDir 'src/main/libs'
+            jni.srcDir '../../../../AppSource'
+        }
+    }
+
+    signingConfigs {
+        release {
+            keyAlias 'Alias'
+            keyPassword '********'
+            storeFile file('keystore.keystore')
+            storePassword '********'
+        }
+    }
+
+    //ChilliSource relies on the names of these to set up task dependencies. Additional types can
+    //be added and existing types removed, but the resulting build variants must contain 'release'
+    //or 'debug' in the name.
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), '../../../../ChilliSource/Tools/Scripts/android-proguard-rules.pro', 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            debuggable true
+            applicationIdSuffix ".debug"
+        }
+    }
+
+    //ChilliSource relies on the names of these to set up task dependencies. Additional flavors
+    //can be added and existing flavors removed, but the resulting build variants must contain an
+    //ABI and either 'googlePlay' or 'amazon' in the name.
+    flavorDimensions "sku", "abi"
+    productFlavors {
+        googlePlay {
+            dimension "sku"
+            applicationId "com.chillisource.csrunner.googleplay"
+        }
+        amazon {
+            dimension "sku"
+            applicationId "com.chillisource.csrunner.amazon"
+        }
+        arm {
+            dimension "abi"
+            ndk {
+                abiFilter "armeabi"
+            }
+        }
+        armv7 {
+            dimension "abi"
+            ndk {
+                abiFilter "armeabi-v7a"
+            }
+        }
+        arm64 {
+            dimension "abi"
+            ndk {
+                abiFilter "arm64-v8a"
+            }
+        }
+        x86 {
+            dimension "abi"
+            ndk {
+                abiFilter "x86"
+            }
+        }
+        x64 {
+            dimension "abi"
+            ndk {
+                abiFilter "x86_64"
+            }
+        }
+    }
+
+    csInitApplication tasks, defaultConfig, applicationVariants
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    csAddDefaultDependencies dependencies
+
+    //Gradle doesn't handle dependencies specific to combinations of flavors and build types so
+    //ChilliSource provides the following to manage it.
+    def csDependencyMap = new HashMap<String, String>()
+    csDependencyMap.put "googlePlayArmDebug", "googlePlayArmDebug"
+    csDependencyMap.put "googlePlayArmRelease", "googlePlayArmRelease"
+    csDependencyMap.put "googlePlayArmv7Debug", "googlePlayArmv7Debug"
+    csDependencyMap.put "googlePlayArmv7Release", "googlePlayArmv7Release"
+    csDependencyMap.put "googlePlayArm64Debug", "googlePlayArm64Debug"
+    csDependencyMap.put "googlePlayArm64Release", "googlePlayArm64Release"
+    csDependencyMap.put "googlePlayX86Debug", "googlePlayX86Debug"
+    csDependencyMap.put "googlePlayX86Release", "googlePlayX86Release"
+    csDependencyMap.put "googlePlayX64Debug", "googlePlayX64Debug"
+    csDependencyMap.put "googlePlayX64Release", "googlePlayX64Release"
+    csDependencyMap.put "amazonArmDebug", "amazonArmDebug"
+    csDependencyMap.put "amazonArmRelease", "amazonArmRelease"
+    csDependencyMap.put "amazonArmv7Debug", "amazonArmv7Debug"
+    csDependencyMap.put "amazonArmv7Release", "amazonArmv7Release"
+    csDependencyMap.put "amazonArm64Debug", "amazonArm64Debug"
+    csDependencyMap.put "amazonArm64Release", "amazonArm64Release"
+    csDependencyMap.put "amazonX86Debug", "amazonX86Debug"
+    csDependencyMap.put "amazonX86Release", "amazonX86Release"
+    csDependencyMap.put "amazonX64Debug", "amazonX64Debug"
+    csDependencyMap.put "amazonX64Release", "amazonX64Release"
+    csAddCSDependencies dependencies, configurations, csDependencyMap
+}
+
+afterEvaluate {
+    //Gradle currently has a bug where library projects depend on all build variants, causing them
+    //all to be built. This causes issues with native builds so the following resolves the issue
+    //for default dependencies
+    csFixDefaultLibraryDependancies tasks
+}

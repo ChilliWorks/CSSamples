@@ -66,13 +66,14 @@ namespace CSPong
         {
             m_transitionState = TransitionState::k_out;
             
+            GetState()->GetUICanvas()->AddWidget(m_fadeImageView);
             m_fadeImageView->BringToFront();
             
             m_fadeTween = CS::MakeSmoothStepTween<f32>(0.0f, 1.0f, m_fadeOutTime);
             m_fadeTween.SetOnEndDelegate([=](CS::SmoothStepTween<f32>* in_tween)
-            {
-                CS::Application::Get()->GetStateManager()->Change(m_targetState);
-            });
+                                         {
+                                             CS::Application::Get()->GetStateManager()->Change(m_targetState);
+                                         });
             m_fadeTween.Play(CS::TweenPlayMode::k_once);
             
             m_targetState = in_newState;
@@ -112,10 +113,11 @@ namespace CSPong
         
         m_fadeTween = CS::MakeSmoothStepTween<f32>(1.0f, 0.0f, m_fadeInTime);
         m_fadeTween.SetOnEndDelegate([=](CS::SmoothStepTween<f32>* in_tween)
-        {
-            m_transitionState = TransitionState::k_none;
-            m_transitionInFinishedEvent.NotifyConnections();
-        });
+                                     {
+                                         m_fadeImageView->RemoveFromParent();
+                                         m_transitionState = TransitionState::k_none;
+                                         m_transitionInFinishedEvent.NotifyConnections();
+                                     });
         m_fadeTween.Play(CS::TweenPlayMode::k_once);
     }
     //-------------------------------------------------
@@ -125,18 +127,20 @@ namespace CSPong
         if (m_transitionState == TransitionState::k_in || m_transitionState == TransitionState::k_out)
         {
             f32 value = m_fadeTween.Update(in_deltaTime);
-            m_fadeImageView->SetColour(CS::Colour(0.0f, 0.0f, 0.0f, value));
-            m_fadeImageView->BringToFront();
-        }
-        else
-        {
-            m_fadeImageView->SetColour(CS::Colour(0.0f, 0.0f, 0.0f, 0.0f));
+            if(m_fadeImageView->GetParent())
+            {
+                m_fadeImageView->SetColour(CS::Colour(0.0f, 0.0f, 0.0f, value));
+                m_fadeImageView->BringToFront();
+            }
         }
     }
     //-------------------------------------------------
     //-------------------------------------------------
     void TransitionSystem::OnDestroy()
     {
-        m_fadeImageView->RemoveFromParent();
+        if(m_fadeImageView->GetParent())
+        {
+            m_fadeImageView->RemoveFromParent();
+        }
     }
 }
